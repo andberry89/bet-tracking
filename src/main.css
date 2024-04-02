@@ -1,6 +1,6 @@
 * {
   box-sizing: border-box;
-  font-family: Arial;
+  font-family: Helvetica;
 }
 
 .page-wrap {
@@ -19,6 +19,7 @@ button {
   font-weight: bold;
   outline: 0;
   padding: 16px;
+  margin-top: 3px;
 }
 
 h1 {
@@ -61,29 +62,9 @@ h1 {
   margin: auto;
 }
 
-.img-wrap {
-  margin-top: 32px;
-  text-align: center;
-}
-
-.img-wrap img {
-  width: 400px;
-}
-
-.product-details {
-  padding: 16px;
-  position: relative;
-}
-
 .add-to-cart {
   width: 100%;
   margin-top: 16px;
-}
-
-.price {
-  position: absolute;
-  top: 24px;
-  right: 16px;
 }
 
 .green-button {
@@ -95,39 +76,7 @@ h1 {
   width: 100%;
 }
 
-.nav-bar {
-  border-bottom: 1px solid #ddd;
-  height: 75px;
-  width: 100%;
-}
-
-.logo-wrap {
-  width: 120px;
-  height: 120px;
-}
-
-.products-link {
-  text-align: center;
-  display: block;
-  color: black;
-  font-size: 22px;
-  left: 32px;
-  position: absolute;
-  top: 16px;
-  text-decoration: none;
-}
-
-.products-link h1 {
-  margin: 0;
-}
-
 .nav-buttons-wrap {
-  position: absolute;
-  right: 16px;
-  top: 16px;
-}
-
-.cart-link {
   position: absolute;
   right: 16px;
   top: 16px;
@@ -141,7 +90,7 @@ h1 {
   margin-top: 16px;
 }
 
-.product-item {
+.grid-item {
   align-items: center;
   border-radius: 8px;
   box-shadow: 0px 2px 5px #888;
@@ -153,23 +102,43 @@ h1 {
   width: 32%;
 }
 
-.product-name {
-  margin-bottom: 0;
+.grid-item img {
+  height: 150px;
+  width: 150px;
 }
 
-.product-item img {
-  height: 200px;
-  width: 200px;
-}
-
-.product-item a {
+.grid-item a {
   width: 100%;
 }
 
-.product-item button {
+.grid-item button {
   width: 100%;
 }
 
+.item-name {
+  margin-left: 5px;
+  margin-bottom: 2px;
+  font: 700 24px/1.2 'Helvetica', 'Arial', sans-serif;
+  color: #000;
+  text-align: center;
+}
+
+.page-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 0;
+}
+
+.img-wrap {
+  display: flex;
+  align-items: center;
+}
+.img-wrap img {
+  width: 100px;
+  border-radius: 50%;
+}
 .product-container {
   align-content: 'center';
   border-bottom: 1px solid #ddd;

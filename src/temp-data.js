@@ -15,87 +15,115 @@ import logoYoyo from './assets/logos/logo-yoyo.jpg'
 
 export const cappers = [
   {
-    id: '0001',
+    id: 'c0001',
     name: 'Parlay Science',
     imageName: logoPS,
     sports: ['NBA', 'MLB', 'NFL'],
   },
   {
-    id: '0002',
+    id: 'c0002',
     name: 'Money Mandrell',
     imageName: logoMM,
     sports: ['NBA', 'MLB', 'NFL'],
   },
   {
-    id: '0003',
+    id: 'c0003',
     name: 'Props Kitchen',
     imageName: logoPK,
     sports: ['NHL', 'MLB', 'NFL'],
   },
   {
-    id: '0004',
+    id: 'c0004',
     name: 'Pick with 456',
     imageName: logo456,
     sports: ['Soccer', 'NFL'],
   },
   {
-    id: '0005',
+    id: 'c0005',
     name: 'Ahaan',
     imageName: logoAhaan,
     sports: ['NFL', 'MLB', 'NBA'],
   },
   {
-    id: '0006',
+    id: 'c0006',
     name: 'Chalk Exchange',
     imageName: logoCE,
     sports: ['NHL', 'MLB', 'NFL'],
   },
   {
-    id: '0007',
+    id: 'c0007',
     name: 'Exoline',
     imageName: logoExo,
     sports: ['NHL', 'MLB', 'NFL'],
   },
   {
-    id: '0008',
+    id: 'c0008',
     name: 'Gretzkys Betzkys',
     imageName: logoGB,
     sports: ['NHL', 'MLB', 'NFL'],
   },
   {
-    id: '0009',
+    id: 'c0009',
     name: 'JBookie',
     imageName: logoJB,
     sports: ['NHL', 'MLB', 'NFL'],
   },
   {
-    id: '0010',
+    id: 'c0010',
     name: 'The Lusor',
     imageName: logoTL,
     sports: ['NHL', 'MLB', 'NFL'],
   },
   {
-    id: '0011',
-    name: 'Super Stoned Betting',
+    id: 'c0011',
+    name: 'Stoned Betting',
     imageName: logoSB,
     sports: ['NHL', 'MLB', 'NFL'],
   },
   {
-    id: '0012',
+    id: 'c0012',
     name: 'Young Simba',
     imageName: logoSimba,
     sports: ['NHL', 'MLB', 'NFL'],
   },
   {
-    id: '0013',
+    id: 'c0013',
     name: 'Slime',
     imageName: logoSlime,
     sports: ['NHL', 'MLB', 'NFL'],
   },
   {
-    id: '0014',
+    id: 'c0014',
     name: 'Yoyo',
     imageName: logoYoyo,
     sports: ['NHL', 'MLB', 'NFL'],
+  },
+]
+
+export const sheets = [
+  {
+    id: 's0001',
+    name: 'MLB Sheets',
+    imageName: '',
+  },
+  {
+    id: 's0002',
+    name: 'NFL Sheets',
+    imageName: '',
+  },
+  {
+    id: 's0003',
+    name: 'NBA Sheets',
+    imageName: '',
+  },
+  {
+    id: 's0004',
+    name: 'NBA All-in-One Sheets',
+    imageName: '',
+  },
+  {
+    id: 's0005',
+    name: 'NBA Starting 5',
+    imageName: '',
   },
 ]

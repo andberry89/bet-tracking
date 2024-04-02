@@ -6,6 +6,7 @@ import CapperPage from './pages/CapperPage.vue'
 import CappersPage from './pages/CappersPage.vue'
 import SheetPage from './pages/SheetPage.vue'
 import SheetsPage from './pages/SheetsPage.vue'
+import PageNotFound from './pages/PageNotFound.vue'
 
 createApp(App)
   .use(
@@ -25,8 +26,12 @@ createApp(App)
           component: SheetsPage,
         },
         {
-          path: '/sheets/:sheetID',
+          path: '/sheets/:sheetId',
           component: SheetPage,
+        },
+        {
+          path: '/:pathMatch(.*)*',
+          component: PageNotFound,
         },
       ],
     }),
