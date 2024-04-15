@@ -12,7 +12,7 @@
 
 <script>
 import axios from 'axios'
-import BetInput from './BetInput.vue'
+import BetInput from '@/components/dashboard/BetInput.vue'
 
 export default {
   name: 'ContributorBets',

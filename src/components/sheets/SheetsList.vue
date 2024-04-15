@@ -1,7 +1,7 @@
 <template>
   <div class="grid-wrap">
     <div
-      class="grid-item"
+      :class="gridSize"
       v-for="sheet in sheets"
       :key="sheet._id"
     >
@@ -16,6 +16,25 @@
 <script>
 export default {
   name: 'SheetsList',
-  props: ['sheets'],
+  props: {
+    sheets: {
+      type: Array,
+      required: true,
+    },
+    size: {
+      type: String,
+      required: false,
+      default: 'large',
+    },
+  },
+  computed: {
+    gridSize() {
+      if (this.size === 'small') {
+        return 'small-grid-item'
+      } else {
+        return 'large-grid-item'
+      }
+    },
+  },
 }
 </script>

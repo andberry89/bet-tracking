@@ -2,27 +2,19 @@
   <div>
     <h1>Dashboard</h1>
     <h2>Contributors</h2>
-    <div class="dashboard-grid">
-      <div
-        class="dashboard-grid-item"
-        v-for="contributor in contributors"
-        :key="contributor.id"
-      >
-        <img :src="contributor.imageUrl" />
-        <router-link
-          class="contributor-link"
-          :to="'/dashboard/' + contributor._id"
-          >{{ contributor.name }}</router-link
-        >
-      </div>
-    </div>
+    <ContributorsList
+      :contributors="contributors"
+      path="dashboard"
+      size="small"
+    />
     <h2>Most Recent Bets</h2>
     <BetDashboard :bets="this.bets" />
   </div>
 </template>
 <script>
 import axios from 'axios'
-import BetDashboard from '../components/BetDashboard'
+import BetDashboard from '../components/dashboard/BetDashboard'
+import ContributorsList from '@/components/contributors/ContributorsList.vue'
 
 export default {
   name: 'DashboardPage',
@@ -34,6 +26,7 @@ export default {
   },
   components: {
     BetDashboard,
+    ContributorsList,
   },
   async created() {
     const betResponse = await axios.get('/api/dashboard/bets')

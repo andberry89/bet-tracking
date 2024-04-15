@@ -95,13 +95,13 @@
   </div>
 </template>
 <script>
-import LegInput from './LegInput.vue'
-import LegDetails from './LegDetails.vue'
-import SelectComponent from './common/SelectComponent.vue'
-import RadioButtonGroup from './common/RadioButtonGroup.vue'
-import InputNumber from './common/InputNumber.vue'
-import InputText from './common/InputText.vue'
-import InputDate from './common/InputDate.vue'
+import LegInput from '@/components/dashboard/LegInput.vue'
+import LegDetails from '@/components/dashboard/LegDetails.vue'
+import SelectComponent from '@/components/common/SelectComponent.vue'
+import RadioButtonGroup from '@/components/common/RadioButtonGroup.vue'
+import InputNumber from '@/components/common/InputNumber.vue'
+import InputText from '@/components/common/InputText.vue'
+import InputDate from '@/components/common/InputDate.vue'
 import { bookOptions } from '@/utils/selectOptions'
 
 const testData = [

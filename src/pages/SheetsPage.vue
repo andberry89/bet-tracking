@@ -1,10 +1,13 @@
 <template>
   <h1>Sheets Review</h1>
-  <SheetsList :sheets="sheets" />
+  <SheetsList
+    :sheets="sheets"
+    size="large"
+  />
 </template>
 
 <script>
-import SheetsList from '@/components/SheetsList.vue'
+import SheetsList from '@/components/sheets/SheetsList.vue'
 import axios from 'axios'
 export default {
   name: 'SheetsPage',

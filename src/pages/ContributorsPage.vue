@@ -1,10 +1,14 @@
 <template>
   <h1>Contributors</h1>
-  <ContributorsList :contributors="contributors" />
+  <ContributorsList
+    :contributors="contributors"
+    path="contributors"
+    size="large"
+  />
 </template>
 
 <script>
-import ContributorsList from '@/components/ContributorsList.vue'
+import ContributorsList from '@/components/contributors/ContributorsList.vue'
 import axios from 'axios'
 
 export default {

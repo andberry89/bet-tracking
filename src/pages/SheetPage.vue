@@ -9,7 +9,7 @@
 
 <script>
 import PageNotFound from './PageNotFound.vue'
-import SheetDetails from '@/components/SheetDetails.vue'
+import SheetDetails from '@/components/sheets/SheetDetails.vue'
 import axios from 'axios'
 
 export default {

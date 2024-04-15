@@ -9,7 +9,7 @@
 
 <script>
 import PageNotFound from './PageNotFound.vue'
-import ContributorDetails from '@/components/ContributorDetails.vue'
+import ContributorDetails from '@/components/contributors/ContributorDetails.vue'
 import axios from 'axios'
 
 export default {

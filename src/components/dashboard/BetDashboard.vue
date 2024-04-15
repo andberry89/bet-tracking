@@ -56,8 +56,8 @@
 </template>
 <script>
 import dateFormat from 'dateformat'
-import SVGComponent from './common/SVGComponent.vue'
-import ArrowComponent from './common/ArrowComponent.vue'
+import SVGComponent from '@/components/common/SVGComponent.vue'
+import ArrowComponent from '@/components/common/ArrowComponent.vue'
 export default {
   name: 'BetDashboard',
   computed: {},

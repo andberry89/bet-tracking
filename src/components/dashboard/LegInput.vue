@@ -52,10 +52,10 @@
   </div>
 </template>
 <script>
-import SVGPlus from './common/SVGPlus.vue'
-import InputText from './common/InputText.vue'
-import InputNumber from './common/InputNumber.vue'
-import SelectComponent from './common/SelectComponent.vue'
+import SVGPlus from '@/components/common/SVGPlus.vue'
+import InputText from '@/components/common/InputText.vue'
+import InputNumber from '@/components/common/InputNumber.vue'
+import SelectComponent from '@/components/common/SelectComponent.vue'
 import updateValue from '@/utils/updateValue'
 import { marketOptions, overUnderOptions } from '@/utils/selectOptions'
 

@@ -86,34 +86,62 @@ h3 {
   margin-top: 16px;
 }
 
-.grid-item {
+.large-grid-item {
   align-items: center;
   border-radius: 8px;
   box-shadow: 0px 2px 5px var(--green);
   display: flex;
   flex-direction: column;
-  margin-bottom: 2%;
   padding: 20px;
   position: relative;
   width: 32%;
   transition: all 0.2s;
 }
 
-.grid-item:hover {
+.large-grid-item:hover,
+.small-item-grid:hover {
   box-shadow: 2px 4px 12px var(--green);
 }
 
-.grid-item img {
+.large-grid-item img {
   height: 150px;
   width: 150px;
 }
 
-.grid-item a {
+.large-grid-item a {
   width: 100%;
 }
 
-.grid-item button {
+.large-grid-item button {
   width: 100%;
+}
+
+.small-grid-item {
+  align-items: center;
+  border-radius: 8px;
+  box-shadow: 0px 2px 5px var(--green);
+  display: flex;
+  flex-direction: column;
+  padding: 8px;
+  position: relative;
+  width: 18%;
+  transition: all 0.2s;
+}
+
+.small-grid-item img {
+  height: 80px;
+  width: 80px;
+  border-radius: 50%;
+  margin-bottom: 5px;
+}
+
+.small-grid-item a {
+  width: 100%;
+}
+
+.small-grid-item button {
+  width: 100%;
+  padding: 8px 2px;
 }
 
 .item-name {
