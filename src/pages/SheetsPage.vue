@@ -5,13 +5,18 @@
 
 <script>
 import SheetsList from '@/components/SheetsList.vue'
-import { sheets } from '@/temp-data.js'
+import axios from 'axios'
 export default {
   name: 'SheetsPage',
   data() {
     return {
-      sheets,
+      sheets: [],
     }
+  },
+  async created() {
+    const response = await axios.get('/api/sheets')
+    const data = response.data
+    this.sheets = data
   },
   components: {
     SheetsList,

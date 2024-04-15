@@ -1,25 +1,45 @@
 * {
   box-sizing: border-box;
-  font-family: Helvetica;
+  font-family: Manrope;
+}
+
+:root {
+  --green: #15c63c;
+  --dark-gray: #131313;
+  --light-gray: #aaa;
+  --red: #cc0000;
+  --orange: #ff8317;
+  --white: #fffdfa;
+  --black: #000;
 }
 
 .page-wrap {
   margin: auto;
-  max-width: 800px;
+  max-width: 1100px;
   min-height: 100vh;
 }
 
+body {
+  background-color: var(--dark-gray);
+  color: var(--white);
+}
+
 button {
-  background-color: black;
-  border: none;
+  background-color: var(--dark-gray);
+  border: 1px solid var(--green);
   border-radius: 8px;
-  color: white;
+  color: var(--white);
   cursor: pointer;
-  font-size: 16px;
-  font-weight: bold;
+  font: 400 16px/1.2 'Russo One', 'Verdana', sans-serif;
   outline: 0;
   padding: 16px;
   margin-top: 3px;
+  transition: all 0.3s;
+}
+
+button:hover {
+  cursor: pointer;
+  background-color: var(--green);
 }
 
 h1 {
@@ -27,39 +47,15 @@ h1 {
   margin: 0;
   margin-top: 16px;
   padding: 16px;
+  font: 400 36px/1.1 'Russo One', sans-serif;
 }
 
-.total-price {
-  padding: 16px;
-  text-align: right;
+h2 {
+  font: 400 24px/1.1 'Russo One', sans-serif;
 }
 
-.checkout-button {
-  width: 100%;
-}
-
-.product-container {
-  align-content: 'center';
-  border-bottom: 1px solid #ddd;
-  display: flex;
-  padding: 16px;
-  width: 100%;
-}
-
-.product-image {
-  flex: 1;
-  height: 100px;
-  max-width: 100px;
-}
-
-.details-wrap {
-  padding: 0 16px;
-  flex: 3;
-}
-
-.remove-button {
-  flex: 1;
-  margin: auto;
+h3 {
+  font: 400 20px/1.1 'Russo One', sans-serif;
 }
 
 .add-to-cart {
@@ -93,13 +89,18 @@ h1 {
 .grid-item {
   align-items: center;
   border-radius: 8px;
-  box-shadow: 0px 2px 5px #888;
+  box-shadow: 0px 2px 5px var(--green);
   display: flex;
   flex-direction: column;
   margin-bottom: 2%;
   padding: 20px;
   position: relative;
   width: 32%;
+  transition: all 0.2s;
+}
+
+.grid-item:hover {
+  box-shadow: 2px 4px 12px var(--green);
 }
 
 .grid-item img {
@@ -119,7 +120,7 @@ h1 {
   margin-left: 5px;
   margin-bottom: 2px;
   font: 700 24px/1.2 'Helvetica', 'Arial', sans-serif;
-  color: #000;
+  color: var(--white);
   text-align: center;
 }
 
@@ -138,27 +139,4 @@ h1 {
 .img-wrap img {
   width: 100px;
   border-radius: 50%;
-}
-.product-container {
-  align-content: 'center';
-  border-bottom: 1px solid #ddd;
-  display: flex;
-  padding: 16px;
-  width: 100%;
-}
-
-.product-image {
-  flex: 1;
-  height: 100px;
-  max-width: 100px;
-}
-
-.details-wrap {
-  padding: 0 16px;
-  flex: 3;
-}
-
-.remove-button {
-  flex: 1;
-  margin: auto;
 }

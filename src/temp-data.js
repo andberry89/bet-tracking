@@ -1,19 +1,4 @@
-import logoMM from './assets/logos/logo-mm.jpg'
-import logoPK from './assets/logos/logo-pk.jpg'
-import logoPS from './assets/logos/logo-ps.jpg'
-import logo456 from './assets/logos/logo-456.jpg'
-import logoAhaan from './assets/logos/logo-ahaan.jpg'
-import logoCE from './assets/logos/logo-ce.jpg'
-import logoExo from './assets/logos/logo-exoline.jpg'
-import logoGB from './assets/logos/logo-gb.jpg'
-import logoJB from './assets/logos/logo-jbookie.jpg'
-import logoTL from './assets/logos/logo-lusor.jpg'
-import logoSB from './assets/logos/logo-sb.jpg'
-import logoSimba from './assets/logos/logo-simba.jpg'
-import logoSlime from './assets/logos/logo-slime.png'
-import logoYoyo from './assets/logos/logo-yoyo.jpg'
-
-export const cappers = [
+export const contributors = [
   {
     id: 'c0001',
     name: 'Parlay Science',
@@ -141,7 +126,7 @@ export const bets = [
     future: false,
     book: 'DraftKings',
     type: 'Parlay',
-    legs: '3',
+    legs: ['Lebron James o6.5 Assists', 'Josh Hart o8.5 Rebounds', 'Naz Reid 15+ Points'],
   },
   {
     id: 'b0002',
@@ -155,7 +140,7 @@ export const bets = [
     future: true,
     book: 'FanDuel',
     type: 'Straight',
-    legs: '1',
+    legs: ['Lance Lynn o5.5 Strikeouts'],
   },
   {
     id: 'b0003',
@@ -169,6 +154,6 @@ export const bets = [
     future: false,
     book: 'Caesars',
     type: 'Straight',
-    legs: '1',
+    legs: ['Dylan Larkin o3.5 SOG'],
   },
 ]

@@ -1,7 +1,7 @@
 <template>
   <div class="page-header">
     <div class="img-wrap">
-      <!-- <img :src="sheet.imageName" /> -->
+      <!-- <img :src="sheet.imageUrl" /> -->
       <div class="item-name">{{ sheet.name }}</div>
     </div>
   </div>

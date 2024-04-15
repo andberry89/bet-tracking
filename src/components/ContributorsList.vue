@@ -2,15 +2,15 @@
   <div class="grid-wrap">
     <div
       class="grid-item"
-      v-for="capper in cappers"
-      :key="capper.id"
+      v-for="contributor in contributors"
+      :key="contributor.id"
     >
-      <img :src="capper.imageName" />
-      <h3 class="item-name">{{ capper.name }}</h3>
+      <img :src="contributor.imageUrl" />
+      <h3 class="item-name">{{ contributor.name }}</h3>
       <span class="specialities"
-        ><em>{{ capper.sports.join(', ') }}</em></span
+        ><em>{{ contributor.sports.join(', ') }}</em></span
       >
-      <router-link :to="'/cappers/' + capper.id">
+      <router-link :to="'/contributors/' + contributor._id">
         <button>View Performance</button>
       </router-link>
     </div>
@@ -18,8 +18,8 @@
 </template>
 <script>
 export default {
-  name: 'CappersList',
-  props: ['cappers'],
+  name: 'ContributorsList',
+  props: ['contributors'],
 }
 </script>
 <style scoped>

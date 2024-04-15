@@ -8,16 +8,21 @@
 </template>
 
 <script>
-import { sheets } from '@/temp-data'
 import PageNotFound from './PageNotFound.vue'
 import SheetDetails from '@/components/SheetDetails.vue'
+import axios from 'axios'
 
 export default {
   name: 'SheetPage',
   data() {
     return {
-      sheet: sheets.find(sheet => sheet.id === this.$route.params.sheetId),
+      sheet: {},
     }
+  },
+  async created() {
+    const response = await axios.get(`/api/sheets/${this.$route.params.sheetId}`)
+    const data = response.data
+    this.sheet = data
   },
   components: {
     PageNotFound,

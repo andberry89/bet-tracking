@@ -2,11 +2,13 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import './main.css'
 import * as VueRouter from 'vue-router'
-import CapperPage from './pages/CapperPage.vue'
-import CappersPage from './pages/CappersPage.vue'
+import ContributorPage from './pages/ContributorPage.vue'
+import ContributorsPage from './pages/ContributorsPage.vue'
 import SheetPage from './pages/SheetPage.vue'
 import SheetsPage from './pages/SheetsPage.vue'
 import PageNotFound from './pages/PageNotFound.vue'
+import DashboardPage from './pages/DashboardPage.vue'
+import ContributorDashboard from './pages/ContributorDashboard.vue'
 
 createApp(App)
   .use(
@@ -14,12 +16,12 @@ createApp(App)
       history: VueRouter.createWebHistory(process.env.BASE_URL),
       routes: [
         {
-          path: '/cappers',
-          component: CappersPage,
+          path: '/contributors',
+          component: ContributorsPage,
         },
         {
-          path: '/cappers/:capperId',
-          component: CapperPage,
+          path: '/contributors/:contributorId',
+          component: ContributorPage,
         },
         {
           path: '/sheets',
@@ -28,6 +30,14 @@ createApp(App)
         {
           path: '/sheets/:sheetId',
           component: SheetPage,
+        },
+        {
+          path: '/dashboard',
+          component: DashboardPage,
+        },
+        {
+          path: '/dashboard/:contributorId',
+          component: ContributorDashboard,
         },
         {
           path: '/:pathMatch(.*)*',

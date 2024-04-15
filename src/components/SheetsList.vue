@@ -3,11 +3,11 @@
     <div
       class="grid-item"
       v-for="sheet in sheets"
-      :key="sheet.id"
+      :key="sheet._id"
     >
-      <img :src="sheet.imageName" />
+      <img :src="sheet.imageUrl" />
       <h3 class="item-name">{{ sheet.name }}</h3>
-      <router-link :to="'/sheets/' + sheet.id">
+      <router-link :to="'/sheets/' + sheet._id">
         <button>View Performance</button>
       </router-link>
     </div>

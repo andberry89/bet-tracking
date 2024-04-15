@@ -6,7 +6,7 @@
     </div>
     <div class="links">
       <router-link
-        to="/cappers"
+        to="/contributors"
         class="button-link"
       >
         <button>Contributors</button>
@@ -16,6 +16,12 @@
         class="button-link"
       >
         <button>Sheets</button>
+      </router-link>
+      <router-link
+        to="/dashboard"
+        class="button-link"
+      >
+        <button>Dashboard</button>
       </router-link>
     </div>
   </div>
