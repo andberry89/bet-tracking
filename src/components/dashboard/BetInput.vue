@@ -35,7 +35,7 @@
           for="bet-type"
           label="Bet Type"
           :placeholder="this.betType"
-          disabled="true"
+          :disabled="isBuilder"
           class="bet-input-field number"
         />
         <SelectComponent
@@ -91,17 +91,15 @@
           v-if="this.legs.length > 0"
         />
       </div>
+      <div class="submit-btn">
+        <button>Enter Bet</button>
+      </div>
     </form>
   </div>
 </template>
 <script>
 import LegInput from '@/components/dashboard/LegInput.vue'
 import LegDetails from '@/components/dashboard/LegDetails.vue'
-import SelectComponent from '@/components/common/SelectComponent.vue'
-import RadioButtonGroup from '@/components/common/RadioButtonGroup.vue'
-import InputNumber from '@/components/common/InputNumber.vue'
-import InputText from '@/components/common/InputText.vue'
-import InputDate from '@/components/common/InputDate.vue'
 import { bookOptions } from '@/utils/selectOptions'
 
 const testData = [
@@ -133,13 +131,8 @@ export default {
     }
   },
   components: {
-    InputDate,
-    InputNumber,
-    InputText,
     LegDetails,
     LegInput,
-    RadioButtonGroup,
-    SelectComponent,
   },
   props: {
     contributor: String,
@@ -164,6 +157,9 @@ export default {
     totalLegs() {
       return this.legs.length
     },
+    isBuilder() {
+      return true
+    },
   },
   methods: {
     addLeg(event) {
@@ -173,6 +169,14 @@ export default {
 }
 </script>
 <style>
+.bet-input {
+  text-align: center;
+}
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 .bet-info-input {
   display: flex;
   flex-wrap: nowrap;
@@ -191,8 +195,12 @@ export default {
 }
 .radio-group {
   border: 1px solid var(--white);
+  margin: 0 1px;
 }
 .leg-wrap {
   width: 80%;
+}
+.submit-btn {
+  align-self: center;
 }
 </style>

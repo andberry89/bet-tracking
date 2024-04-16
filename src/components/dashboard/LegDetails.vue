@@ -22,9 +22,12 @@ export default {
 </script>
 <style scoped>
 .leg-details-wrap {
-  border: 1px solid var(--green);
+  background-color: rgba(250, 250, 250, 0.2);
+  color: var(--white);
+  border: 2px dashed var(--green);
   border-radius: 8px;
   padding: 0 5px;
+  margin-top: 5px;
 }
 .added-leg {
   display: grid;

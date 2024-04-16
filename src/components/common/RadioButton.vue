@@ -40,6 +40,8 @@ export default {
 </script>
 <style scoped>
 p {
+  background-color: var(--white);
+  color: var(--black);
   margin: 0;
 }
 </style>

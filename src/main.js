@@ -2,48 +2,81 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import './main.css'
 import * as VueRouter from 'vue-router'
-import ContributorPage from './pages/ContributorPage.vue'
-import ContributorsPage from './pages/ContributorsPage.vue'
-import SheetPage from './pages/SheetPage.vue'
-import SheetsPage from './pages/SheetsPage.vue'
-import PageNotFound from './pages/PageNotFound.vue'
-import DashboardPage from './pages/DashboardPage.vue'
-import ContributorDashboard from './pages/ContributorDashboard.vue'
 
-createApp(App)
-  .use(
-    VueRouter.createRouter({
-      history: VueRouter.createWebHistory(process.env.BASE_URL),
-      routes: [
-        {
-          path: '/contributors',
-          component: ContributorsPage,
-        },
-        {
-          path: '/contributors/:contributorId',
-          component: ContributorPage,
-        },
-        {
-          path: '/sheets',
-          component: SheetsPage,
-        },
-        {
-          path: '/sheets/:sheetId',
-          component: SheetPage,
-        },
-        {
-          path: '/dashboard',
-          component: DashboardPage,
-        },
-        {
-          path: '/dashboard/:contributorId',
-          component: ContributorDashboard,
-        },
-        {
-          path: '/:pathMatch(.*)*',
-          component: PageNotFound,
-        },
-      ],
-    }),
-  )
-  .mount('#app')
+/**
+ * * Make sure to add the Vue component to '@/components/pages/index.js
+ */
+import {
+  ContributorDashboard,
+  ContributorPage,
+  ContributorsPage,
+  DashboardPage,
+  PageNotFound,
+  SheetPage,
+  SheetsPage,
+} from '@/components/pages'
+
+/**
+ * * Only register components that are regularly used globally
+ */
+import {
+  ArrowComponent,
+  InputDate,
+  InputNumber,
+  InputText,
+  RadioButton,
+  RadioButtonGroup,
+  SelectComponent,
+  SVGComponent,
+  SVGPlus,
+} from '@/components/common'
+
+const app = createApp(App)
+
+app.component('ArrowComponent', ArrowComponent)
+app.component('InputDate', InputDate)
+app.component('InputNumber', InputNumber)
+app.component('InputText', InputText)
+app.component('RadioButton', RadioButton)
+app.component('RadioButtonGroup', RadioButtonGroup)
+app.component('SelectComponent', SelectComponent)
+app.component('SVGComponent', SVGComponent)
+app.component('SVGPlus', SVGPlus)
+
+app.use(
+  VueRouter.createRouter({
+    history: VueRouter.createWebHistory(process.env.BASE_URL),
+    routes: [
+      {
+        path: '/contributors',
+        component: ContributorsPage,
+      },
+      {
+        path: '/contributors/:contributorId',
+        component: ContributorPage,
+      },
+      {
+        path: '/sheets',
+        component: SheetsPage,
+      },
+      {
+        path: '/sheets/:sheetId',
+        component: SheetPage,
+      },
+      {
+        path: '/dashboard',
+        component: DashboardPage,
+      },
+      {
+        path: '/dashboard/:contributorId',
+        component: ContributorDashboard,
+      },
+      {
+        path: '/:pathMatch(.*)*',
+        component: PageNotFound,
+      },
+    ],
+  }),
+)
+
+app.mount('#app')

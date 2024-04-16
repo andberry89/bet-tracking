@@ -13,7 +13,7 @@
 </template>
 <script>
 import axios from 'axios'
-import BetDashboard from '../components/dashboard/BetDashboard'
+import BetDashboard from '@/components/dashboard/BetDashboard'
 import ContributorsList from '@/components/contributors/ContributorsList.vue'
 
 export default {

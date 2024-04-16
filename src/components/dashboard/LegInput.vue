@@ -1,5 +1,5 @@
 <template>
-  <div class="leg-wrap">
+  <div class="leg-input-wrap">
     <div>Input Leg</div>
     <SelectComponent
       name="sports"
@@ -44,6 +44,7 @@
       @update="updateValue(details, 'prop', $event)"
     />
     <SVGPlus
+      v-if="isValidLeg"
       class="add-leg-btn"
       height="35px"
       width="35px"
@@ -52,10 +53,6 @@
   </div>
 </template>
 <script>
-import SVGPlus from '@/components/common/SVGPlus.vue'
-import InputText from '@/components/common/InputText.vue'
-import InputNumber from '@/components/common/InputNumber.vue'
-import SelectComponent from '@/components/common/SelectComponent.vue'
 import updateValue from '@/utils/updateValue'
 import { marketOptions, overUnderOptions } from '@/utils/selectOptions'
 
@@ -80,12 +77,6 @@ export default {
       overUnderOptions: overUnderOptions,
     }
   },
-  components: {
-    SVGPlus,
-    InputText,
-    InputNumber,
-    SelectComponent,
-  },
   computed: {
     isValidLeg() {
       if (this.isValidMarket && this.isValidSubject && this.isValidOU && this.isValidLine && this.isValidProp) {
@@ -95,7 +86,11 @@ export default {
       }
     },
     isOverOrUnder() {
-      return this.details.over === 'Over' || this.details.over === 'Under'
+      if (this.details.over === 'Over' || this.details.over === 'Under') {
+        return true
+      } else {
+        return false
+      }
     },
   },
   methods: {
@@ -149,12 +144,9 @@ export default {
       },
       deep: true,
     },
-    /**
-     * TODO: fix the validation for the line prop with over under
-     */
     'details.line': {
       handler(val) {
-        if (this.isOverOrUnder) {
+        if (!this.isOverOrUnder) {
           this.isValidLine = false
         } else {
           if (val === '' || val < 0) {
@@ -180,7 +172,7 @@ export default {
 }
 </script>
 <style scoped>
-.leg-wrap {
+.leg-input-wrap {
   display: grid;
   grid-template-columns: 90px 2fr 2fr 90px 1fr 2fr 35px;
   column-gap: 5px;
@@ -188,8 +180,9 @@ export default {
   align-items: center;
   background-color: var(--white);
   color: var(--black);
-  width: 100%;
   padding: 0 5px;
+  width: 100%;
+  height: 40px;
   border-radius: 8px;
   border: 1px solid var(--orange);
 }

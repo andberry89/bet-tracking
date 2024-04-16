@@ -23,9 +23,9 @@ export default {
   name: 'InputText',
   props: {
     disabled: {
-      type: String,
+      type: Boolean,
       required: false,
-      defaul: false,
+      default: false,
     },
     label: {
       type: String,

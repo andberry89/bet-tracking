@@ -11,13 +11,8 @@
   </div>
 </template>
 <script>
-import RadioButton from './RadioButton.vue'
-
 export default {
   name: 'RadioButtonGroup',
-  components: {
-    RadioButton,
-  },
   props: {
     defaultChoice: {
       type: String,
