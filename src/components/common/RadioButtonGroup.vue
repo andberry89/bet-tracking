@@ -7,6 +7,7 @@
       :key="option"
       :name="name"
       :defaultChoice="defaultChoice"
+      :disabled="disabled"
     />
   </div>
 </template>
@@ -17,6 +18,11 @@ export default {
     defaultChoice: {
       type: String,
       required: false,
+    },
+    disabled: {
+      type: Boolean,
+      required: false,
+      default: false,
     },
     label: {
       type: String,

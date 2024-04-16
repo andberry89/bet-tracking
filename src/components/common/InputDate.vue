@@ -2,14 +2,14 @@
   <div class="date-wrap">
     <label
       v-if="label"
-      for="name"
+      :for="name"
       >{{ this.label }}</label
     >
     <input
       type="date"
+      :id="name"
       :for="name"
       :name="name"
-      :id="name"
       @change="$emit('update', $event.target.value)"
     />
   </div>

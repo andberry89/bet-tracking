@@ -7,6 +7,7 @@
     >
     <input
       type="Number"
+      :id="forVal"
       :placeholder="placeholder"
       :for="forVal"
       :name="forVal"

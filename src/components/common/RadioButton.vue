@@ -1,12 +1,13 @@
 <template>
   <p>
-    <label :for="option">
+    <label :for="thisId">
       <input
         type="radio"
         :name="name"
         :value="option"
-        :id="option"
+        :id="thisId"
         :checked="isDefault"
+        :disabled="disabled"
         @change="$parent.$emit('update', option)"
       />
       {{ option }}
@@ -21,6 +22,11 @@ export default {
       type: String,
       required: false,
     },
+    disabled: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
     name: {
       type: String,
       required: true,
@@ -32,6 +38,9 @@ export default {
     radioValue: String,
   },
   computed: {
+    thisId() {
+      return this.name + '-' + this.option
+    },
     isDefault() {
       return this.defaultChoice === this.option
     },
@@ -43,5 +52,6 @@ p {
   background-color: var(--white);
   color: var(--black);
   margin: 0;
+  text-align: left;
 }
 </style>

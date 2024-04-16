@@ -7,6 +7,7 @@
     >
     <input
       type="text"
+      :id="forVal"
       :placeholder="placeholder"
       :for="forVal"
       :name="forVal"

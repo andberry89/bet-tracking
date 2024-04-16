@@ -79,11 +79,7 @@ export default {
   },
   computed: {
     isValidLeg() {
-      if (this.isValidMarket && this.isValidSubject && this.isValidOU && this.isValidLine && this.isValidProp) {
-        return true
-      } else {
-        return false
-      }
+      return this.isValidMarket && this.isValidSubject && this.isValidOU && this.isValidLine && this.isValidProp
     },
     isOverOrUnder() {
       if (this.details.over === 'Over' || this.details.over === 'Under') {
