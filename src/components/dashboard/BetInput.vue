@@ -49,6 +49,7 @@
           :placeholder="betType"
           :disabled="isBuilder"
           :value="betType"
+          @update="updateValue(details, 'type', $event)"
           class="bet-input-field number"
         />
         <SelectComponent
@@ -119,19 +120,24 @@
           ref="legs"
         />
       </div>
-      <div class="submit-btn">
-        <button>Enter Bet</button>
+      <div
+        class="submit-btn"
+        v-if="isValidBet"
+      >
+        <button @click.prevent="addBet(this.details)">Enter Bet</button>
       </div>
     </form>
     {{ this.details }}
   </div>
 </template>
 <script>
+import axios from 'axios'
 import LegInput from '@/components/dashboard/LegInput.vue'
 import LegDetails from '@/components/dashboard/LegDetails.vue'
 import { bookOptions } from '@/utils/selectOptions'
 import calcPayout from '@/utils/calcPayout'
 import updateValue from '@/utils/updateValue'
+import formatBet from '@/utils/formatBet'
 
 const testData = [
   {
@@ -140,6 +146,7 @@ const testData = [
     over: 'Over',
     line: '6.5',
     prop: 'Runs',
+    sport: 'Baseball',
   },
   {
     market: 'NBA',
@@ -147,6 +154,15 @@ const testData = [
     over: 'Over',
     line: '11.5',
     prop: 'Rebounds',
+    sport: 'Basketball',
+  },
+  {
+    market: 'NBA',
+    subject: 'LeBron James',
+    over: 'Under',
+    line: '5.5',
+    prop: 'Rebounds',
+    sport: 'Basketball',
   },
 ]
 
@@ -154,16 +170,19 @@ export default {
   name: 'BetInput',
   data() {
     return {
+      contributorId: '',
+      imageUrl: '',
       details: {
         date: '',
-        odds: '',
         risk: '',
+        odds: '',
         payout: '',
-        book: '',
-        future: 'No',
         settled: 'No',
         won: 'No',
+        book: '',
+        future: 'No',
         bonus: 'No',
+        type: '',
         promo: 'No',
         legs: testData,
       },
@@ -215,6 +234,11 @@ export default {
     isSettled() {
       return this.details.settled === 'Yes'
     },
+    sportsInLegs() {
+      let sports = []
+      this.details.legs.forEach(leg => sports.push(leg.market))
+      return sports
+    },
     totalLegs() {
       return this.details.legs.length
     },
@@ -224,9 +248,15 @@ export default {
   },
   methods: {
     calcPayout: calcPayout,
+    formatBet: formatBet,
     updateValue: updateValue,
     addLeg(event) {
       this.details.legs.push(event)
+    },
+    async addBet(details) {
+      const formattedBet = formatBet(details)
+      console.log(formattedBet)
+      await axios.post(`/api/dashboard/${this.contributorId}`, formattedBet)
     },
   },
   watch: {
@@ -242,7 +272,9 @@ export default {
     },
     'details.odds': {
       handler(val) {
-        if (val === '' || (-100 > val && val < 100)) {
+        if (val === '') {
+          this.flags.odds = false
+        } else if (val > -100 && val < 100) {
           this.flags.odds = false
         } else {
           this.flags.odds = true
@@ -286,6 +318,13 @@ export default {
       },
     },
   },
+  async created() {
+    const id = this.$route.params.contributorId
+    const response = await axios.get(`/api/contributors/${id}`)
+    const data = response.data
+    this.contributorId = id
+    this.imageUrl = data.imageUrl
+  },
 }
 </script>
 <style>
@@ -321,7 +360,7 @@ form {
   width: 80%;
 }
 .submit-btn {
-  align-self: center;
+  margin-top: 5px;
 }
 .valid {
   border: 1px solid var(--green);

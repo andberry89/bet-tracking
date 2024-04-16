@@ -12,8 +12,8 @@
         {{ dateFormat(bet.date, 'yyyy') }}</span
       >
       <div class="bet-type">
-        <p>{{ betType(bet) }}</p>
-        <p>{{ bet.future ? 'Future' : '' }}</p>
+        <p>{{ bet.type }}</p>
+        <p class="future-text">{{ bet.future ? 'Future' : '' }}</p>
         <p>{{ bet.sports.join(', ') }}</p>
       </div>
       <div class="bet-legs">
@@ -22,10 +22,17 @@
             v-for="(value, index) in bet.legs"
             :key="index"
           >
-            <span class="subject">{{ value.subject }}</span>
-            <span class="over-under">{{ value.over ? ' o' : ' u' }}</span>
-            <span class="line">{{ value.line }}</span>
-            <span class="prop">{{ ' ' + value.prop }}</span>
+            <div class="subject">
+              <span class="subject"
+                ><strong>{{ value.subject }}</strong></span
+              >
+            </div>
+            <div>
+              <span class="over-under">{{ getOUS(value.over) }}</span> <span class="line">{{ value.line }}</span>
+            </div>
+            <div>
+              <span class="prop">{{ ' ' + value.prop }}</span>
+            </div>
           </li>
         </ul>
       </div>
@@ -41,15 +48,15 @@
       <div class="bet-wager-info">
         <p><strong>Risk</strong>: {{ bet.risk }}U</p>
         <p><strong>Odds</strong>: {{ bet.odds }}</p>
-        <p v-if="!bet.completed"><strong>To Win</strong>: {{ bet.payout }}U</p>
-        <p v-if="bet.completed">
-          <ArrowComponent :upArrow="bet.win" />
-          <span :class="bet.win ? 'bet-win' : 'bet-lose'">{{ bet.win ? bet.payout : '-' + bet.risk }}U</span>
+        <p v-if="!bet.settled"><strong>To win</strong>: {{ bet.payout }}U</p>
+        <p v-if="bet.settled">
+          <ArrowComponent :upArrow="bet.won" />
+          <span :class="bet.won ? 'bet-won' : 'bet-lose'">{{ bet.won ? bet.payout : '-' + bet.risk }}U</span>
         </p>
       </div>
       <SVGComponent
-        v-if="bet.completed"
-        :win="bet.win"
+        v-if="bet.settled"
+        :won="bet.won"
       />
     </div>
   </div>
@@ -58,19 +65,25 @@
 import dateFormat from 'dateformat'
 export default {
   name: 'BetDashboard',
-  computed: {},
   methods: {
     dateFormat: dateFormat,
     borderStyle(bet) {
-      if (!bet.completed) {
+      if (!bet.settled) {
         return bet.future ? 'future-bet' : 'pending-bet'
       } else {
-        return bet.win ? 'winning-bet' : 'losing-bet'
+        return bet.won ? 'winning-bet' : 'losing-bet'
       }
     },
-    betType(bet) {
-      const betType = bet.type[0].toUpperCase() + bet.type.slice(1)
-      return bet.legs.length > 1 ? bet.legs.length + '-Leg ' + betType : betType
+    getOUS(val) {
+      val = val.toLowerCase()
+      switch (val) {
+        case 'over':
+          return 'o'
+        case 'under':
+          return 'u'
+        default:
+          return ''
+      }
     },
   },
   props: ['bets'],
@@ -79,7 +92,7 @@ export default {
 <style scoped>
 .bet-item {
   display: grid;
-  grid-template-columns: 90px 0.5fr 1fr 2fr 1fr 1fr 50px;
+  grid-template-columns: 90px 0.5fr 0.5fr 2fr 0.75fr 0.75fr 50px;
   column-gap: 5px;
   place-items: center;
   background-color: #131313;
@@ -102,6 +115,9 @@ export default {
 }
 .future-bet {
   border: 3px solid var(--orange);
+}
+.future-text {
+  color: var(--orange);
 }
 .pending-bet {
   border: 3px solid var(--white);
@@ -131,15 +147,22 @@ export default {
   padding: 0;
   margin: 0;
 }
+.bet-legs ul li {
+  display: grid;
+  grid-template-columns: 1.5fr max-content 1fr;
+  column-gap: 10px;
+}
+.subject {
+  justify-self: end;
+}
 .promo-text {
   font-size: 14px;
   color: var(--green);
 }
-.bet-win {
+.bet-won {
   color: var(--green);
 }
 .bet-lose {
   color: var(--red);
 }
 </style>
-./SVGWinner.vue./SVGComponent.vue./common/SVGComponent.vue

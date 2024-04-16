@@ -30,7 +30,7 @@
       step="0.5"
       min="0"
       :value="this.details.line"
-      :disabled="!isOverOrUnder"
+      :disabled="disableLine"
       :class="isValidLine ? 'valid' : 'invalid'"
       @update="updateValue(details, 'line', $event)"
     />
@@ -54,6 +54,7 @@
 </template>
 <script>
 import updateValue from '@/utils/updateValue'
+import { findSport } from '@/utils/handleLegs'
 import { marketOptions, overUnderOptions } from '@/utils/selectOptions'
 
 export default {
@@ -66,6 +67,7 @@ export default {
         over: '',
         line: '',
         prop: '',
+        sport: '',
       },
       isValidMarket: false,
       isValidSubject: false,
@@ -78,21 +80,21 @@ export default {
     }
   },
   computed: {
+    disableLine() {
+      return this.isOverOrUnder && this.details.over === 'Neither'
+    },
+    isOverOrUnder() {
+      return this.isValidOU
+    },
     isValidLeg() {
       return this.isValidMarket && this.isValidSubject && this.isValidOU && this.isValidLine && this.isValidProp
     },
-    isOverOrUnder() {
-      if (this.details.over === 'Over' || this.details.over === 'Under') {
-        return true
-      } else {
-        return false
-      }
-    },
   },
   methods: {
+    findSport: findSport,
     updateValue: updateValue,
     addLeg() {
-      this.$emit('update', this.details)
+      this.$emit('update', findSport(this.details))
       this.details = {
         market: '',
         subject: '',
@@ -132,6 +134,10 @@ export default {
     },
     'details.over': {
       handler(val) {
+        if (val === 'Neither') {
+          this.line = ''
+          this.isValidLine = true
+        }
         if (val === '--O/U/N--' || val === '') {
           this.isValidOU = false
         } else {
@@ -142,14 +148,14 @@ export default {
     },
     'details.line': {
       handler(val) {
-        if (!this.isOverOrUnder) {
+        if (this.isOverOrUnder && val === 'Neither') {
+          this.isValidLine = true
+        } else if (this.isOverOrUnder && val <= 0) {
           this.isValidLine = false
+        } else if (this.isOverOrUnder && val > 0) {
+          this.isValidLine = true
         } else {
-          if (val === '' || val < 0) {
-            this.isValidLine = false
-          } else {
-            this.isValidLine = true
-          }
+          this.isValidLine = false
         }
       },
       deep: true,

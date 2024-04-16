@@ -1,3 +1,6 @@
+/**
+ * If you add a market, make sure to update @/utils/handleLegs
+ */
 export const marketOptions = [
   {
     value: '--Select a Market--',
@@ -56,6 +59,10 @@ export const marketOptions = [
     disabled: true,
   },
   {
+    value: 'Golf',
+    disabled: false,
+  },
+  {
     value: 'Soccer',
     disabled: false,
   },
@@ -87,7 +94,11 @@ export const overUnderOptions = [
     disabled: false,
   },
   {
-    value: 'Neither',
+    value: 'Spread',
+    disabled: false,
+  },
+  {
+    value: 'Other',
     disabled: false,
   },
 ]

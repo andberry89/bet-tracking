@@ -1,6 +1,6 @@
 <template>
   <svg
-    v-if="win"
+    v-if="won"
     class="my-svg-component"
     width="50px"
     height="50px"
@@ -50,7 +50,7 @@
     version="1.1"
     xmlns="http://www.w3.org/2000/svg"
     stroke="#cc0000"
-    v-if="!win"
+    v-if="!won"
   >
     <g
       id="SVGRepo_bgCarrier"
@@ -82,7 +82,7 @@
 export default {
   name: 'SVGComponent',
   props: {
-    win: {
+    won: {
       type: Boolean,
       default: null,
     },
