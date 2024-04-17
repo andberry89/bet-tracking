@@ -12,9 +12,11 @@
       <div class="leg-item">{{ leg.line }}</div>
       <div class="leg-item">{{ leg.prop }}</div>
       <div>
-        <SVGMinus
+        <SVGPlusMinus
           height="35px"
           width="35px"
+          type="minus"
+          class="delete-btn"
           @click="$emit('update', index)"
         />
       </div>

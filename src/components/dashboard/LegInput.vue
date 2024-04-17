@@ -43,11 +43,12 @@
       :class="isValidProp ? 'valid' : 'invalid'"
       @update="updateValue(details, 'prop', $event)"
     />
-    <SVGPlus
+    <SVGPlusMinus
       v-if="isValidLeg"
       class="add-leg-btn"
       height="35px"
       width="35px"
+      type="plus"
       @click="addLeg"
     />
   </div>
@@ -210,11 +211,5 @@ export default {
 }
 .invalid {
   border: 1px solid var(--red);
-}
-.add-leg-btn:hover {
-  cursor: pointer;
-}
-.add-leg-btn:active {
-  transform: translate(0, 2px);
 }
 </style>
