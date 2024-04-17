@@ -27,8 +27,8 @@ export const validateLine = (line, isOU, over) => {
     return false
   }
 }
-export const validateProp = val => {
-  if (val === '') {
+export const validateProp = (val, spread) => {
+  if (val === '' && !spread) {
     return false
   } else {
     return true

@@ -28,6 +28,7 @@ import {
   RadioButtonGroup,
   SelectComponent,
   SVGComponent,
+  SVGMinus,
   SVGPlus,
 } from '@/components/common'
 
@@ -41,6 +42,7 @@ app.component('RadioButton', RadioButton)
 app.component('RadioButtonGroup', RadioButtonGroup)
 app.component('SelectComponent', SelectComponent)
 app.component('SVGComponent', SVGComponent)
+app.component('SVGMinus', SVGMinus)
 app.component('SVGPlus', SVGPlus)
 
 app.use(

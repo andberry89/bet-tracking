@@ -6,6 +6,7 @@ import RadioButton from './RadioButton.vue'
 import RadioButtonGroup from './RadioButtonGroup.vue'
 import SelectComponent from './SelectComponent.vue'
 import SVGComponent from './SVGComponent.vue'
+import SVGMinus from './SVGMinus.vue'
 import SVGPlus from './SVGPlus.vue'
 
 export {
@@ -17,5 +18,6 @@ export {
   RadioButtonGroup,
   SelectComponent,
   SVGComponent,
+  SVGMinus,
   SVGPlus,
 }

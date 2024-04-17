@@ -117,7 +117,7 @@
         <LegDetails
           :legs="this.details.legs"
           v-if="this.totalLegs > 0"
-          ref="legs"
+          @update="deleteLeg($event)"
         />
       </div>
       <div
@@ -257,6 +257,9 @@ export default {
       details.type = this.betType
       const formattedBet = formatBet(details)
       await axios.post(`/api/dashboard/${this.details.contributorId}`, formattedBet)
+    },
+    deleteLeg(idx) {
+      this.details.legs.splice(idx, 1)
     },
   },
   watch: {

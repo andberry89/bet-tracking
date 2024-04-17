@@ -11,6 +11,13 @@
       <div class="leg-item">{{ leg.over }}</div>
       <div class="leg-item">{{ leg.line }}</div>
       <div class="leg-item">{{ leg.prop }}</div>
+      <div>
+        <SVGMinus
+          height="35px"
+          width="35px"
+          @click="$emit('update', index)"
+        />
+      </div>
     </div>
   </div>
 </template>

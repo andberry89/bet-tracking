@@ -147,12 +147,12 @@ export default {
           case 'Over':
             this.isValidOU = true
             this.isValidLine = validateLine(line, true, over)
-            this.isValidProp = validateProp(prop)
+            this.isValidProp = validateProp(prop, false)
             break
           case 'Under':
             this.isValidOU = true
             this.isValidLine = validateLine(line, true, over)
-            this.isValidProp = validateProp(prop)
+            this.isValidProp = validateProp(prop, false)
             break
           case 'Spread':
             this.isValidOU = true
@@ -164,7 +164,7 @@ export default {
             this.isValidOU = true
             this.details.line = ''
             this.isValidLine = true
-            this.isValidProp = validateProp(prop)
+            this.isValidProp = validateProp(prop, false)
             break
           default:
             this.isValidOU = false
@@ -180,7 +180,7 @@ export default {
     },
     'details.prop': {
       handler(val) {
-        this.isValidProp = validateProp(val)
+        this.isValidProp = validateProp(val, this.isSpread)
       },
       deep: true,
     },
