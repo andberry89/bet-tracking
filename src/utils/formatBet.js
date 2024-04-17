@@ -11,17 +11,25 @@ const formatBet = details => {
     details.legs[i].line = parseInt(line)
   }
 
-  details = {
-    ...details,
+  const formattedDetails = {
+    contributor: details.contributorId,
+    imageUrl: details.imageUrl,
+    date: details.date,
+    risk: parseFloat(details.risk),
+    odds: parseInt(details.odds, 10),
+    payout: parseFloat(details.payout),
     settled: details.settled.toLowerCase() === 'yes',
     won: details.won.toLowerCase() === 'yes',
+    sports: filterSports(details.legs),
     future: details.future.toLowerCase() === 'yes',
+    book: details.book,
     promo: details.promo.toLowerCase() === 'yes',
     bonus: details.bonus.toLowerCase() === 'yes',
-    sports: filterSports(details.legs),
+    type: details.type,
+    legs: details.legs,
   }
 
-  return details
+  return formattedDetails
 }
 
 export default formatBet

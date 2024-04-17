@@ -170,9 +170,9 @@ export default {
   name: 'BetInput',
   data() {
     return {
-      contributorId: '',
-      imageUrl: '',
       details: {
+        contributorId: '',
+        imageUrl: '',
         date: '',
         risk: '',
         odds: '',
@@ -254,9 +254,9 @@ export default {
       this.details.legs.push(event)
     },
     async addBet(details) {
+      details.type = this.betType
       const formattedBet = formatBet(details)
-      console.log(formattedBet)
-      await axios.post(`/api/dashboard/${this.contributorId}`, formattedBet)
+      await axios.post(`/api/dashboard/${this.details.contributorId}`, formattedBet)
     },
   },
   watch: {
@@ -322,8 +322,8 @@ export default {
     const id = this.$route.params.contributorId
     const response = await axios.get(`/api/contributors/${id}`)
     const data = response.data
-    this.contributorId = id
-    this.imageUrl = data.imageUrl
+    this.details.contributorId = id
+    this.details.imageUrl = data.imageUrl
   },
 }
 </script>
