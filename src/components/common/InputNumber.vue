@@ -23,7 +23,7 @@
 </template>
 <script>
 export default {
-  name: 'InputText',
+  name: 'InputName',
   props: {
     disabled: {
       type: Boolean,

@@ -14,7 +14,7 @@
       <div class="bet-type">
         <p>{{ bet.type }}</p>
         <p class="future-text">{{ bet.future ? 'Future' : '' }}</p>
-        <p>{{ bet.sports.join(', ') }}</p>
+        <p class="small-text">{{ bet.sports.join(', ') }}</p>
       </div>
       <div class="bet-legs">
         <ul>
@@ -40,14 +40,20 @@
         <p>{{ bet.book }}</p>
         <p
           v-if="bet.promo"
-          class="promo-text"
+          class="bonus-promo-text"
         >
           <em>Promo used!</em>
+        </p>
+        <p
+          v-if="bet.bonus"
+          class="bonus-promo-text"
+        >
+          <em>Bonus bet used!</em>
         </p>
       </div>
       <div class="bet-wager-info">
         <p><strong>Risk</strong>: {{ bet.risk }}U</p>
-        <p><strong>Odds</strong>: {{ bet.odds }}</p>
+        <p><strong>Odds</strong>: {{ bet.odds > 0 ? '+' + bet.odds : bet.odds }}</p>
         <p v-if="!bet.settled"><strong>To win</strong>: {{ bet.payout }}U</p>
         <p v-if="bet.settled">
           <ArrowComponent :upArrow="bet.won" />
@@ -155,7 +161,7 @@ export default {
 .subject {
   justify-self: end;
 }
-.promo-text {
+.bonus-promo-text {
   font-size: 14px;
   color: var(--green);
 }
@@ -164,5 +170,8 @@ export default {
 }
 .bet-lose {
   color: var(--red);
+}
+.small-text {
+  font-size: 12px;
 }
 </style>

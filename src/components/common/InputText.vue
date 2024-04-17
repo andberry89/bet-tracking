@@ -66,4 +66,7 @@ input {
   border: none;
   height: 100%;
 }
+input:disabled {
+  background-color: var(--dark-gray);
+}
 </style>

@@ -27,11 +27,10 @@
     <InputNumber
       for="line"
       placeholder="Line"
-      step="0.5"
-      min="0"
+      step="0.25"
       :value="this.details.line"
       :disabled="disableLine"
-      :class="isValidLine ? 'valid' : 'invalid'"
+      :class="isLine ? 'valid' : 'invalid'"
       @update="updateValue(details, 'line', $event)"
     />
     <InputText
@@ -39,6 +38,7 @@
       for="prop"
       placeholder="Prop"
       class="prop-input"
+      :disabled="isSpread"
       :value="this.details.prop"
       :class="isValidProp ? 'valid' : 'invalid'"
       @update="updateValue(details, 'prop', $event)"
@@ -56,6 +56,7 @@
 import updateValue from '@/utils/updateValue'
 import { findSport } from '@/utils/handleLegs'
 import { marketOptions, overUnderOptions } from '@/utils/selectOptions'
+import { validateMarket, validateSubject, validateLine, validateProp } from '@/utils/validateLeg.js'
 
 export default {
   name: 'LegInput',
@@ -81,10 +82,16 @@ export default {
   },
   computed: {
     disableLine() {
-      return this.isOverOrUnder && this.details.over === 'Neither'
+      return this.isOverOrUnder && this.details.over === 'Other'
     },
     isOverOrUnder() {
       return this.isValidOU
+    },
+    isLine() {
+      return this.isValidLine
+    },
+    isSpread() {
+      return this.details.over === 'Spread'
     },
     isValidLeg() {
       return this.isValidMarket && this.isValidSubject && this.isValidOU && this.isValidLine && this.isValidProp
@@ -93,6 +100,10 @@ export default {
   methods: {
     findSport: findSport,
     updateValue: updateValue,
+    validateLine: validateLine,
+    validateMarket: validateMarket,
+    validateProp: validateProp,
+    validateSubject: validateSubject,
     addLeg() {
       this.$emit('update', findSport(this.details))
       this.details = {
@@ -114,59 +125,62 @@ export default {
   watch: {
     'details.market': {
       handler(val) {
-        if (val === '' || val === '--Select a Market--') {
-          this.isValidMarket = false
-        } else {
-          this.isValidMarket = true
-        }
+        this.isValidMarket = validateMarket(val)
       },
       deep: true,
     },
     'details.subject': {
       handler(val) {
-        if (val === '') {
-          this.isValidSubject = false
-        } else {
-          this.isValidSubject = true
-        }
+        this.isValidSubject = validateSubject(val)
       },
       deep: true,
     },
     'details.over': {
       handler(val) {
-        if (val === 'Neither') {
-          this.line = ''
-          this.isValidLine = true
-        }
-        if (val === '--O/U/N--' || val === '') {
-          this.isValidOU = false
-        } else {
-          this.isValidOU = true
+        this.isValidLine = false
+        this.isValidProp = false
+        this.isValidOU = false
+        let line = parseFloat(this.details.line)
+        let prop = this.details.prop
+        let over = val
+        switch (val) {
+          case 'Over':
+            this.isValidOU = true
+            this.isValidLine = validateLine(line, true, over)
+            this.isValidProp = validateProp(prop)
+            break
+          case 'Under':
+            this.isValidOU = true
+            this.isValidLine = validateLine(line, true, over)
+            this.isValidProp = validateProp(prop)
+            break
+          case 'Spread':
+            this.isValidOU = true
+            this.details.prop = ''
+            this.isValidProp = true
+            this.isValidLine = validateLine(line, true, over)
+            break
+          case 'Other':
+            this.isValidOU = true
+            this.details.line = ''
+            this.isValidLine = true
+            this.isValidProp = validateProp(prop)
+            break
+          default:
+            this.isValidOU = false
         }
       },
       deep: true,
     },
     'details.line': {
       handler(val) {
-        if (this.isOverOrUnder && val === 'Neither') {
-          this.isValidLine = true
-        } else if (this.isOverOrUnder && val <= 0) {
-          this.isValidLine = false
-        } else if (this.isOverOrUnder && val > 0) {
-          this.isValidLine = true
-        } else {
-          this.isValidLine = false
-        }
+        this.isValidLine = validateLine(val, this.isOverOrUnder, this.details.over)
       },
       deep: true,
     },
     'details.prop': {
       handler(val) {
-        if (val === '') {
-          this.isValidProp = false
-        } else {
-          this.isValidProp = true
-        }
+        this.isValidProp = validateProp(val)
       },
       deep: true,
     },
