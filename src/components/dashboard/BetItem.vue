@@ -47,10 +47,11 @@
               >
             </div>
             <div>
-              <span class="over-under">{{ getOUS(value.over) }}</span> <span class="line">{{ value.line }}</span>
+              <span class="over-under">{{ getOUS(value.over, value.line) }}</span>
+              <span class="line">{{ value.line }}</span>
             </div>
             <div>
-              <span class="prop">{{ ' ' + value.prop }}</span>
+              <span class="prop">{{ value.over === 'Spread' ? ' Spread' : ' ' + value.prop }}</span>
             </div>
           </li>
         </ul>
@@ -89,7 +90,7 @@
 <script>
 import dateFormat from 'dateformat'
 export default {
-  name: 'BetDashboard',
+  name: 'BetItem',
   data() {
     return {}
   },
@@ -111,13 +112,19 @@ export default {
     getImgUrl(path) {
       return require('@/assets/icons/' + path.toLowerCase() + '.png')
     },
-    getOUS(val) {
+    getOUS(val, line) {
       val = val.toLowerCase()
       switch (val) {
         case 'over':
           return 'o'
         case 'under':
           return 'u'
+        case 'spread':
+          if (line > 0) {
+            return '+'
+          } else {
+            return ''
+          }
         default:
           return ''
       }
