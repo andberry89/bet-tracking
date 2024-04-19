@@ -5,8 +5,6 @@
   >
     <h1>Bet Tracking for {{ contributor.name }}</h1>
     <BetInput />
-
-    [[ Bet View -- need filter ]]
   </div>
 </template>
 

@@ -47,3 +47,11 @@ export default {
   },
 }
 </script>
+<style scoped>
+svg:hover {
+  cursor: pointer;
+}
+svg:active {
+  transform: translate(0, 2px);
+}
+</style>

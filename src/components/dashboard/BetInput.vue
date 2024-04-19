@@ -113,11 +113,14 @@
       </div>
       <div class="leg-wrap">
         <h3>Legs</h3>
-        <LegInput @update="addLeg" />
+        <LegInput
+          type="add"
+          @update="addLeg"
+        />
         <LegDetails
           :legs="this.details.legs"
           v-if="this.totalLegs > 0"
-          @update="deleteLeg($event)"
+          @delete="deleteLeg($event)"
         />
       </div>
       <div
@@ -127,7 +130,6 @@
         <button @click.prevent="addBet(this.details)">Enter Bet</button>
       </div>
     </form>
-    {{ this.details }}
   </div>
 </template>
 <script>

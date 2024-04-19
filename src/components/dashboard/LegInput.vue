@@ -1,6 +1,6 @@
 <template>
   <div class="leg-input-wrap">
-    <div>Input Leg</div>
+    <div>{{ isEdit ? 'Edit' : 'Input' }} Leg</div>
     <SelectComponent
       name="sports"
       id="sport-select"
@@ -81,9 +81,19 @@ export default {
       overUnderOptions: overUnderOptions,
     }
   },
+  props: {
+    type: {
+      type: String,
+      required: false,
+      default: 'add',
+    },
+  },
   computed: {
     disableLine() {
       return this.isOverOrUnder && this.details.over === 'Other'
+    },
+    isEdit() {
+      return this.type === 'edit'
     },
     isOverOrUnder() {
       return this.isValidOU

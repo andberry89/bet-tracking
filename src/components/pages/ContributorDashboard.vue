@@ -1,6 +1,7 @@
 <template>
   <div v-if="contributor">
     <ContributorBets :contributor="contributor" />
+    <BetDashboard :bets="this.bets" />
   </div>
   <div v-else>
     <PageNotFound />
@@ -8,25 +9,32 @@
 </template>
 
 <script>
-import PageNotFound from './PageNotFound.vue'
+import BetDashboard from '@/components/dashboard/BetDashboard'
 import ContributorBets from '@/components/contributors/ContributorBets.vue'
+import PageNotFound from './PageNotFound.vue'
 import axios from 'axios'
 
 export default {
-  name: 'ContributorPage',
+  name: 'ContributorDashboard',
   data() {
     return {
       contributor: {},
+      bets: [],
     }
   },
   async created() {
-    const response = await axios.get(`/api/contributors/${this.$route.params.contributorId}`)
-    const data = response.data
-    this.contributor = data
+    const contributorId = this.$route.params.contributorId
+    const betResponse = await axios.get(`/api/dashboard/${contributorId}`)
+    const contributorResponse = await axios.get(`/api/contributors/${contributorId}`)
+    const bets = betResponse.data
+    const contributor = contributorResponse.data
+    this.contributor = contributor
+    this.bets = bets
   },
   components: {
-    PageNotFound,
+    BetDashboard,
     ContributorBets,
+    PageNotFound,
   },
 }
 </script>

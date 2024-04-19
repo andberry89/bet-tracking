@@ -17,7 +17,7 @@
           width="35px"
           type="minus"
           class="delete-btn"
-          @click="$emit('update', index)"
+          @click="$emit('delete', index)"
         />
       </div>
     </div>
