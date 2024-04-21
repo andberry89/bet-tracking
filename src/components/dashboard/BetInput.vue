@@ -129,6 +129,18 @@
       >
         <button @click.prevent="addBet(this.details)">Enter Bet</button>
       </div>
+      <p
+        v-if="betMsg !== ''"
+        class="betMsg"
+      >
+        {{ this.betMsg }}
+      </p>
+      <p
+        v-if="errMsg !== ''"
+        class="errMsg"
+      >
+        {{ this.errMsg }}
+      </p>
     </form>
   </div>
 </template>
@@ -195,6 +207,8 @@ export default {
         payout: false,
         book: false,
       },
+      betMsg: '',
+      errMsg: '',
       bookOptions: bookOptions,
       yesNoOptions: ['Yes', 'No'],
     }
@@ -258,10 +272,54 @@ export default {
     async addBet(details) {
       details.type = this.betType
       const formattedBet = formatBet(details)
-      await axios.post(`/api/dashboard/${this.details.contributorId}`, formattedBet)
+      await axios
+        .post(`/api/dashboard/${this.details.contributorId}`, formattedBet)
+        .then(res => {
+          if (res.status === 201) {
+            this.betMsg = 'Bet successfully entered!'
+          }
+        })
+        .catch(err => {
+          let errMsg = 'Error: '
+          if (err.response) {
+            // The request was made and the server responded with a status code
+            // that falls out of the range of 2xx
+            console.log(err.response.data)
+            console.log(err.response.status)
+            errMsg += err.response.data._message
+          } else if (err.request) {
+            // The request was made but no response was received
+            console.log(err.request)
+            errMsg = 'Hooked by the server. Check your internet connection and try again'
+          } else {
+            // Something happened in setting up the request that triggered an Error
+            errMsg += err.message + ' Contact the administrator if problem continues.'
+            console.log('Error', err.message)
+          }
+          console.log(err.config)
+          this.errMsg = errMsg
+        })
+
+      this.resetDetails()
+      /**
+       * TODO - Get response status to set a message on whether the bat was added or not!
+       */
     },
     deleteLeg(idx) {
       this.details.legs.splice(idx, 1)
+    },
+    resetDetails() {
+      this.details.date = ''
+      this.details.risk = ''
+      this.details.odds = ''
+      this.details.payout = ''
+      this.details.settled = 'No'
+      this.details.won = 'No'
+      this.details.book = ''
+      this.details.future = 'No'
+      this.details.bonus = 'No'
+      this.details.promo = 'No'
+      this.details.legs = []
     },
   },
   watch: {
@@ -322,6 +380,12 @@ export default {
         }
       },
     },
+    isValidBet(val) {
+      if (val === true) {
+        this.betMsg = ''
+        this.errMsg = ''
+      }
+    },
   },
   async created() {
     const id = this.$route.params.contributorId
@@ -372,5 +436,16 @@ form {
 }
 .invalid {
   border: 3px solid var(--red);
+}
+.betMsg,
+.errMsg {
+  font-weight: 700;
+  font-size: 18px;
+}
+.betMsg {
+  color: var(--green);
+}
+.errMsg {
+  color: var(--red);
 }
 </style>

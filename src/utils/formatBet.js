@@ -1,32 +1,37 @@
 import { filterSports } from './handleLegs'
 
 const formatBet = details => {
-  console.log(details)
-  for (let i = 0; i < details.legs.length; i++) {
-    const over = details.legs[i].over
-    const line = details.legs[i].line
-    if (over === 'Other ') {
-      details.legs[i].over === ''
+  let newDetails = details
+  let len = newDetails.legs.length
+
+  for (let i = 0; i < len; i++) {
+    let over = newDetails.legs[i].over
+    let line = newDetails.legs[i].line
+    if (over === 'Other') {
+      newDetails.legs[i].over = ''
+    } else if (over === 'Moneyline') {
+      newDetails.legs[i].over = ''
+      newDetails.legs[i].prop = 'Moneyline'
     }
-    details.legs[i].line = parseFloat(line)
+    newDetails.legs[i].line = parseFloat(line)
   }
 
   const formattedDetails = {
-    contributor: details.contributorId,
-    imageUrl: details.imageUrl,
-    date: details.date,
-    risk: parseFloat(details.risk),
-    odds: parseInt(details.odds, 10),
-    payout: parseFloat(details.payout),
-    settled: details.settled.toLowerCase() === 'yes',
-    won: details.won.toLowerCase() === 'yes',
-    sports: filterSports(details.legs),
-    future: details.future.toLowerCase() === 'yes',
-    book: details.book,
-    promo: details.promo.toLowerCase() === 'yes',
-    bonus: details.bonus.toLowerCase() === 'yes',
-    type: details.type,
-    legs: details.legs,
+    contributor: newDetails.contributorId,
+    imageUrl: newDetails.imageUrl,
+    date: newDetails.date,
+    risk: parseFloat(newDetails.risk),
+    odds: parseInt(newDetails.odds, 10),
+    payout: parseFloat(newDetails.payout),
+    settled: newDetails.settled.toLowerCase() === 'yes',
+    won: newDetails.won.toLowerCase() === 'yes',
+    sports: filterSports(newDetails.legs),
+    future: newDetails.future.toLowerCase() === 'yes',
+    book: newDetails.book,
+    promo: newDetails.promo.toLowerCase() === 'yes',
+    bonus: newDetails.bonus.toLowerCase() === 'yes',
+    type: newDetails.type,
+    legs: newDetails.legs,
   }
 
   return formattedDetails

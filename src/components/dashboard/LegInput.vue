@@ -38,7 +38,7 @@
       for="prop"
       placeholder="Prop"
       class="prop-input"
-      :disabled="isSpread"
+      :disabled="isSpreadOrMoneyline"
       :value="this.details.prop"
       :class="isValidProp ? 'valid' : 'invalid'"
       @update="updateValue(details, 'prop', $event)"
@@ -90,7 +90,7 @@ export default {
   },
   computed: {
     disableLine() {
-      return this.isOverOrUnder && this.details.over === 'Other'
+      return this.isOverOrUnder && (this.details.over === 'Other' || this.details.over === 'Moneyline')
     },
     isEdit() {
       return this.type === 'edit'
@@ -101,8 +101,8 @@ export default {
     isLine() {
       return this.isValidLine
     },
-    isSpread() {
-      return this.details.over === 'Spread'
+    isSpreadOrMoneyline() {
+      return this.details.over === 'Spread' || this.details.over === 'Moneyline'
     },
     isValidLeg() {
       return this.isValidMarket && this.isValidSubject && this.isValidOU && this.isValidLine && this.isValidProp
@@ -170,6 +170,13 @@ export default {
             this.details.prop = ''
             this.isValidProp = true
             this.isValidLine = validateLine(line, true, over)
+            break
+          case 'Moneyline':
+            this.isValidOU = true
+            this.details.prop = ''
+            this.isValidProp = true
+            this.details.line = ''
+            this.isValidLine = true
             break
           case 'Other':
             this.isValidOU = true

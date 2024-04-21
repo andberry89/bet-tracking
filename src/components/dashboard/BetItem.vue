@@ -17,8 +17,8 @@
       <div class="bet-type">
         <p>{{ bet.type }}</p>
         <p class="future-text">{{ bet.future ? 'Future' : '' }}</p>
-        <div>
-          <ul class="icon-wrap">
+        <div class="icon-wrap">
+          <ul>
             <li
               v-for="(sport, i) in bet.sports"
               :key="sport"
@@ -176,7 +176,6 @@ export default {
   text-align: center;
 }
 .bet-type,
-.bet-legs,
 .bet-info,
 .bet-wager-info {
   justify-self: start;
@@ -212,12 +211,15 @@ export default {
   font-size: 12px;
 }
 .icon-wrap {
+  height: 35px;
+}
+.icon-wrap ul {
   list-style-type: none;
   position: relative;
-  padding: 0 0 20px;
   margin: 0;
 }
 .sport-icon {
   position: absolute;
+  padding: 0;
 }
 </style>
