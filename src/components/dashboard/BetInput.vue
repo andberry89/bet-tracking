@@ -142,10 +142,7 @@
         {{ this.errMsg }}
       </p>
     </form>
-    <BetDashboard
-      :bets="this.bets"
-      :key="componentKey"
-    />
+    <BetDashboard :bets="this.bets" />
   </div>
 </template>
 <script>
@@ -191,7 +188,6 @@ export default {
   data() {
     return {
       bets: [],
-      componentKey: 0,
       details: {
         contributorId: '',
         imageUrl: '',
@@ -288,7 +284,6 @@ export default {
         })
         .then(this.bets.push(formattedBet))
         .then((this.bets = sortBets(this.bets)))
-        .then(this.componentKey++)
         .catch(err => {
           let errMsg = 'Error: '
           if (err.response) {
@@ -311,9 +306,6 @@ export default {
         })
 
       this.resetDetails()
-      /**
-       * TODO - Get response status to set a message on whether the bat was added or not!
-       */
     },
     deleteLeg(idx) {
       this.details.legs.splice(idx, 1)
@@ -323,12 +315,12 @@ export default {
       this.details.risk = ''
       this.details.odds = ''
       this.details.payout = ''
-      this.details.settled = 'No'
-      this.details.won = 'No'
+      document.getElementById('bet-settled-No').checked = true
+      document.getElementById('bet-won-No').checked = true
       document.getElementById('book-select').selectedIndex = 0
-      this.details.future = 'No'
-      this.details.bonus = 'No'
-      this.details.promo = 'No'
+      document.getElementById('future-bet-No').checked = true
+      document.getElementById('bonus-bet-used-No').checked = true
+      document.getElementById('promo-used-No').checked = true
       this.details.legs = []
     },
   },
