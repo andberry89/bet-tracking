@@ -1,6 +1,10 @@
 <template>
-  <div v-if="contributor">
-    <ContributorBets :contributor="contributor" />
+  <div
+    v-if="contributor"
+    class="wrap"
+  >
+    <h1>Bet Tracking for {{ contributor.name }}</h1>
+    <BetInput />
     <BetDashboard />
   </div>
   <div v-else>
@@ -10,7 +14,7 @@
 
 <script>
 import BetDashboard from '@/components/dashboard/BetDashboard'
-import ContributorBets from '@/components/contributors/ContributorBets.vue'
+import BetInput from '@/components/dashboard/BetInput.vue'
 import PageNotFound from './PageNotFound.vue'
 import axios from 'axios'
 
@@ -29,7 +33,7 @@ export default {
   },
   components: {
     BetDashboard,
-    ContributorBets,
+    BetInput,
     PageNotFound,
   },
 }

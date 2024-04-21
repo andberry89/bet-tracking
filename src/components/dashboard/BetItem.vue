@@ -23,11 +23,11 @@
               v-for="(sport, i) in bet.sports"
               :key="sport"
               class="sport-icon"
-              :style="{ left: `${i * 18}px` }"
+              :style="{ left: `${i * 13}px` }"
             >
               <img
-                width="30"
-                height="30"
+                width="25"
+                height="25"
                 :src="getImgUrl(sport)"
                 :alt="sport"
               />
@@ -211,7 +211,7 @@ export default {
   font-size: 12px;
 }
 .icon-wrap {
-  height: 35px;
+  height: 30px;
 }
 .icon-wrap ul {
   list-style-type: none;

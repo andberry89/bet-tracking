@@ -4,7 +4,7 @@
     <form>
       <div class="bet-info-input">
         <InputDate
-          name="date"
+          name="bet-date"
           label="Date"
           class="bet-input-field"
           :class="flags.date ? 'valid' : 'invalid'"
@@ -217,9 +217,6 @@ export default {
     LegDetails,
     LegInput,
   },
-  props: {
-    contributor: String,
-  },
   computed: {
     betType() {
       if (this.totalLegs < 1) {
@@ -309,13 +306,13 @@ export default {
       this.details.legs.splice(idx, 1)
     },
     resetDetails() {
-      this.details.date = ''
+      document.getElementById('bet-date').value = ''
       this.details.risk = ''
       this.details.odds = ''
       this.details.payout = ''
       this.details.settled = 'No'
       this.details.won = 'No'
-      this.details.book = ''
+      document.getElementById('book-select').selectedIndex = 0
       this.details.future = 'No'
       this.details.bonus = 'No'
       this.details.promo = 'No'
