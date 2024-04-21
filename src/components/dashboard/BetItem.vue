@@ -1,6 +1,6 @@
 <template>
-  <!-- TODO BUILD A FILTER COMPONENT -->
   <div class="bet-wrap">
+    <!-- TODO BUILD A FILTER COMPONENT -->
     <div
       class="bet-item"
       :class="borderStyle(bet)"
@@ -11,8 +11,8 @@
         :src="bet.imageUrl"
       />
       <span class="date"
-        >{{ dateFormat(bet.date, 'mmm dd') }}<br />
-        {{ dateFormat(bet.date, 'yyyy') }}</span
+        >{{ dateFormat(bet.date, 'UTC:mmm dd') }},<br />
+        {{ dateFormat(bet.date, 'UTC:yyyy') }}</span
       >
       <div class="bet-type">
         <p>{{ bet.type }}</p>

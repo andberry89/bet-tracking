@@ -17,7 +17,7 @@ export const validateSubject = val => {
 export const validateLine = (line, isOU, over) => {
   if (isOU && over === 'Other') {
     return true
-  } else if (isOU && over === 'Spread' && line > 0) {
+  } else if (isOU && over === 'Spread' && line !== 0) {
     return true
   } else if (isOU && over !== 'Spread' && line <= 0) {
     return false

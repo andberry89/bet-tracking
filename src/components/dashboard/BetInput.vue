@@ -142,16 +142,22 @@
         {{ this.errMsg }}
       </p>
     </form>
+    <BetDashboard
+      :bets="this.bets"
+      :key="componentKey"
+    />
   </div>
 </template>
 <script>
 import axios from 'axios'
+import BetDashboard from '@/components/dashboard/BetDashboard.vue'
 import LegInput from '@/components/dashboard/LegInput.vue'
 import LegDetails from '@/components/dashboard/LegDetails.vue'
 import { bookOptions } from '@/utils/selectOptions'
 import calcPayout from '@/utils/calcPayout'
 import updateValue from '@/utils/updateValue'
 import formatBet from '@/utils/formatBet'
+import sortBets from '@/utils/sortBets'
 
 const testData = [
   {
@@ -184,6 +190,8 @@ export default {
   name: 'BetInput',
   data() {
     return {
+      bets: [],
+      componentKey: 0,
       details: {
         contributorId: '',
         imageUrl: '',
@@ -214,6 +222,7 @@ export default {
     }
   },
   components: {
+    BetDashboard,
     LegDetails,
     LegInput,
   },
@@ -262,6 +271,7 @@ export default {
   methods: {
     calcPayout: calcPayout,
     formatBet: formatBet,
+    sortBets: sortBets,
     updateValue: updateValue,
     addLeg(event) {
       this.details.legs.push(event)
@@ -276,6 +286,9 @@ export default {
             this.betMsg = 'Bet successfully entered!'
           }
         })
+        .then(this.bets.push(formattedBet))
+        .then((this.bets = sortBets(this.bets)))
+        .then(this.componentKey++)
         .catch(err => {
           let errMsg = 'Error: '
           if (err.response) {
@@ -386,10 +399,14 @@ export default {
   },
   async created() {
     const id = this.$route.params.contributorId
-    const response = await axios.get(`/api/contributors/${id}`)
-    const data = response.data
+    const conRes = await axios.get(`/api/contributors/${id}`)
+    const conData = conRes.data
+    const betRes = await axios.get(`/api/dashboard/${id}`)
+    let bets = betRes.data
     this.details.contributorId = id
-    this.details.imageUrl = data.imageUrl
+    this.details.imageUrl = conData.imageUrl
+    bets = sortBets(bets)
+    this.bets = bets
   },
 }
 </script>

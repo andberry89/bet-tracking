@@ -9,11 +9,14 @@ const formatBet = details => {
     let line = newDetails.legs[i].line
     if (over === 'Other') {
       newDetails.legs[i].over = ''
+      newDetails.legs[i].line = null
     } else if (over === 'Moneyline') {
       newDetails.legs[i].over = ''
       newDetails.legs[i].prop = 'Moneyline'
+      newDetails.legs[i].line = null
+    } else {
+      newDetails.legs[i].line = parseFloat(line)
     }
-    newDetails.legs[i].line = parseFloat(line)
   }
 
   const formattedDetails = {
