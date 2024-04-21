@@ -315,6 +315,12 @@ export default {
       this.details.risk = ''
       this.details.odds = ''
       this.details.payout = ''
+      this.details.settled = 'No'
+      this.details.won = 'No'
+      document.getElementById('book-select').selectedIndex = 0
+      this.details.future = 'No'
+      this.details.bonus = 'No'
+      this.details.promo = 'No'
       document.getElementById('bet-settled-No').checked = true
       document.getElementById('bet-won-No').checked = true
       document.getElementById('book-select').selectedIndex = 0
