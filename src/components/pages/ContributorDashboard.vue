@@ -1,7 +1,7 @@
 <template>
   <div v-if="contributor">
     <ContributorBets :contributor="contributor" />
-    <BetDashboard :bets="this.bets" />
+    <BetDashboard />
   </div>
   <div v-else>
     <PageNotFound />
@@ -19,17 +19,13 @@ export default {
   data() {
     return {
       contributor: {},
-      bets: [],
     }
   },
   async created() {
     const contributorId = this.$route.params.contributorId
-    const betResponse = await axios.get(`/api/dashboard/${contributorId}`)
     const contributorResponse = await axios.get(`/api/contributors/${contributorId}`)
-    const bets = betResponse.data
     const contributor = contributorResponse.data
     this.contributor = contributor
-    this.bets = bets
   },
   components: {
     BetDashboard,

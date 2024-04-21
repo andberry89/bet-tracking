@@ -9,12 +9,23 @@
   </div>
 </template>
 <script>
+import axios from 'axios'
 import BetItem from '@/components/dashboard/BetItem.vue'
 export default {
   name: 'BetDashboard',
+  data() {
+    return {
+      bets: [],
+    }
+  },
   components: {
     BetItem,
   },
-  props: ['bets'],
+  async created() {
+    const contributorId = this.$route.params.contributorId
+    const betResponse = await axios.get(`/api/dashboard/${contributorId}`)
+    const bets = betResponse.data
+    this.bets = bets
+  },
 }
 </script>
