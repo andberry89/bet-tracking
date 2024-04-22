@@ -3,6 +3,25 @@
   font-family: Manrope;
 }
 
+/* Chrome, Edge and Safari */
+*::-webkit-scrollbar {
+  height: 10px;
+  width: 10px;
+}
+*::-webkit-scrollbar-track {
+  border-radius: 5px;
+  background-color: #767676;
+}
+
+*::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  background-color: #15c63c;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background-color: #0e8027;
+}
+
 :root {
   --green: #15c63c;
   --dark-gray: #131313;
@@ -12,11 +31,10 @@
   --white: #fffdfa;
   --black: #000;
 }
-
 .page-wrap {
   margin: auto;
-  max-width: 1100px;
-  min-height: 100vh;
+  max-width: 1400px;
+  min-height: 60vh;
 }
 
 body {
@@ -25,6 +43,9 @@ body {
 }
 
 button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   background-color: var(--dark-gray);
   border: 1px solid var(--green);
   border-radius: 8px;

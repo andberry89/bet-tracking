@@ -142,6 +142,7 @@
         {{ this.errMsg }}
       </p>
     </form>
+    <hr />
     <BetDashboard :bets="this.bets" />
   </div>
 </template>
@@ -156,32 +157,32 @@ import updateValue from '@/utils/updateValue'
 import formatBet from '@/utils/formatBet'
 import sortBets from '@/utils/sortBets'
 
-const testData = [
-  {
-    market: 'MLB',
-    subject: 'St. Louis Cardinals',
-    over: 'Over',
-    line: '6.5',
-    prop: 'Runs',
-    sport: 'Baseball',
-  },
-  {
-    market: 'NBA',
-    subject: 'Joker',
-    over: 'Over',
-    line: '11.5',
-    prop: 'Rebounds',
-    sport: 'Basketball',
-  },
-  {
-    market: 'NBA',
-    subject: 'LeBron James',
-    over: 'Under',
-    line: '5.5',
-    prop: 'Rebounds',
-    sport: 'Basketball',
-  },
-]
+// const testData = [
+//   {
+//     market: 'MLB',
+//     subject: 'St. Louis Cardinals',
+//     over: 'Over',
+//     line: '6.5',
+//     prop: 'Runs',
+//     sport: 'Baseball',
+//   },
+//   {
+//     market: 'NBA',
+//     subject: 'Joker',
+//     over: 'Over',
+//     line: '11.5',
+//     prop: 'Rebounds',
+//     sport: 'Basketball',
+//   },
+//   {
+//     market: 'NBA',
+//     subject: 'LeBron James',
+//     over: 'Under',
+//     line: '5.5',
+//     prop: 'Rebounds',
+//     sport: 'Basketball',
+//   },
+// ]
 
 export default {
   name: 'BetInput',
@@ -202,7 +203,7 @@ export default {
         bonus: 'No',
         type: '',
         promo: 'No',
-        legs: testData,
+        legs: [],
       },
       flags: {
         date: false,
@@ -409,6 +410,9 @@ export default {
 }
 </script>
 <style>
+hr {
+  margin: 20px 0;
+}
 .bet-input {
   text-align: center;
 }

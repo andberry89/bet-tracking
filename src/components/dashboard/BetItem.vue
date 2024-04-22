@@ -1,6 +1,5 @@
 <template>
   <div class="bet-wrap">
-    <!-- TODO BUILD A FILTER COMPONENT -->
     <div
       class="bet-item"
       :class="borderStyle(bet)"
@@ -141,7 +140,7 @@ export default {
   background-color: #131313;
   color: #fff;
   width: 95%;
-  margin: 5px auto;
+  margin: 0 auto 5px;
   border-radius: 8px;
   padding: 5px;
   font-size: 16px;

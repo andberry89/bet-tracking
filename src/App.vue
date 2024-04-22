@@ -1,7 +1,9 @@
 <template>
-  <NavBar />
-  <div class="page-wrap">
-    <router-view></router-view>
+  <div class="container">
+    <NavBar class="nav-bar" />
+    <div class="page-wrap">
+      <router-view></router-view>
+    </div>
   </div>
 </template>
 

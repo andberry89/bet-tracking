@@ -1,6 +1,16 @@
 <template>
-  <div v-if="contributor">
-    <ContributorDetails :contributor="contributor" />
+  <div
+    class="contributor-page-wrap"
+    v-if="contributor"
+  >
+    <ContributorDetails
+      class="contributor-details"
+      :contributor="contributor"
+    />
+    <BetDashboard
+      class="bet-dashboard"
+      :bets="bets"
+    />
   </div>
   <div v-else>
     <PageNotFound />
@@ -8,28 +18,46 @@
 </template>
 
 <script>
-import PageNotFound from './PageNotFound.vue'
+import BetDashboard from '@/components/dashboard/BetDashboard.vue'
 import ContributorDetails from '@/components/contributors/ContributorDetails.vue'
+import PageNotFound from './PageNotFound.vue'
 import axios from 'axios'
+import sortBets from '@/utils/sortBets'
 
 export default {
   name: 'ContributorPage',
   data() {
     return {
+      bets: [],
       contributor: {
         type: Object,
         default: null,
       },
     }
   },
-  async created() {
-    const response = await axios.get(`/api/contributors/${this.$route.params.contributorId}`)
-    const data = response.data
-    this.contributor = data
-  },
   components: {
-    PageNotFound,
+    BetDashboard,
     ContributorDetails,
+    PageNotFound,
+  },
+  methods: {
+    sortBets: sortBets,
+  },
+  async created() {
+    const id = this.$route.params.contributorId
+    const conRes = await axios.get(`/api/contributors/${id}`)
+    const conData = conRes.data
+    this.contributor = conData
+    const betRes = await axios.get(`/api/dashboard/${id}`)
+    let bets = betRes.data
+    bets = sortBets(bets)
+    this.bets = bets
   },
 }
 </script>
+<style scoped>
+.bet-dashboard {
+  max-height: 70vh;
+  overflow-y: auto;
+}
+</style>
