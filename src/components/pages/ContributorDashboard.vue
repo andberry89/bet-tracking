@@ -4,7 +4,7 @@
     class="wrap"
   >
     <div class="header">
-      <h1>Bet Tracking for {{ contributor.name }}</h1>
+      <h1>{{ contributor.name }} -- Dashboard</h1>
       <div class="view-btns">
         <button
           :class="view === 'input' ? 'active' : ''"
@@ -26,7 +26,14 @@
         </button>
       </div>
     </div>
-    <BetInput />
+    <BetInput
+      v-if="view === 'input'"
+      @update="addBet($event)"
+    />
+    <BetDashboard
+      v-if="view === 'view'"
+      :bets="this.bets"
+    />
   </div>
   <div v-else>
     <PageNotFound />
@@ -34,23 +41,32 @@
 </template>
 
 <script>
+import BetDashboard from '@/components/dashboard/BetDashboard.vue'
 import BetInput from '@/components/dashboard/BetInput.vue'
 import PageNotFound from './PageNotFound.vue'
 import axios from 'axios'
+import sortBets from '@/utils/sortBets'
 
 export default {
   name: 'ContributorDashboard',
   data() {
     return {
+      bets: [],
       contributor: {},
       view: 'input',
     }
   },
   components: {
+    BetDashboard,
     BetInput,
     PageNotFound,
   },
   methods: {
+    sortBets: sortBets,
+    addBet(newBet) {
+      this.bets.push(newBet)
+      this.bets = sortBets(this.bets)
+    },
     updateView(view) {
       this.view = view
     },
@@ -60,6 +76,10 @@ export default {
     const contributorResponse = await axios.get(`/api/contributors/${contributorId}`)
     const contributor = contributorResponse.data
     this.contributor = contributor
+    const betRes = await axios.get(`/api/dashboard/${contributorId}`)
+    let bets = betRes.data
+    bets = sortBets(bets)
+    this.bets = bets
   },
 }
 </script>

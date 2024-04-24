@@ -1,12 +1,15 @@
 <template>
-  <div class="bet-dashboard-wrap">
-    <BetFilter @update="filterBets($event)" />
-    <div class="bet-wrap">
-      <BetItem
-        v-for="bet in filteredBets"
-        :key="bet._id"
-        :bet="bet"
-      />
+  <div>
+    <h2>View Bets</h2>
+    <div class="bet-dashboard-wrap">
+      <BetFilter @update="filterBets($event)" />
+      <div class="bet-wrap">
+        <BetItem
+          v-for="bet in filteredBets"
+          :key="bet._id"
+          :bet="bet"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -71,5 +74,8 @@ export default {
   display: grid;
   grid-template-columns: auto 1fr;
   gap: 5px;
+}
+h2 {
+  text-align: center;
 }
 </style>

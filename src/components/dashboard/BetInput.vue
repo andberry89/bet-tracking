@@ -1,7 +1,7 @@
 <template>
   <div class="bet-input">
     <h2>Input Bet</h2>
-    <form>
+    <div class="form">
       <div class="bet-info-input">
         <InputDate
           name="bet-date"
@@ -129,26 +129,28 @@
       >
         <button @click.prevent="addBet(this.details)">Enter Bet</button>
       </div>
-      <p
+      <div
         v-if="betMsg !== ''"
-        class="betMsg"
+        class="successfulBet"
       >
-        {{ this.betMsg }}
-      </p>
+        <p class="betMsg">
+          {{ this.betMsg }}
+          <BetItem :bet="bet" />
+        </p>
+      </div>
       <p
         v-if="errMsg !== ''"
         class="errMsg"
       >
         {{ this.errMsg }}
       </p>
-    </form>
+    </div>
     <hr />
-    <BetDashboard :bets="this.bets" />
   </div>
 </template>
 <script>
 import axios from 'axios'
-import BetDashboard from '@/components/dashboard/BetDashboard.vue'
+import BetItem from '@/components/dashboard/BetItem.vue'
 import LegInput from '@/components/dashboard/LegInput.vue'
 import LegDetails from '@/components/dashboard/LegDetails.vue'
 import { bookOptions } from '@/utils/selectOptions'
@@ -157,38 +159,11 @@ import updateValue from '@/utils/updateValue'
 import formatBet from '@/utils/formatBet'
 import sortBets from '@/utils/sortBets'
 
-// const testData = [
-//   {
-//     market: 'MLB',
-//     subject: 'St. Louis Cardinals',
-//     over: 'Over',
-//     line: '6.5',
-//     prop: 'Runs',
-//     sport: 'Baseball',
-//   },
-//   {
-//     market: 'NBA',
-//     subject: 'Joker',
-//     over: 'Over',
-//     line: '11.5',
-//     prop: 'Rebounds',
-//     sport: 'Basketball',
-//   },
-//   {
-//     market: 'NBA',
-//     subject: 'LeBron James',
-//     over: 'Under',
-//     line: '5.5',
-//     prop: 'Rebounds',
-//     sport: 'Basketball',
-//   },
-// ]
-
 export default {
   name: 'BetInput',
   data() {
     return {
-      bets: [],
+      bet: {},
       details: {
         contributorId: '',
         imageUrl: '',
@@ -219,7 +194,7 @@ export default {
     }
   },
   components: {
-    BetDashboard,
+    BetItem,
     LegDetails,
     LegInput,
   },
@@ -283,8 +258,8 @@ export default {
             this.betMsg = 'Bet successfully entered!'
           }
         })
-        .then(this.bets.push(formattedBet))
-        .then((this.bets = sortBets(this.bets)))
+        .then(this.$emit('update', formattedBet))
+        .then((this.bet = formattedBet))
         .catch(err => {
           let errMsg = 'Error: '
           if (err.response) {
@@ -400,12 +375,8 @@ export default {
     const id = this.$route.params.contributorId
     const conRes = await axios.get(`/api/contributors/${id}`)
     const conData = conRes.data
-    const betRes = await axios.get(`/api/dashboard/${id}`)
-    let bets = betRes.data
     this.details.contributorId = id
     this.details.imageUrl = conData.imageUrl
-    bets = sortBets(bets)
-    this.bets = bets
   },
 }
 </script>
@@ -416,7 +387,7 @@ hr {
 .bet-input {
   text-align: center;
 }
-form {
+.form {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -457,6 +428,9 @@ form {
 .errMsg {
   font-weight: 700;
   font-size: 18px;
+}
+.successfulBet {
+  width: 100%;
 }
 .betMsg {
   color: var(--green);
