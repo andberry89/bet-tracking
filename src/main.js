@@ -21,6 +21,7 @@ import {
  */
 import {
   ArrowComponent,
+  CheckboxInput,
   InputDate,
   InputNumber,
   InputText,
@@ -35,6 +36,7 @@ import {
 const app = createApp(App)
 
 app.component('ArrowComponent', ArrowComponent)
+app.component('CheckboxInput', CheckboxInput)
 app.component('InputDate', InputDate)
 app.component('InputNumber', InputNumber)
 app.component('InputText', InputText)

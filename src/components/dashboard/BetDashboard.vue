@@ -21,6 +21,7 @@ export default {
   data() {
     return {
       filter: '',
+      filterOptions: [],
     }
   },
   components: {
@@ -30,30 +31,47 @@ export default {
   props: ['bets'],
   computed: {
     filteredBets() {
+      let filteredBets = this.bets
+
       switch (this.filter) {
         case 'all':
-          return this.bets
+          filteredBets = this.bets
+          break
+        case 'open':
+          filteredBets = this.bets.filter(bet => bet.settled === false)
+          break
         case 'settled':
-          return this.bets.filter(bet => bet.settled === true)
+          filteredBets = this.bets.filter(bet => bet.settled === true)
+          break
         case 'won':
-          return this.bets.filter(bet => bet.settled === true && bet.won === true)
+          filteredBets = this.bets.filter(bet => bet.settled === true && bet.won === true)
+          break
         case 'lost':
-          return this.bets.filter(bet => bet.settled === true && bet.won === false)
+          filteredBets = this.bets.filter(bet => bet.settled === true && bet.won === false)
+          break
         default:
-          return this.bets
+          filteredBets = this.bets
+          break
       }
+
+      this.filterOptions.forEach(option => {
+        filteredBets = filteredBets.filter(bet => bet[option] === true)
+      })
+
+      return filteredBets
     },
   },
   methods: {
-    filterBets(filter) {
+    filterBets({ filter, filterOptions }) {
       this.filter = filter
+      this.filterOptions = filterOptions
     },
   },
 }
 </script>
 <style scoped>
 .bet-dashboard-wrap {
-  display: flex;
-  flex-flow: row nowrap;
+  display: grid;
+  grid-template-columns: auto 1fr;
 }
 </style>

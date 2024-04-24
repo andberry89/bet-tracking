@@ -79,6 +79,20 @@ h3 {
   font: 400 20px/1.1 'Russo One', sans-serif;
 }
 
+input[type='checkbox'] {
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: var(--white);
+  margin: 0;
+  font: inherit;
+  color: currentColor;
+  width: 1.15em;
+  height: 1.15em;
+  border: 0.15em solid currentColor;
+  border-radius: 0.15em;
+  transform: translateY(-0.075em);
+}
+
 .add-to-cart {
   width: 100%;
   margin-top: 16px;

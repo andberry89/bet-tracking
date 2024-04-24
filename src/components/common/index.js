@@ -1,4 +1,5 @@
 import ArrowComponent from './ArrowComponent.vue'
+import CheckboxInput from './CheckboxInput.vue'
 import InputDate from './InputDate.vue'
 import InputNumber from './InputNumber.vue'
 import InputText from './InputText.vue'
@@ -11,6 +12,7 @@ import SVGPlusMinus from './SVGPlusMinus.vue'
 
 export {
   ArrowComponent,
+  CheckboxInput,
   InputDate,
   InputNumber,
   InputText,

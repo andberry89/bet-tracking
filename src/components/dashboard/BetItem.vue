@@ -139,7 +139,6 @@ export default {
   place-items: center;
   background-color: #131313;
   color: #fff;
-  width: 95%;
   margin: 0 auto 5px;
   border-radius: 8px;
   padding: 5px;

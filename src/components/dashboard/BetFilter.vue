@@ -9,6 +9,12 @@
         All
       </button>
       <button
+        :class="activeBtn === 'open' ? 'active' : ''"
+        @click="filterBets('open')"
+      >
+        Open
+      </button>
+      <button
         :class="activeBtn === 'settled' ? 'active' : ''"
         @click="filterBets('settled')"
       >
@@ -26,6 +32,27 @@
       >
         Lost
       </button>
+      <hr />
+      <div class="checkbox-filters">
+        <CheckboxInput
+          id="filter-future-bet"
+          value="filter"
+          @update="updateFilter('future', $event)"
+          >Future Bets</CheckboxInput
+        >
+        <CheckboxInput
+          id="filter-promos-used"
+          value="promo"
+          @update="updateFilter('promo', $event)"
+          >Promos Used</CheckboxInput
+        >
+        <CheckboxInput
+          id="filter-bonus-bets"
+          value="bonus"
+          @update="updateFilter('bonus', $event)"
+          >Bonus Bets</CheckboxInput
+        >
+      </div>
     </div>
   </div>
 </template>
@@ -35,12 +62,22 @@ export default {
   data() {
     return {
       activeBtn: 'all',
+      filterOptions: [],
     }
   },
   methods: {
     filterBets(filter) {
       this.activeBtn = filter
-      this.$emit('update', filter)
+      const filterOptions = this.filterOptions
+      this.$emit('update', { filter, filterOptions })
+    },
+    updateFilter(key, e) {
+      if (e) {
+        this.filterOptions.push(key)
+      } else {
+        this.filterOptions = this.filterOptions.filter(o => o !== key)
+      }
+      this.filterBets(this.activeBtn)
     },
   },
 }
@@ -56,6 +93,10 @@ export default {
 }
 .filter-wrap h3 {
   letter-spacing: 0.125rem;
+}
+hr {
+  width: 80%;
+  border-color: var(--green);
 }
 .main-filters {
   display: flex;
