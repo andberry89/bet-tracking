@@ -1,7 +1,7 @@
 <template>
   <div class="nav-bar">
     <div class="logo">
-      <h1>Bet Tracking</h1>
+      <h1>Parlay Science Discord Bet Tracking</h1>
       <!-- if a logo goes here use .logo-wrap -->
     </div>
     <div class="links">

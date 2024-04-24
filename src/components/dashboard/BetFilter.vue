@@ -87,9 +87,10 @@ export default {
   border: 3px solid var(--green);
   border-radius: 8px;
   min-width: 200px;
-  height: 60vh;
+  max-height: 50vh;
   text-align: center;
   font: 400 14px/1.2 'Russo One', 'Verdana', sans-serif;
+  padding-bottom: 30px;
 }
 .filter-wrap h3 {
   letter-spacing: 0.125rem;
@@ -109,6 +110,6 @@ hr {
   height: 40px;
 }
 .main-filters button.active {
-  background-color: var(--green);
+  background-color: var(--translucent-green);
 }
 </style>

@@ -24,6 +24,7 @@
 
 :root {
   --green: #15c63c;
+  --translucent-green: rgba(21, 198, 60, 0.7);
   --dark-gray: #131313;
   --light-gray: #aaa;
   --red: #cc0000;
@@ -64,7 +65,6 @@ button:hover {
 }
 
 h1 {
-  border-bottom: 1px solid black;
   margin: 0;
   margin: 16px 0 0;
   padding: 16px 0;

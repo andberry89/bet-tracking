@@ -1,9 +1,6 @@
 <template>
   <div class="bet-dashboard-wrap">
-    <BetFilter
-      class="bet-filter"
-      @update="filterBets($event)"
-    />
+    <BetFilter @update="filterBets($event)" />
     <div class="bet-wrap">
       <BetItem
         v-for="bet in filteredBets"
@@ -73,5 +70,6 @@ export default {
 .bet-dashboard-wrap {
   display: grid;
   grid-template-columns: auto 1fr;
+  gap: 5px;
 }
 </style>
