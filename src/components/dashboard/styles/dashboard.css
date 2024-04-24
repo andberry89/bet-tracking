@@ -1,0 +1,49 @@
+h2 {
+  text-align: center;
+}
+.bet-dashboard-wrap {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 5px;
+}
+.pending-bet {
+  border: 3px solid var(--white);
+}
+.winning-bet {
+  border: 3px solid var(--green);
+}
+.losing-bet {
+  border: 3px solid var(--red);
+}
+.future-bet {
+  border: 3px solid var(--orange);
+}
+.future-text {
+  color: var(--orange);
+}
+.bonus-promo-text {
+  color: var(--green);
+}
+.bet-won {
+  color: var(--green);
+}
+.bet-lose {
+  color: var(--red);
+}
+.bet-legs ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+.icon-wrap {
+  height: 30px;
+}
+.icon-wrap ul {
+  list-style-type: none;
+  position: relative;
+  margin: 0;
+}
+.sport-icon {
+  position: absolute;
+  padding: 0;
+}

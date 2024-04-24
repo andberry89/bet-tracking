@@ -30,6 +30,10 @@
       v-if="view === 'input'"
       @update="addBet($event)"
     />
+    <EditBetDashboard
+      v-if="view === 'edit'"
+      :bets="this.bets"
+    />
     <BetDashboard
       v-if="view === 'view'"
       :bets="this.bets"
@@ -43,9 +47,11 @@
 <script>
 import BetDashboard from '@/components/dashboard/BetDashboard.vue'
 import BetInput from '@/components/dashboard/BetInput.vue'
+import EditBetDashboard from '@/components/dashboard/EditBetDashboard.vue'
 import PageNotFound from './PageNotFound.vue'
 import axios from 'axios'
 import sortBets from '@/utils/sortBets'
+import '../dashboard/styles/dashboard.css'
 
 export default {
   name: 'ContributorDashboard',
@@ -59,6 +65,7 @@ export default {
   components: {
     BetDashboard,
     BetInput,
+    EditBetDashboard,
     PageNotFound,
   },
   methods: {

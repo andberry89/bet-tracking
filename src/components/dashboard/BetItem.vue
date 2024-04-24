@@ -71,8 +71,8 @@
         </p>
       </div>
       <div class="bet-wager-info">
-        <p><strong>Risk</strong>: {{ bet.risk }}U</p>
         <p><strong>Odds</strong>: {{ bet.odds > 0 ? '+' + bet.odds : bet.odds }}</p>
+        <p><strong>Risk</strong>: {{ bet.risk }}U</p>
         <p v-if="!bet.settled"><strong>To win</strong>: {{ bet.payout }}U</p>
         <p v-if="bet.settled">
           <ArrowComponent :upArrow="bet.won" />
@@ -88,6 +88,9 @@
 </template>
 <script>
 import dateFormat from 'dateformat'
+import borderStyle from './utils/borderStyle'
+import getImgUrl from './utils/getImgUrl'
+import getOUS from './utils/getOUS'
 export default {
   name: 'BetItem',
   data() {
@@ -101,33 +104,9 @@ export default {
   },
   methods: {
     dateFormat: dateFormat,
-    borderStyle(bet) {
-      if (!bet.settled) {
-        return bet.future ? 'future-bet' : 'pending-bet'
-      } else {
-        return bet.won ? 'winning-bet' : 'losing-bet'
-      }
-    },
-    getImgUrl(path) {
-      return require('@/assets/icons/' + path.toLowerCase() + '.png')
-    },
-    getOUS(val, line) {
-      val = val.toLowerCase()
-      switch (val) {
-        case 'over':
-          return 'o'
-        case 'under':
-          return 'u'
-        case 'spread':
-          if (line > 0) {
-            return '+'
-          } else {
-            return ''
-          }
-        default:
-          return ''
-      }
-    },
+    getImgUrl: getImgUrl,
+    getOUS: getOUS,
+    borderStyle: borderStyle,
   },
 }
 </script>
@@ -154,21 +133,7 @@ export default {
   display: flex;
   align-items: center;
 }
-.future-bet {
-  border: 3px solid var(--orange);
-}
-.future-text {
-  color: var(--orange);
-}
-.pending-bet {
-  border: 3px solid var(--white);
-}
-.winning-bet {
-  border: 3px solid var(--green);
-}
-.losing-bet {
-  border: 3px solid var(--red);
-}
+
 .date {
   font-size: 14px;
   text-align: center;
@@ -182,11 +147,6 @@ export default {
   padding-left: 10px;
   border-left: 1px solid var(--white);
 }
-.bet-legs ul {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-}
 .bet-legs ul li {
   display: grid;
   grid-template-columns: 1.5fr max-content 1fr;
@@ -197,27 +157,8 @@ export default {
 }
 .bonus-promo-text {
   font-size: 14px;
-  color: var(--green);
-}
-.bet-won {
-  color: var(--green);
-}
-.bet-lose {
-  color: var(--red);
 }
 .small-text {
   font-size: 12px;
-}
-.icon-wrap {
-  height: 30px;
-}
-.icon-wrap ul {
-  list-style-type: none;
-  position: relative;
-  margin: 0;
-}
-.sport-icon {
-  position: absolute;
-  padding: 0;
 }
 </style>
