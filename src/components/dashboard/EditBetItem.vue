@@ -13,7 +13,7 @@
       <span
         v-if="bet.settled"
         :class="bet.won ? 'bet-won' : 'bet-lose'"
-        >{{ bet.won ? bet.payout : '-' + bet.risk }}U</span
+        >{{ bet.won ? '+' + bet.payout : '-' + bet.risk }}U</span
       >
       <span
         v-if="!bet.settled"
@@ -44,7 +44,7 @@
     <div class="bet-legs">
       <ul>
         <li
-          v-for="(value, index) in bet.legs"
+          v-for="(value, index) in betLegs"
           :key="index"
         >
           <span class="subject">{{ value.subject + '  ' }}</span>
@@ -88,6 +88,16 @@ export default {
     },
   },
   computed: {
+    betLegs() {
+      if (this.bet.legs.length < 4) {
+        return this.bet.legs
+      } else {
+        let legs = this.bet.legs.slice(0, 2)
+        let extraLegs = this.bet.legs.length - 2
+        legs.push({ subject: '+' + extraLegs + ' more legs...', over: '', line: '', prop: '' })
+        return legs
+      }
+    },
     betOdds() {
       if (this.bet.odds > 0) {
         return '+' + this.bet.odds
@@ -132,9 +142,9 @@ export default {
   gap: 2px;
   align-items: end;
   border-radius: 8px;
-  text-wrap: nowrap;
-  overflow: hidden;
   text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 .bet-type {
   justify-self: center;

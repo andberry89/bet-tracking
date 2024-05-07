@@ -41,16 +41,12 @@
             :key="index"
           >
             <div class="subject">
-              <span class="subject"
-                ><strong>{{ value.subject }}</strong></span
-              >
+              <span
+                ><strong>{{ value.subject }}</strong>
+              </span>
             </div>
             <div>
-              <span class="over-under">{{ getOUS(value.over, value.line) }}</span>
-              <span class="line">{{ value.line }}</span>
-            </div>
-            <div>
-              <span class="prop">{{ value.over === 'Spread' ? ' Spread' : ' ' + value.prop }}</span>
+              <span>{{ this.lineProp(value) }}</span>
             </div>
           </li>
         </ul>
@@ -107,6 +103,13 @@ export default {
     getImgUrl: getImgUrl,
     getOUS: getOUS,
     borderStyle: borderStyle,
+    lineProp(value) {
+      return (
+        this.getOUS(value.over, value.line) +
+        (value.line === null ? '' : value.line) +
+        (value.over === 'Spread' ? ' Spread' : ' ' + value.prop)
+      )
+    },
   },
 }
 </script>
@@ -149,8 +152,8 @@ export default {
 }
 .bet-legs ul li {
   display: grid;
-  grid-template-columns: 1.5fr max-content 1fr;
-  column-gap: 10px;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 4px;
 }
 .subject {
   justify-self: end;

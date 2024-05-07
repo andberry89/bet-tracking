@@ -36,13 +36,21 @@ export default {
       return filterBets(this.bets, this.filter, this.filterOptions)
     },
   },
+  methods: {
+    filterBets: filterBets,
+    updateFilters({ filter, filterOptions }) {
+      this.filter = filter
+      this.filterOptions = filterOptions
+    },
+  },
 }
 </script>
 <style scoped>
 .edit-bet-wrap {
   display: flex;
   flex-flow: row wrap;
-  justify-content: center;
+  justify-content: start;
+  align-items: start;
   gap: 10px;
 }
 </style>
