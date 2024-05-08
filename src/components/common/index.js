@@ -3,6 +3,7 @@ import CheckboxInput from './CheckboxInput.vue'
 import InputDate from './InputDate.vue'
 import InputNumber from './InputNumber.vue'
 import InputText from './InputText.vue'
+import ModalOverlay from './ModalOverlay.vue'
 import RadioButton from './RadioButton.vue'
 import RadioButtonGroup from './RadioButtonGroup.vue'
 import SelectComponent from './SelectComponent.vue'
@@ -16,6 +17,7 @@ export {
   InputDate,
   InputNumber,
   InputText,
+  ModalOverlay,
   RadioButton,
   RadioButtonGroup,
   SelectComponent,

@@ -61,9 +61,16 @@ export default {
   name: 'BetFilter',
   data() {
     return {
-      activeBtn: 'all',
+      activeBtn: this.activeFilter || 'all',
       filterOptions: [],
     }
+  },
+  props: {
+    activeFilter: {
+      type: String,
+      required: false,
+      default: 'all',
+    },
   },
   methods: {
     filterBets(filter) {

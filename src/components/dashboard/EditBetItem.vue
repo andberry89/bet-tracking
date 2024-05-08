@@ -132,7 +132,6 @@ export default {
 </script>
 <style scoped>
 .edit-bet-item {
-  width: 24%;
   padding: 0 10px;
   font-size: 14px;
   display: grid;
@@ -145,6 +144,9 @@ export default {
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+}
+.edit-bet-item:hover {
+  cursor: pointer;
 }
 .bet-type {
   justify-self: center;

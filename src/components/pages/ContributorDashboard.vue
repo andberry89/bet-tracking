@@ -16,7 +16,7 @@
           :class="view === 'edit' ? 'active' : ''"
           @click="updateView('edit')"
         >
-          Edit Bets
+          Settle Bets
         </button>
         <button
           :class="view === 'view' ? 'active' : ''"

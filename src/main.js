@@ -25,6 +25,7 @@ import {
   InputDate,
   InputNumber,
   InputText,
+  ModalOverlay,
   RadioButton,
   RadioButtonGroup,
   SelectComponent,
@@ -40,6 +41,7 @@ app.component('CheckboxInput', CheckboxInput)
 app.component('InputDate', InputDate)
 app.component('InputNumber', InputNumber)
 app.component('InputText', InputText)
+app.component('ModalOverlay', ModalOverlay)
 app.component('RadioButton', RadioButton)
 app.component('RadioButtonGroup', RadioButtonGroup)
 app.component('SelectComponent', SelectComponent)

@@ -256,10 +256,10 @@ export default {
         .then(res => {
           if (res.status === 201) {
             this.betMsg = 'Bet successfully entered!'
+            this.$emit('update', formattedBet)
+            this.bet = formattedBet
           }
         })
-        .then(this.$emit('update', formattedBet))
-        .then((this.bet = formattedBet))
         .catch(err => {
           let errMsg = 'Error: '
           if (err.response) {
