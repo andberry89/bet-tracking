@@ -6,6 +6,7 @@
     <ContributorDetails
       class="contributor-details"
       :contributor="contributor"
+      :bets="bets"
     />
     <BetDashboard
       class="bet-dashboard"
