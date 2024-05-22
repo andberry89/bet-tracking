@@ -5,26 +5,49 @@
   >
     <div class="left-side">
       <div class="logo-wrap">
-        <img
-          :src="contributor.imageUrl"
-          height="85"
-          width="85"
-        />
+        <div class="logo-image">
+          <img
+            :src="contributor.imageUrl"
+            height="85"
+            width="85"
+          />
+        </div>
         <div class="item-name">{{ contributor.name }}</div>
+        <div class="contributor-sports">{{ contributor.sports.join(', ') }}</div>
       </div>
       <div class="numbers">
         <PerformanceTable :bets="bets" />
       </div>
+      <div class="chart">
+        <Bar :data="chartData" />
+      </div>
     </div>
-    <div class="contributor-sports">{{ contributor.sports.join(', ') }}</div>
   </div>
 </template>
 <script>
 import dateFormat from 'dateformat'
+import { Bar } from 'vue-chartjs'
+import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js'
 import PerformanceTable from './components/PerformanceTable.vue'
+
+ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
 
 export default {
   name: 'ContributorDetails',
+  data() {
+    return {
+      chartData: {
+        labels: ['January', 'February', 'March'],
+        datasets: [
+          {
+            label: 'Year to Date',
+            backgroundColor: '#f87979',
+            data: [40, -20, 12],
+          },
+        ],
+      },
+    }
+  },
   props: {
     bets: {
       type: Array,
@@ -35,11 +58,12 @@ export default {
     },
   },
   components: {
+    Bar,
     PerformanceTable,
   },
   /**
-   * TODO: WRITE A FUNCTION TO CALCULATE ROI, WINS, LOSSES, RISKED, FOR SPECIFIC TIME FRAMES
-   * TODO: ADD DATE TO FILTER RESULTS*
+   * TODO: ADD DATE TO FILTER RESULTS
+   * TODO: CREATE A BAR GRAPH
    * *
    */
   methods: {
@@ -56,7 +80,7 @@ export default {
   padding: 10px 0;
 }
 .contributor-sports {
-  font: 400 20px/1.2 'Helvetica', 'Arial', sans-serif;
+  font: 400 16px/1.2 'Helvetica', 'Arial', sans-serif;
   color: #333;
 }
 .left-side {
@@ -68,6 +92,9 @@ export default {
   margin-left: 15px;
   padding-left: 15px;
   border-left: 1px solid var(--white);
+}
+.logo-wrap {
+  text-align: center;
 }
 .logo-wrap img {
   border-radius: 50%;
