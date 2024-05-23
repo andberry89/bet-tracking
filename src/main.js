@@ -25,6 +25,7 @@ import {
   InputDate,
   InputNumber,
   InputText,
+  LineChart,
   ModalOverlay,
   RadioButton,
   RadioButtonGroup,
@@ -41,6 +42,7 @@ app.component('CheckboxInput', CheckboxInput)
 app.component('InputDate', InputDate)
 app.component('InputNumber', InputNumber)
 app.component('InputText', InputText)
+app.component('LineChart', LineChart)
 app.component('ModalOverlay', ModalOverlay)
 app.component('RadioButton', RadioButton)
 app.component('RadioButtonGroup', RadioButtonGroup)

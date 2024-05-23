@@ -60,5 +60,6 @@ export default {
 .bet-dashboard {
   max-height: 70vh;
   overflow-y: auto;
+  padding: 0 10px 0 0;
 }
 </style>

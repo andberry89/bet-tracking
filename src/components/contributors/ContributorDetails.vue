@@ -1,53 +1,38 @@
 <template>
-  <div
-    v-if="contributor.sports"
-    class="page-header"
-  >
-    <div class="left-side">
-      <div class="logo-wrap">
-        <div class="logo-image">
-          <img
-            :src="contributor.imageUrl"
-            height="85"
-            width="85"
-          />
+  <div>
+    <div
+      v-if="contributor.sports"
+      class="page-header"
+    >
+      <div class="left-side">
+        <div class="logo-wrap">
+          <div class="logo-image">
+            <img
+              :src="contributor.imageUrl"
+              height="85"
+              width="85"
+            />
+          </div>
+          <div class="item-name">{{ contributor.name }}</div>
+          <div class="contributor-sports">{{ contributor.sports.join(', ') }}</div>
         </div>
-        <div class="item-name">{{ contributor.name }}</div>
-        <div class="contributor-sports">{{ contributor.sports.join(', ') }}</div>
+        <div class="numbers">
+          <PerformanceTable :bets="bets" />
+        </div>
       </div>
-      <div class="numbers">
-        <PerformanceTable :bets="bets" />
-      </div>
-      <div class="chart">
-        <Bar :data="chartData" />
-      </div>
+    </div>
+    <div class="chart">
+      <ChartsContainer :bets="bets" />
     </div>
   </div>
 </template>
 <script>
 import dateFormat from 'dateformat'
-import { Bar } from 'vue-chartjs'
-import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js'
+import ChartsContainer from '@/components/contributors/ChartsContainer.vue'
 import PerformanceTable from './components/PerformanceTable.vue'
-
-ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
 
 export default {
   name: 'ContributorDetails',
-  data() {
-    return {
-      chartData: {
-        labels: ['January', 'February', 'March'],
-        datasets: [
-          {
-            label: 'Year to Date',
-            backgroundColor: '#f87979',
-            data: [40, -20, 12],
-          },
-        ],
-      },
-    }
-  },
   props: {
     bets: {
       type: Array,
@@ -58,7 +43,7 @@ export default {
     },
   },
   components: {
-    Bar,
+    ChartsContainer,
     PerformanceTable,
   },
   /**

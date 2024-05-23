@@ -3,6 +3,7 @@ import CheckboxInput from './CheckboxInput.vue'
 import InputDate from './InputDate.vue'
 import InputNumber from './InputNumber.vue'
 import InputText from './InputText.vue'
+import LineChart from './LineChart.vue'
 import ModalOverlay from './ModalOverlay.vue'
 import RadioButton from './RadioButton.vue'
 import RadioButtonGroup from './RadioButtonGroup.vue'
@@ -17,6 +18,7 @@ export {
   InputDate,
   InputNumber,
   InputText,
+  LineChart,
   ModalOverlay,
   RadioButton,
   RadioButtonGroup,
