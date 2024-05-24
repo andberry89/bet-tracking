@@ -1,9 +1,11 @@
 <template>
   <div class="charts-container">
-    <LineChart :data="chartData" />
+    <LineChart :data="mtd" />
   </div>
 </template>
 <script>
+import createDataset from '@/utils/createDataset'
+
 export default {
   name: 'ChartsContainer',
   data() {
@@ -26,11 +28,25 @@ export default {
       return true
     },
     mtd() {
-      return true
+      const { dates, runningTotal } = createDataset(['2024/04/01', '2024/04/30'], this.bets)
+      const data = {
+        labels: dates,
+        datasets: [
+          {
+            label: 'April 2024',
+            backgroundColor: '#15c63c',
+            data: runningTotal,
+          },
+        ],
+      }
+      return data
     },
     ytd() {
       return true
     },
+  },
+  methods: {
+    createDataset: createDataset,
   },
 }
 </script>
