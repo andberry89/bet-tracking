@@ -17,7 +17,7 @@ const calcAll = bets => {
     lost = lostArr.reduce((a, b) => a + b, 0).toFixed(2)
     risk = riskArr.reduce((a, b) => a + b, 0).toFixed(2)
     const net = (won - lost).toFixed(2)
-    roi = ((net / risk) * 100).toFixed(2)
+    roi = risk != 0 ? ((net / risk) * 100).toFixed(2) : 0
 
     return { won, lost, net, risk, roi }
   }

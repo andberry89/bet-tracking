@@ -55,19 +55,19 @@
       </tr>
       <tr class="row-roi">
         <th scope="row">ROI%</th>
-        <td :class="this.results.today.roi >= 0.0 ? 'won' : 'lost'">
+        <td :class="this.results.today.roi >= 0 ? 'won' : 'lost'">
           {{ this.results.today.roi >= 0.0 ? '+' : '' }}{{ this.results.today.roi }}%
         </td>
-        <td :class="this.results.today.roi >= 0.0 ? 'won' : 'lost'">
+        <td :class="this.results.yesterday.roi >= 0 ? 'won' : 'lost'">
           {{ this.results.yesterday.roi >= 0.0 ? '+' : '' }}{{ this.results.yesterday.roi }}%
         </td>
-        <td :class="this.results.today.roi >= 0.0 ? 'won' : 'lost'">
+        <td :class="this.results.l7.roi >= 0 ? 'won' : 'lost'">
           {{ this.results.l7.roi >= 0.0 ? '+' : '' }}{{ this.results.l7.roi }}%
         </td>
-        <td :class="this.results.today.roi >= 0.0 ? 'won' : 'lost'">
+        <td :class="this.results.mtd.roi >= 0 ? 'won' : 'lost'">
           {{ this.results.mtd.roi >= 0.0 ? '+' : '' }}{{ this.results.mtd.roi }}%
         </td>
-        <td :class="this.results.today.roi >= 0.0 ? 'won' : 'lost'">
+        <td :class="this.results.ytd.roi >= 0 ? 'won' : 'lost'">
           {{ this.results.ytd.roi >= 0.0 ? '+' : '' }}{{ this.results.ytd.roi }}%
         </td>
       </tr>
