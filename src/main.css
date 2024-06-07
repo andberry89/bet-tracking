@@ -23,15 +23,15 @@
 }
 
 :root {
-  --green: #15c63c;
+  --green: rgb(21, 198, 60); /* #15c63c */
   --translucent-green: rgba(21, 198, 60, 0.7);
-  --blue: #c5d1f1;
-  --dark-gray: #131313;
-  --light-gray: #aaa;
-  --red: #cc0000;
-  --orange: #ff8317;
-  --white: #fffdfa;
-  --black: #000;
+  --blue: rgb(197, 209, 241); /* #c5d1f1 */
+  --dark-gray: rgb(19, 19, 19); /* #131313 */
+  --light-gray: rgb(170, 170, 170); /* #aaa */
+  --red: rgb(204, 0, 0); /* #cc0000 */
+  --orange: rgb(255, 131, 23); /* #ff8317 */
+  --white: rgb(255, 253, 250); /* #fffdfa */
+  --black: rgb(0, 0, 0); /* #000 */
 }
 .page-wrap {
   margin: auto;

@@ -1,7 +1,7 @@
 <template>
   <Line
     id="my-chart-id"
-    :options="chartOptions"
+    :options="options"
     :data="data"
   />
 </template>
@@ -25,17 +25,14 @@ export default {
   components: {
     Line,
   },
-  data() {
-    return {
-      chartOptions: {
-        responsive: true,
-      },
-    }
-  },
   props: {
     data: {
       type: Object,
       required: true,
+    },
+    options: {
+      type: Object,
+      default: () => {},
     },
   },
 }
