@@ -28,7 +28,7 @@
 </template>
 <script>
 import dateFormat from 'dateformat'
-import ChartsContainer from '@/components/contributors/ChartsContainer.vue'
+import ChartsContainer from '@/components/contributors/components/ChartsContainer.vue'
 import PerformanceTable from './components/PerformanceTable.vue'
 
 export default {

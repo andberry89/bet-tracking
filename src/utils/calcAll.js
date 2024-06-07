@@ -1,4 +1,5 @@
 import dateFormat from 'dateformat'
+import getDates from '@/utils/getDates'
 
 const calcAll = bets => {
   const calcPerformance = bets => {
@@ -22,31 +23,23 @@ const calcAll = bets => {
     return { won, lost, net, risk, roi }
   }
 
-  let dateToday = new Date()
-  let dateYesterday = new Date()
-  let dateLastWeek = new Date()
-  let dateFirstOfTheMonth = new Date(new Date().getFullYear(), new Date().getMonth(), 1)
-  let dateFirstOfTheYear = new Date(new Date().getFullYear(), 0, 1)
+  const dates = getDates()
 
-  dateToday = dateFormat(new Date(), 'isoDate')
-  dateYesterday = dateFormat(dateYesterday.setDate(dateYesterday.getDate() - 1), 'isoDate')
-  dateLastWeek = dateFormat(dateLastWeek.setDate(dateLastWeek.getDate() - 7), 'isoDate')
-  dateFirstOfTheMonth = dateFormat(dateFirstOfTheMonth, 'isoDate')
-  dateFirstOfTheYear = dateFormat(dateFirstOfTheYear, 'isoDate')
-
-  const todaysBets = bets.filter(bet => dateFormat(bet.date, 'isoDate', true) === dateToday)
-  const yesterdaysBets = bets.filter(bet => dateFormat(bet.date, 'isoDate', true) === dateYesterday)
-  const lastWeeksBets = bets.filter(bet => Date.parse(dateLastWeek) <= Date.parse(bet.date))
-  const monthToDateBets = bets.filter(bet => Date.parse(dateFirstOfTheMonth) <= Date.parse(bet.date))
-  const yearToDateBets = bets.filter(bet => Date.parse(dateFirstOfTheYear) <= Date.parse(bet.date))
+  const todaysBets = bets.filter(bet => dateFormat(bet.date, 'isoDate', true) === dates.today)
+  const yesterdaysBets = bets.filter(bet => dateFormat(bet.date, 'isoDate', true) === dates.yesterday)
+  const lastWeeksBets = bets.filter(bet => Date.parse(dates.lastWeek) <= Date.parse(bet.date))
+  const lastMonthsBets = bets.filter(bet => Date.parse(dates.lastMonth) <= Date.parse(bet.date))
+  const monthToDateBets = bets.filter(bet => Date.parse(dates.firstOfTheMonth) <= Date.parse(bet.date))
+  const yearToDateBets = bets.filter(bet => Date.parse(dates.firstOfTheYear) <= Date.parse(bet.date))
 
   const today = calcPerformance(todaysBets)
   const yesterday = calcPerformance(yesterdaysBets)
   const l7 = calcPerformance(lastWeeksBets)
+  const l30 = calcPerformance(lastMonthsBets)
   const mtd = calcPerformance(monthToDateBets)
   const ytd = calcPerformance(yearToDateBets)
 
-  return { today, yesterday, l7, mtd, ytd }
+  return { today, yesterday, l7, l30, mtd, ytd }
 }
 
 export default calcAll

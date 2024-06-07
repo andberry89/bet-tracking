@@ -6,6 +6,7 @@
         <th scope="col">Today</th>
         <th scope="col">Yesterday</th>
         <th scope="col">Last 7</th>
+        <th scope="col">Last 30</th>
         <th scope="col">MtD</th>
         <th scope="col">YtD</th>
       </tr>
@@ -16,6 +17,7 @@
         <td>+{{ this.results.today.won }}</td>
         <td>+{{ this.results.yesterday.won }}</td>
         <td>+{{ this.results.l7.won }}</td>
+        <td>+{{ this.results.l30.won }}</td>
         <td>+{{ this.results.mtd.won }}</td>
         <td>+{{ this.results.ytd.won }}</td>
       </tr>
@@ -24,6 +26,7 @@
         <td>-{{ this.results.today.lost }}</td>
         <td>-{{ this.results.yesterday.lost }}</td>
         <td>-{{ this.results.l7.lost }}</td>
+        <td>-{{ this.results.l30.lost }}</td>
         <td>-{{ this.results.mtd.lost }}</td>
         <td>-{{ this.results.ytd.lost }}</td>
       </tr>
@@ -38,6 +41,9 @@
         <td :class="this.results.l7.net >= 0.0 ? 'won' : 'lost'">
           {{ this.results.l7.net >= 0.0 ? '+' : '' }}{{ this.results.l7.net }}
         </td>
+        <td :class="this.results.l30.net >= 0.0 ? 'won' : 'lost'">
+          {{ this.results.l30.net >= 0.0 ? '+' : '' }}{{ this.results.l30.net }}
+        </td>
         <td :class="this.results.mtd.net >= 0.0 ? 'won' : 'lost'">
           {{ this.results.mtd.net >= 0.0 ? '+' : '' }}{{ this.results.mtd.net }}
         </td>
@@ -50,6 +56,7 @@
         <td>{{ this.results.today.risk }}</td>
         <td>{{ this.results.yesterday.risk }}</td>
         <td>{{ this.results.l7.risk }}</td>
+        <td>{{ this.results.l30.risk }}</td>
         <td>{{ this.results.mtd.risk }}</td>
         <td>{{ this.results.ytd.risk }}</td>
       </tr>
@@ -63,6 +70,9 @@
         </td>
         <td :class="this.results.l7.roi >= 0 ? 'won' : 'lost'">
           {{ this.results.l7.roi >= 0.0 ? '+' : '' }}{{ this.results.l7.roi }}%
+        </td>
+        <td :class="this.results.l30.roi >= 0 ? 'won' : 'lost'">
+          {{ this.results.l30.roi >= 0.0 ? '+' : '' }}{{ this.results.l30.roi }}%
         </td>
         <td :class="this.results.mtd.roi >= 0 ? 'won' : 'lost'">
           {{ this.results.mtd.roi >= 0.0 ? '+' : '' }}{{ this.results.mtd.roi }}%
