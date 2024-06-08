@@ -86,10 +86,15 @@ export default {
       type: Object,
       required: true,
     },
+    full: {
+      type: Boolean,
+      default: false,
+      required: false,
+    },
   },
   computed: {
     betLegs() {
-      if (this.bet.legs.length < 4) {
+      if (this.bet.legs.length < 4 || this.full === 'true') {
         return this.bet.legs
       } else {
         let legs = this.bet.legs.slice(0, 2)
@@ -135,7 +140,7 @@ export default {
   padding: 0 10px;
   font-size: 14px;
   display: grid;
-  height: 10rem;
+  min-height: 10rem;
   grid-template-columns: [col1] auto [col2] 1fr [col3] auto [end];
   grid-template-rows: [row1] max-content [row2] 30px [row3] 1fr [row4] 30px [row-end];
   gap: 2px;

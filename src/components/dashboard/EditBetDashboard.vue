@@ -10,7 +10,11 @@
       >
         <h4>Settle this bet?</h4>
         <p><button @click="settleBet(true)">Won</button><button @click="settleBet(false)">Lost</button></p>
-        <EditBetItem :bet="this.bet" />
+        <EditBetItem
+          :bet="this.bet"
+          full="true"
+        />
+        <!-- pass a prop to show full bet todo -->
       </div>
       <div
         class="modal"
