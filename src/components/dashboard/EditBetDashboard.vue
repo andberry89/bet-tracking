@@ -9,12 +9,12 @@
         v-if="this.msg === ''"
       >
         <h4>Settle this bet?</h4>
-        <p><button @click="settleBet(true)">Won</button><button @click="settleBet(false)">Lost</button></p>
+        <p><button @click="settleBet('won')">Won</button><button @click="settleBet('lost')">Lost</button></p>
+        <p><button @click="settleBet('void')">Void Bet</button></p>
         <EditBetItem
           :bet="this.bet"
           full="true"
         />
-        <!-- pass a prop to show full bet todo -->
       </div>
       <div
         class="modal"
@@ -79,9 +79,14 @@ export default {
     },
     async settleBet(val) {
       const path = `/api/dashboard/${this.bet.contributor}/${this.bet._id}`
-      const body = {
-        settled: true,
-        won: val,
+      let body = { settled: true }
+      if (val === 'void') {
+        body = { ...body, won: false, void: true }
+      } else {
+        body = {
+          ...body,
+          ...(val === 'won' ? { won: true } : { won: false }),
+        }
       }
       await axios
         .patch(path, body)
@@ -134,5 +139,8 @@ export default {
 }
 .modal button {
   margin: 0 10px;
+}
+.modal p {
+  margin: 0 0 10px 0;
 }
 </style>

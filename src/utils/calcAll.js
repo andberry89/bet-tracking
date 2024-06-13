@@ -9,9 +9,11 @@ const calcAll = bets => {
     let won, lost, risk, roi
 
     bets.forEach(bet => {
-      if (bet.won) wonArr.push(bet.payout)
-      if (!bet.won) lostArr.push(bet.risk)
-      riskArr.push(bet.risk)
+      if (bet.settled && !bet.void) {
+        if (bet.won) wonArr.push(bet.payout)
+        if (!bet.won) lostArr.push(bet.risk)
+        riskArr.push(bet.risk)
+      }
     })
 
     won = wonArr.reduce((a, b) => a + b, 0).toFixed(2)

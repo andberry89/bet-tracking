@@ -1,9 +1,9 @@
-import { eachDayOfInterval, isWithinInterval } from 'date-fns'
+import { eachDayOfInterval, isWithinInterval, parseISO } from 'date-fns'
 import dateFormat from 'dateformat'
 
 const createDataset = (range, allBets) => {
-  const startDate = range[0]
-  const endDate = range[1]
+  const startDate = parseISO(range[0])
+  const endDate = parseISO(range[1])
 
   // Get all dates within the range
   const dates = eachDayOfInterval({
@@ -20,6 +20,8 @@ const createDataset = (range, allBets) => {
   )
   // Get all settled bets from the bets within the range
   const settledBets = bets.filter(bet => bet.settled)
+
+  console.log(settledBets)
 
   let dailyTotals = Array(dates.length).fill(0)
 

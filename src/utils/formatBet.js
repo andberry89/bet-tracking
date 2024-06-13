@@ -28,6 +28,7 @@ const formatBet = details => {
     payout: parseFloat(newDetails.payout),
     settled: newDetails.settled.toLowerCase() === 'yes',
     won: newDetails.won.toLowerCase() === 'yes',
+    void: false,
     sports: filterSports(newDetails.legs),
     future: newDetails.future.toLowerCase() === 'yes',
     book: newDetails.book,

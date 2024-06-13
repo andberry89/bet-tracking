@@ -67,18 +67,22 @@
         </p>
       </div>
       <div class="bet-wager-info">
-        <p><strong>Odds</strong>: {{ bet.odds > 0 ? '+' + bet.odds : bet.odds }}</p>
-        <p><strong>Risk</strong>: {{ bet.risk }}U</p>
-        <p v-if="!bet.settled"><strong>To win</strong>: {{ bet.payout }}U</p>
-        <p v-if="bet.settled">
+        <div><strong>Odds</strong>: {{ bet.odds > 0 ? '+' + bet.odds : bet.odds }}</div>
+        <div><strong>Risk</strong>: {{ bet.risk }}U</div>
+        <div v-if="!bet.settled"><strong>To win</strong>: {{ bet.payout }}U</div>
+        <div v-if="isNotVoid">
           <ArrowComponent :upArrow="bet.won" />
           <span :class="bet.won ? 'bet-won' : 'bet-lose'">{{ bet.won ? bet.payout : '-' + bet.risk }}U</span>
-        </p>
+        </div>
+        <div v-if="bet.void">Wager Returned</div>
       </div>
-      <SVGComponent
-        v-if="bet.settled"
-        :won="bet.won"
-      />
+      <div>
+        <SVGComponent
+          v-if="isNotVoid"
+          :won="bet.won"
+        />
+        <p v-if="bet.void">VOID</p>
+      </div>
     </div>
   </div>
 </template>
@@ -96,6 +100,11 @@ export default {
     bet: {
       type: Object,
       required: true,
+    },
+  },
+  computed: {
+    isNotVoid() {
+      return this.bet.settled && !this.bet.void
     },
   },
   methods: {
@@ -145,6 +154,11 @@ export default {
 .bet-info,
 .bet-wager-info {
   justify-self: start;
+}
+.bet-wager-info div {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
 }
 .bet-type {
   padding-left: 10px;
