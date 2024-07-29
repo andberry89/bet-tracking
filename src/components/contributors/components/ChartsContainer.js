@@ -15,6 +15,7 @@ export const chartOptions = title => {
     scales: {
       y: {
         suggestedMin: 0,
+        suggestedMax: 0,
         grid: {
           display: false,
           color: 'rgba(150,150,150,.3)',
@@ -48,8 +49,10 @@ export const chartOptions = title => {
             let label = context.dataset.label || ''
 
             if (context.parsed.y !== null && context.parsed.y >= 0) {
-              label += '+' + context.parsed.y
+              label += '+'
             }
+
+            label += context.parsed.y
 
             const suffix = context.parsed.y === 1 ? '' : 's'
             label += ' unit' + suffix

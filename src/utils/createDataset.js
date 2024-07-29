@@ -18,10 +18,8 @@ const createDataset = (range, allBets) => {
       end: endDate,
     }),
   )
-  // Get all settled bets from the bets within the range
-  const settledBets = bets.filter(bet => bet.settled)
-
-  console.log(settledBets)
+  // Get all settled, non-voided bets from the bets within the range
+  const settledBets = bets.filter(bet => bet.settled && !bet.void)
 
   let dailyTotals = Array(dates.length).fill(0)
 

@@ -1,29 +1,19 @@
 <template>
-  <Line
-    id="my-chart-id"
+  <LineChart
     :options="options"
     :data="data"
   />
 </template>
 <script>
 import { Line } from 'vue-chartjs'
-import {
-  Chart as ChartJS,
-  Title,
-  Tooltip,
-  Legend,
-  LineElement,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-} from 'chart.js'
+import { Chart as ChartJS, registerables } from 'chart.js'
 
-ChartJS.register(Title, Tooltip, Legend, LineElement, CategoryScale, LinearScale, PointElement)
+ChartJS.register(...registerables)
 
 export default {
   name: 'LineChart',
   components: {
-    Line,
+    LineChart: Line,
   },
   props: {
     data: {
