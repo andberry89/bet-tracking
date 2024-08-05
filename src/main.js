@@ -7,6 +7,7 @@ import * as VueRouter from 'vue-router'
  * * Make sure to add the Vue component to '@/components/pages/index.js
  */
 import {
+  AddContributor,
   ContributorDashboard,
   ContributorPage,
   ContributorsPage,
@@ -74,6 +75,10 @@ app.use(
       {
         path: '/dashboard',
         component: DashboardPage,
+      },
+      {
+        path: '/dashboard/add-new-contributor',
+        component: AddContributor,
       },
       {
         path: '/dashboard/:contributorId',

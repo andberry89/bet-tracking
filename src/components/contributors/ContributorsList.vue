@@ -1,6 +1,16 @@
 <template>
   <div class="grid-wrap">
     <div
+      id="add-contributor"
+      :class="gridSize"
+      v-if="isDashboard"
+    >
+      <img src="@/assets/icons/plus.png" />
+      <router-link :to="formattedPath + 'add-new-contributor'">
+        <button>Add New Contributor</button>
+      </router-link>
+    </div>
+    <div
       :class="gridSize"
       v-for="contributor in contributors"
       :key="contributor.id"
@@ -65,5 +75,10 @@ img {
 .specialities {
   font: 400 14px/1.2 'Helvetica', sans-serif;
   margin: 2px 0;
+}
+#add-contributor {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
 }
 </style>

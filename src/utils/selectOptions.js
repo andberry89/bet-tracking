@@ -173,3 +173,42 @@ export const bookOptions = [
     disabled: false,
   },
 ]
+
+export const leagueOptions = [
+  {
+    value: 'MLB',
+    disabled: false,
+  },
+  {
+    value: 'NBA',
+    disabled: false,
+  },
+  {
+    value: 'NCAA Basketball',
+    disabled: false,
+  },
+  {
+    value: 'NCAA Football',
+    disabled: false,
+  },
+  {
+    value: 'NFL',
+    disabled: false,
+  },
+  {
+    value: 'NHL',
+    disabled: false,
+  },
+  {
+    value: 'Soccer',
+    disabled: false,
+  },
+  {
+    value: 'Tennis',
+    disabled: false,
+  },
+  {
+    value: 'UFC',
+    disabled: false,
+  },
+]

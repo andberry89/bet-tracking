@@ -7,6 +7,12 @@
       path="dashboard"
       size="small"
     />
+    <h2>Sheets</h2>
+    <SheetsList
+      :sheets="sheets"
+      path="dashboard"
+      size="small"
+    />
     <h2>Most Recent Bets</h2>
     <BetDashboard :bets="this.bets" />
   </div>
@@ -15,26 +21,32 @@
 import axios from 'axios'
 import BetDashboard from '@/components/dashboard/BetDashboard'
 import ContributorsList from '@/components/contributors/ContributorsList.vue'
+import SheetsList from '@/components/sheets/SheetsList.vue'
 
 export default {
   name: 'DashboardPage',
   data() {
     return {
-      contributors: [],
       bets: [],
+      contributors: [],
+      sheets: [],
     }
   },
   components: {
     BetDashboard,
     ContributorsList,
+    SheetsList,
   },
   async created() {
     const betResponse = await axios.get('/api/dashboard/bets')
     const contributorResponse = await axios.get('/api/contributors')
+    const sheetsResponse = await axios.get('/api/sheets')
     const bets = betResponse.data
     const contributors = contributorResponse.data
+    const sheets = sheetsResponse.data
     this.bets = bets
     this.contributors = contributors
+    this.sheets = sheets
   },
 }
 </script>

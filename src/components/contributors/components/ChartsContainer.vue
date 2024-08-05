@@ -21,12 +21,14 @@ import dateFormat from 'dateformat'
 import getDates from '@/utils/getDates'
 import { chartData, chartOptions } from './ChartsContainer'
 
-//TODO:
-// Can we get the chart tooltip to show the difference from the day before? Is that the daily total?
-// NEED TO FIGURE OUT ROUND ROBINS
-// NEED A LIST OF PLAYERS WITH TEAMS AS AN IMPORTED SET
-// NEED TO FIGURE OUT SVG ICONS
-// MULTIPLE CHARTS ON THE SAME PAGE -- async created hook?
+/**
+ * TODO
+ * Can we get the chart tooltip to show the difference from the day before? Is that the daily total?
+ * NEED TO FIGURE OUT ROUND ROBINS
+ * NEED A LIST OF PLAYERS WITH TEAMS AS AN IMPORTED SET
+ * NEED TO FIGURE OUT SVG ICONS
+ * MULTIPLE CHARTS ON THE SAME PAGE -- async created hook?
+ */
 
 export default {
   name: 'ChartsContainer',
