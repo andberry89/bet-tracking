@@ -3,7 +3,6 @@
     <div class="img-wrap">
       <!-- <img :src="sheet.imageUrl" /> -->
       <div class="item-name">{{ sheet.name }}</div>
-      {{ sheet._id }}
     </div>
   </div>
 </template>
