@@ -8,11 +8,13 @@ import * as VueRouter from 'vue-router'
  */
 import {
   AddContributor,
+  AddSheet,
   ContributorDashboard,
   ContributorPage,
   ContributorsPage,
   DashboardPage,
   PageNotFound,
+  SheetDashboard,
   SheetPage,
   SheetsPage,
 } from '@/components/pages'
@@ -77,12 +79,20 @@ app.use(
         component: DashboardPage,
       },
       {
-        path: '/dashboard/add-new-contributor',
+        path: '/dashboard/contributors/add-new-contributor',
         component: AddContributor,
       },
       {
-        path: '/dashboard/:contributorId',
+        path: '/dashboard/contributors/:contributorId',
         component: ContributorDashboard,
+      },
+      {
+        path: '/dashboard/sheets/add-new-sheet',
+        component: AddSheet,
+      },
+      {
+        path: '/dashboard/sheets/:sheetId',
+        component: SheetDashboard,
       },
       {
         path: '/:pathMatch(.*)*',

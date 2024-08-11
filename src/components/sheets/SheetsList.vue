@@ -22,7 +22,7 @@
       >
         {{ sheet.name }}
       </h3>
-      <router-link :to="'/sheets/' + sheet._id">
+      <router-link :to="formattedPath + sheet._id">
         <button>{{ isDashboard ? sheet.name : 'View Performance' }}</button>
       </router-link>
     </div>
@@ -44,6 +44,7 @@ export default {
     path: {
       type: String,
       required: false,
+      default: 'sheets',
     },
   },
   computed: {
@@ -55,7 +56,7 @@ export default {
       }
     },
     formattedPath() {
-      return `/${this.path}/`
+      return this.path === 'dashboard' ? `/${this.path}/sheets/` : `/${this.path}/`
     },
     isDashboard() {
       return this.path === 'dashboard' ? true : false

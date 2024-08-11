@@ -48,7 +48,8 @@ export default {
     },
     path: {
       type: String,
-      required: true,
+      required: false,
+      default: 'contributors',
     },
   },
   computed: {
@@ -60,7 +61,7 @@ export default {
       }
     },
     formattedPath() {
-      return `/${this.path}/`
+      return this.path === 'dashboard' ? `/${this.path}/contributors/` : `/${this.path}/`
     },
     isDashboard() {
       return this.path === 'dashboard' ? true : false
