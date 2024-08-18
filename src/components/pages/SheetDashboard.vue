@@ -16,7 +16,8 @@
       </button>
     </div>
     <hr />
-    {{ sheetItems[activeSheet] }}
+    <h2>New Sheet</h2>
+    <SheetInput :sheetId="sheetId" />
   </div>
   <div v-else>
     <PageNotFound />
@@ -26,6 +27,7 @@
 <script>
 // TODO: FORMAT SHEET APPEARANCE
 import PageNotFound from './PageNotFound.vue'
+import SheetInput from '../dashboard/sheets/SheetInput.vue'
 import axios from 'axios'
 import dateFormat from 'dateformat'
 import '../dashboard/styles/dashboard.css'
@@ -36,11 +38,13 @@ export default {
     return {
       activeSheet: 0,
       sheet: {},
+      sheetId: '',
       sheetItems: [],
     }
   },
   components: {
     PageNotFound,
+    SheetInput,
   },
   methods: {
     dateFormat: dateFormat,
@@ -51,6 +55,8 @@ export default {
   },
   async created() {
     const sheetId = this.$route.params.sheetId
+    this.sheetId = sheetId
+
     const sheetResponse = await axios.get(`/api/sheets/${sheetId}`)
     const sheet = sheetResponse.data
     this.sheet = sheet

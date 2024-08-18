@@ -41,7 +41,6 @@ export default {
       required: true,
     },
   },
-  computed: {},
 }
 </script>
 <style scoped>
