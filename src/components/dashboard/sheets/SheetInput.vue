@@ -20,7 +20,9 @@
   </div>
 </template>
 <script>
+import axios from 'axios'
 import SheetInputField from '@/components/dashboard/sheets/components/SheetInputField.vue'
+import formatSheet from '@/components/dashboard/sheets/utils/formatSheet'
 import propNames from '@/utils/sheets/propNames'
 import updateValue from '@/utils/updateValue'
 
@@ -31,8 +33,10 @@ export default {
   data() {
     return {
       props: [],
+      errMsg: '',
       details: {
         date: '',
+        sheet: '',
       },
     }
   },
@@ -46,9 +50,38 @@ export default {
     SheetInputField,
   },
   methods: {
+    formatSheet: formatSheet,
     updateValue: updateValue,
-    addSheet() {
-      console.log(this.details)
+    async addSheet() {
+      const sheetDetails = formatSheet(this.props, this.details)
+      await axios
+        .post(`/api/dashboard/sheets/${this.sheetId}`, sheetDetails)
+        .then(res => {
+          if (res.status === 201) {
+            console.log('Bet Successful.')
+            location.reload()
+          }
+        })
+        .catch(err => {
+          let errMsg = 'Error: '
+          if (err.response) {
+            // The request was made and the server responded with a status code
+            // that falls out of the range of 2xx
+            console.log(err.response.data)
+            console.log(err.response.status)
+            errMsg += err.response.data._message
+          } else if (err.request) {
+            // The request was made but no response was received
+            console.log(err.request)
+            errMsg = 'Hooked by the server. Check your internet connection and try again'
+          } else {
+            // Something happened in setting up the request that triggered an Error
+            errMsg += err.message + ' Contact the administrator if problem continues.'
+            console.log('Error', err.message)
+          }
+          console.log(err.config)
+          this.errMsg = errMsg
+        })
     },
     updateDetails(prop, lines) {
       this.details[prop] = lines
@@ -56,6 +89,7 @@ export default {
   },
   async created() {
     this.props = propNames(this.sheetId)
+    this.details.sheet = this.sheetId
   },
 }
 </script>

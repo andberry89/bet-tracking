@@ -63,7 +63,11 @@ export default {
 
     const sheetItemsResponse = await axios.get(`/api/dashboard/sheets/${sheetId}`)
     const sheetItems = sheetItemsResponse.data
-    this.sheetItems = sheetItems.reverse()
+    this.sheetItems = sheetItems
+      .sort(function (a, b) {
+        return new Date(b.date) - new Date(a.date)
+      })
+      .reverse()
   },
 }
 </script>

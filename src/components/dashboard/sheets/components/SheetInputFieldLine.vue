@@ -13,7 +13,7 @@
       name="over-under"
       :id="id + '-ou'"
       v-model="details.ou"
-      @change="updateLine('ou', $event.target.value)"
+      @change="updateLine('overUnder', $event.target.value)"
     >
       <option value="over">Over</option>
       <option value="under">Under</option>
@@ -21,6 +21,7 @@
     <input
       type="number"
       step=".5"
+      min="0.5"
       :value="details.line"
       :id="id + '-line'"
       @keyup="updateLine('line', $event.target.value)"
@@ -37,7 +38,7 @@ export default {
     return {
       details: {
         player: '',
-        ou: 'over',
+        overUnder: 'over',
         line: 0,
       },
     }
