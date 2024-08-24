@@ -10,7 +10,7 @@
         v-for="item in sheetItems"
         :key="item._id"
         class="sheet-date-grid-item"
-        @click="updateActiveSheet(item._id)"
+        @click="updateSheet(sheetItems, item._id)"
       >
         {{ dateFormat(item.date, 'UTC:mm/dd/yyyy') }}
       </button>
@@ -30,6 +30,7 @@ import PageNotFound from './PageNotFound.vue'
 import SheetInput from '../dashboard/sheets/SheetInput.vue'
 import axios from 'axios'
 import dateFormat from 'dateformat'
+import updateActiveSheet from '@/components/sheets/utils/updateActiveSheet'
 import '../dashboard/styles/dashboard.css'
 
 export default {
@@ -48,9 +49,9 @@ export default {
   },
   methods: {
     dateFormat: dateFormat,
-    updateActiveSheet(id) {
-      const idx = this.sheetItems.findIndex(e => e._id === id)
-      this.activeSheet = idx
+    updateActiveSheet: updateActiveSheet,
+    updateSheet(items, id) {
+      this.activeSheet = updateActiveSheet(items, id)
     },
   },
   async created() {
@@ -71,15 +72,3 @@ export default {
   },
 }
 </script>
-<style scoped>
-.date-wrapper {
-  display: flex;
-  gap: 8px;
-}
-.sheet-date-grid-item {
-  padding: 8px 16px;
-  border: 1px solid var(--green);
-  border-radius: 8px;
-  cursor: pointer;
-}
-</style>

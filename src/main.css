@@ -196,3 +196,13 @@ input[type='checkbox'] {
   width: 100px;
   border-radius: 50%;
 }
+.date-wrapper {
+  display: flex;
+  gap: 8px;
+}
+.sheet-date-grid-item {
+  padding: 8px 16px;
+  border: 1px solid var(--green);
+  border-radius: 8px;
+  cursor: pointer;
+}
