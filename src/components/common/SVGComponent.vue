@@ -3,8 +3,8 @@
     <svg
       v-if="won"
       class="my-svg-component"
-      width="50px"
-      height="50px"
+      :width="width"
+      :height="height"
       viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -43,8 +43,8 @@
     </svg>
 
     <svg
-      width="40px"
-      height="40px"
+      :width="width"
+      :height="height"
       viewBox="0 0 1024 1024"
       fill="#cc0000"
       class="icon"
@@ -84,6 +84,16 @@
 export default {
   name: 'SVGComponent',
   props: {
+    height: {
+      type: String,
+      required: false,
+      default: '50px',
+    },
+    width: {
+      type: String,
+      required: false,
+      default: '50px',
+    },
     won: {
       type: Boolean,
       default: null,

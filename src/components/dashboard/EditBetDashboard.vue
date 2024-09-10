@@ -13,7 +13,7 @@
         <p><button @click="settleBet('void')">Void Bet</button></p>
         <EditBetItem
           :bet="this.bet"
-          full="true"
+          :full="true"
         />
       </div>
       <div
@@ -122,16 +122,6 @@ export default {
 }
 .edit-component {
   width: 30%;
-}
-.modal {
-  border-radius: 8px;
-  background-color: var(--dark-gray);
-  padding: 25px;
-  color: var(--white);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-around;
 }
 .modal h4 {
   margin: 0;

@@ -26,8 +26,6 @@ import formatSheet from '@/components/dashboard/sheets/utils/formatSheet'
 import propNames from '@/utils/sheets/propNames'
 import updateValue from '@/utils/updateValue'
 
-//TODO: FORMAT SHEET AND POST TO DATABASE
-
 export default {
   name: 'SheetInput',
   data() {
@@ -58,7 +56,7 @@ export default {
         .post(`/api/dashboard/sheets/${this.sheetId}`, sheetDetails)
         .then(res => {
           if (res.status === 201) {
-            console.log('Bet Successful.')
+            console.log('Sheet Successful.')
             location.reload()
           }
         })

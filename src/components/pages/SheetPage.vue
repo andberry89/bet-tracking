@@ -1,7 +1,7 @@
 <template>
-  <div v-if="sheet">
+  <div v-if="dataReady">
     <SheetDetails
-      :sheet="sheet"
+      :sheetName="sheet.name"
       :sheetId="sheetId"
       :sheetItems="sheetItems"
     />
@@ -20,6 +20,7 @@ export default {
   name: 'SheetPage',
   data() {
     return {
+      dataReady: false,
       sheet: {},
       sheetId: '',
       sheetItems: [],
@@ -29,17 +30,17 @@ export default {
     const sheetId = this.$route.params.sheetId
     this.sheetId = sheetId
 
-    const sheetResonse = await axios.get(`/api/sheets/${sheetId}`)
-    const sheet = sheetResonse.data
+    const sheetResponse = await axios.get(`/api/sheets/${sheetId}`)
+    const sheet = sheetResponse.data
     this.sheet = sheet
 
     const sheetItemsResponse = await axios.get(`/api/dashboard/sheets/${sheetId}`)
     const sheetItems = sheetItemsResponse.data
-    this.sheetItems = sheetItems
-      .sort(function (a, b) {
-        return new Date(b.date) - new Date(a.date)
-      })
-      .reverse()
+    this.sheetItems = sheetItems.sort(function (a, b) {
+      return new Date(b.date) - new Date(a.date)
+    })
+
+    this.dataReady = true
   },
   components: {
     PageNotFound,

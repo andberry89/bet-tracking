@@ -1,6 +1,7 @@
 const formatSheet = (props, details) => {
   const propKeys = props.flatMap(Object.keys)
   const sheetProps = []
+
   propKeys.forEach(prop => {
     sheetProps.push({
       name: prop,
@@ -9,17 +10,15 @@ const formatSheet = (props, details) => {
   })
 
   sheetProps.forEach(prop => {
+    prop.values = prop.values.filter(e => e.player !== '')
     prop.values = prop.values.map(e => ({ ...e, result: null, hit: false }))
   })
 
   const newDetails = {
-    sheet: details.sheet,
-    date: details.date,
-    open: true,
+    _id: details._id,
+    open: false,
     props: sheetProps,
   }
-
-  console.log(newDetails)
 
   return newDetails
 }

@@ -12,7 +12,7 @@
     <select
       name="over-under"
       :id="id + '-ou'"
-      v-model="details.ou"
+      v-model="details.overUnder"
       @change="updateLine('overUnder', $event.target.value)"
     >
       <option value="over">Over</option>
@@ -20,7 +20,7 @@
     </select>
     <input
       type="number"
-      step=".5"
+      step="0.5"
       min="0.5"
       :value="details.line"
       :id="id + '-line'"
@@ -52,6 +52,9 @@ export default {
   methods: {
     updateValue: updateValue,
     updateLine(detail, value) {
+      if (detail === 'line') {
+        value = parseFloat(value)
+      }
       updateValue(this.details, detail, value)
       this.$emit('update', this.details)
     },

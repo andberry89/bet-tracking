@@ -2,7 +2,7 @@
   <div class="page-header">
     <div class="img-wrap">
       <!-- <img :src="sheet.imageUrl" /> -->
-      <div class="item-name">{{ sheet.name }}</div>
+      <div class="item-name">{{ sheetName }}</div>
     </div>
     <div class="date-wrapper">
       <button
@@ -11,11 +11,11 @@
         class="sheet-date-grid-item"
         @click="updateSheet(sheetItems, item._id)"
       >
-        {{ dateFormat(item.date, 'UTC:mm/dd/yyyy') }}
+        {{ item.name ? item.name : dateFormat(item.date, 'UTC:mm/dd/yyyy') }}
       </button>
     </div>
     <hr />
-    <SheetView :sheet="sheetItems[activeSheet]" />
+    <SheetView :sheet="activeSheet" />
   </div>
 </template>
 
@@ -33,29 +33,43 @@ export default {
   name: 'SheetDetails',
   data() {
     return {
-      activeSheet: 0,
+      activeSheetIdx: 0,
+      settledSheets: [],
     }
   },
   components: {
     SheetView,
   },
   props: {
-    sheet: {
-      type: Object,
-    },
     sheetId: {
       type: String,
     },
     sheetItems: {
       type: Array,
     },
+    sheetName: {
+      type: String,
+    },
+  },
+  computed: {
+    activeSheet() {
+      return this.sheetItems[this.activeSheetIdx]
+    },
   },
   methods: {
     dateFormat: dateFormat,
     updateActiveSheet: updateActiveSheet,
     updateSheet(items, id) {
-      this.activeSheet = updateActiveSheet(items, id)
+      this.activeSheetIdx = updateActiveSheet(items, id)
     },
+  },
+  created() {
+    this.settledSheets = this.sheetItems.filter(e => !e.open)
   },
 }
 </script>
+<style scoped>
+.page-header {
+  padding-top: 8px;
+}
+</style>
