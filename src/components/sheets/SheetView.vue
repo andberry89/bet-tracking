@@ -3,7 +3,9 @@
     class="sheet-view"
     v-if="dataReady"
   >
-    <div class="sheet-date">{{ date }}</div>
+    <div class="sheet-date">{{ sheet.name ? sheet.name : date }}</div>
+    <div class="sheet-record">{{ getSheetRecord() }}</div>
+    <!-- TODO: FORMAT SHEET RECORD -->
     <div
       v-for="(prop, index) in this.sheetProps"
       :key="prop.name"
@@ -71,6 +73,17 @@ export default {
       const hit = values.filter(e => e.hit).length
       return hit + '/' + len
     },
+    getSheetRecord() {
+      let hit = 0
+      let total = 0
+      const len = this.sheet.props.length
+      for (let i = 0; i < len; i++) {
+        const valuesLen = this.sheet.props[i].values.length
+        total += valuesLen
+        hit += this.getValues(i).filter(e => e.hit).length
+      }
+      return hit + '/' + total + ' -- ' + (hit * 100) / total + '%'
+    },
     getValues(index) {
       const propsIdx = this.sheet.props.findIndex(e => e.name === this.getKey(index))
       return this.sheet.props[propsIdx].values
@@ -87,6 +100,13 @@ export default {
   margin: 15px 10px;
   font-weight: 700;
   font-size: 24px;
+  border-left: 6px solid var(--white);
+  padding-left: 10px;
+}
+.sheet-record {
+  margin: 10px;
+  font-weight: 700;
+  font-size: 20px;
   border-left: 6px solid var(--white);
   padding-left: 10px;
 }

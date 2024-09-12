@@ -16,7 +16,10 @@ const formatSheet = (props, details) => {
 
   const newDetails = {
     _id: details._id,
-    open: false,
+    sheet: details.sheet,
+    open: true,
+    date: details.date,
+    name: details.name,
     props: sheetProps,
   }
 

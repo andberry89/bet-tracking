@@ -30,6 +30,7 @@
     <div class="msg-div">{{ this.msg }}</div>
     <div class="update-btn">
       <button @click="settleSheet">Update Sheet</button>
+      <button @click="deleteSheet">Delete Sheet</button>
     </div>
   </div>
 </template>
@@ -64,6 +65,20 @@ export default {
     getValues(index) {
       const propsIdx = this.sheet.props.findIndex(e => e.name === this.getKey(index))
       return this.sheet.props[propsIdx].values
+    },
+    async deleteSheet() {
+      const path = `/api/dashboard/sheets/${this.details.sheet}/${this.details._id}`
+      console.log(path)
+      await axios
+        .delete(path, this.details._id)
+        .then(res => {
+          if (res.status === 200) {
+            this.msg = 'Sheet Deleted Successfully!'
+          }
+        })
+        .catch(err => {
+          console.log(err)
+        })
     },
     async settleSheet() {
       const updates = {
@@ -138,6 +153,9 @@ h3 {
 }
 input {
   width: 100px;
+}
+button {
+  margin: 0 5px;
 }
 .update-btn,
 .msg-div {

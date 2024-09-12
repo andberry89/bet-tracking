@@ -8,6 +8,13 @@
       :value="this.details.date"
       @update="updateValue(details, 'date', $event)"
     />
+    <InputText
+      label="Name"
+      class="date-field"
+      placeholder="Custom Name"
+      :value="this.details.name"
+      @update="updateValue(details, 'name', $event)"
+    />
     <div class="sheet-wrap">
       <SheetInputField
         v-for="(prop, index) in props"
@@ -35,6 +42,7 @@ export default {
       details: {
         date: '',
         sheet: '',
+        name: '',
       },
     }
   },

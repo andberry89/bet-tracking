@@ -18,6 +18,7 @@
         v-for="item in openSheets"
         :key="item._id"
         class="sheet-date-grid-item"
+        :class="{ activeButton: isActive(item._id) }"
         @click="editSheet(sheetItems, item._id)"
       >
         {{ item.name ? item.name : dateFormat(item.date, 'UTC:mm/dd/yyyy') }}
@@ -33,7 +34,6 @@
 </template>
 
 <script>
-// TODO: FORMAT SHEET APPEARANCE
 import PageNotFound from './PageNotFound.vue'
 import SheetInput from '../dashboard/sheets/SheetInput.vue'
 import axios from 'axios'
@@ -70,6 +70,9 @@ export default {
     editSheet(items, id) {
       this.activeSheet = updateActiveSheet(items, id)
       this.show = true
+    },
+    isActive(id) {
+      return this.openSheets[this.activeSheet]._id === id
     },
   },
   async created() {

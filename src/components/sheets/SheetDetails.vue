@@ -9,6 +9,7 @@
         v-for="item in sheetItems"
         :key="item._id"
         class="sheet-date-grid-item"
+        :class="{ activeButton: isActive(item._id) }"
         @click="updateSheet(sheetItems, item._id)"
       >
         {{ item.name ? item.name : dateFormat(item.date, 'UTC:mm/dd/yyyy') }}
@@ -59,6 +60,9 @@ export default {
   methods: {
     dateFormat: dateFormat,
     updateActiveSheet: updateActiveSheet,
+    isActive(id) {
+      return this.activeSheet._id === id
+    },
     updateSheet(items, id) {
       this.activeSheetIdx = updateActiveSheet(items, id)
     },

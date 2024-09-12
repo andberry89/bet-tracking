@@ -153,6 +153,9 @@ input[type='checkbox'] {
   width: 100%;
 }
 
+.activeButton {
+  background-color: var(--green);
+}
 .small-grid-item {
   align-items: center;
   border-radius: 8px;
