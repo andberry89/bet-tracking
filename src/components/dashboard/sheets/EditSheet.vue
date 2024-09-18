@@ -68,12 +68,15 @@ export default {
     },
     async deleteSheet() {
       const path = `/api/dashboard/sheets/${this.details.sheet}/${this.details._id}`
+      const body = { id: this.details._id }
       console.log(path)
+      console.log(body)
       await axios
-        .delete(path, this.details._id)
+        .delete(path, body)
         .then(res => {
           if (res.status === 200) {
             this.msg = 'Sheet Deleted Successfully!'
+            console.log(res.data)
           }
         })
         .catch(err => {
