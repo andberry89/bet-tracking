@@ -76,7 +76,7 @@ export default {
         .then(res => {
           if (res.status === 200) {
             this.msg = 'Sheet Deleted Successfully!'
-            console.log(res.data)
+            location.reload()
           }
         })
         .catch(err => {

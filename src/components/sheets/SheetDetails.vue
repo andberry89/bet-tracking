@@ -1,8 +1,8 @@
 <template>
   <div class="page-header">
     <div class="img-wrap">
-      <!-- <img :src="sheet.imageUrl" /> -->
-      <div class="item-name">{{ sheetName }}</div>
+      <img :src="sheet.imageUrl" />
+      <div class="item-name">{{ sheet.name }}</div>
     </div>
     <div class="date-wrapper">
       <button
@@ -21,7 +21,8 @@
 </template>
 
 <script>
-/** TODO
+/**
+ * TODO
  * SET UP THE API TO PULL ALL TEAM DATA ONCE PER DAY - MLB TEAM PLAYERS
  * CREATE A LIST OF ATHLETES FROM ALL TEAMS
  * RUN AN AUDIT OVER NIGHT TO CHECK SHEETS - USING MLB SUMMARY
@@ -42,14 +43,11 @@ export default {
     SheetView,
   },
   props: {
-    sheetId: {
-      type: String,
+    sheet: {
+      type: Object,
     },
     sheetItems: {
       type: Array,
-    },
-    sheetName: {
-      type: String,
     },
   },
   computed: {
@@ -75,5 +73,12 @@ export default {
 <style scoped>
 .page-header {
   padding-top: 8px;
+}
+.img-wrap {
+  display: flex;
+  flex-direction: column;
+}
+.item-name {
+  font-size: 30px;
 }
 </style>

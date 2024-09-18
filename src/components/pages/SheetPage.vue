@@ -1,8 +1,7 @@
 <template>
   <div v-if="dataReady">
     <SheetDetails
-      :sheetName="sheet.name"
-      :sheetId="sheetId"
+      :sheet="sheet"
       :sheetItems="sheetItems"
     />
   </div>
