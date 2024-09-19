@@ -1,8 +1,11 @@
 <template>
   <div class="page-header">
-    <div class="img-wrap">
-      <img :src="sheet.imageUrl" />
-      <div class="item-name">{{ sheet.name }}</div>
+    <div class="hero-section">
+      <div class="img-wrap">
+        <img :src="sheet.imageUrl" />
+        <div class="item-name">{{ sheet.name }}</div>
+      </div>
+      <SheetPerformance :sheets="settledSheets" />
     </div>
     <div class="date-wrapper">
       <button
@@ -30,6 +33,7 @@
 import SheetView from './SheetView.vue'
 import dateFormat from 'dateformat'
 import updateActiveSheet from '@/components/sheets/utils/updateActiveSheet'
+import SheetPerformance from './components/SheetPerformance.vue'
 
 export default {
   name: 'SheetDetails',
@@ -40,6 +44,7 @@ export default {
     }
   },
   components: {
+    SheetPerformance,
     SheetView,
   },
   props: {
@@ -73,6 +78,12 @@ export default {
 <style scoped>
 .page-header {
   padding-top: 8px;
+}
+.hero-section {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 15px;
+  align-items: center;
 }
 .img-wrap {
   display: flex;
