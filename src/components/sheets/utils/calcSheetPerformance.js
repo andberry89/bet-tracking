@@ -77,11 +77,22 @@ const calcSheetPerformance = sheets => {
   })
 
   // create an array of all players used, then remove duplicates
+  let players = []
 
-  console.log(perfectSheets)
-  // need to return sortedSheets, perfectSheets
+  sheets.forEach(sheet => {
+    sheet.props.forEach(prop => {
+      prop.values.forEach(value => {
+        players.push(value.player)
+      })
+    })
+  })
 
-  return 'hello'
+  // remove duplicates
+  players = [...new Set(players)]
+
+  console.log(players)
+
+  return { sortedSheets, perfectSheets }
 
   // TODO:
   // CALCULATE SHEET PERFORMANCES
