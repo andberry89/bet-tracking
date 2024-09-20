@@ -12,13 +12,25 @@ const calcSheetPerformance = sheets => {
   let sortedSheets = {}
 
   // sort each sheet by prop type into its own array
+  // values have to be sorted into an array for each sheet
+  // to calculate perfect categories
+  // later we concat all values into a single array
   keys.forEach(key => {
     let propArr = []
 
-    sheets.forEach(e => {
-      e.props.forEach(prop => {
+    sheets.forEach(sheet => {
+      sheet.props.forEach(prop => {
         if (prop.name === key) {
-          propArr.push(prop.values)
+          let arr = []
+          prop.values.forEach(value => {
+            const val = {
+              ...value,
+              date: sheet.date,
+              sheetName: sheet.name,
+            }
+            arr.push(val)
+          })
+          propArr.push(arr)
         }
       })
     })
@@ -55,6 +67,11 @@ const calcSheetPerformance = sheets => {
       total: total,
       perfect: perfectProp,
     }
+
+    // concat all values for each prop
+    // into a single array
+    propArr = [].concat(...propArr)
+    sortedSheets[key].values = propArr
   })
 
   // calculate perfect sheets
@@ -76,28 +93,57 @@ const calcSheetPerformance = sheets => {
     if (perfect) perfectSheets++
   })
 
-  // create an array of all players used, then remove duplicates
+  // create an array of all players used
+  // adding individual lines
+  // while also calculating
   let players = []
 
   sheets.forEach(sheet => {
     sheet.props.forEach(prop => {
       prop.values.forEach(value => {
-        players.push(value.player)
+        const idx = players.findIndex(player => player.name === value.player)
+        if (idx === -1) {
+          let hits = value.hit ? 1 : 0
+          let appearances = 1
+          let hitRate = parseFloat(hits / appearances)
+          players.push({
+            name: value.player,
+            appearances: appearances,
+            hits: hits,
+            hitRate: hitRate,
+            lines: [
+              {
+                date: sheet.date,
+                sheetName: sheet.name,
+                prop: prop.name,
+                overUnder: value.overUnder,
+                line: value.line,
+                result: value.result,
+                hit: value.hit,
+              },
+            ],
+          })
+        } else {
+          players[idx].appearances++
+          if (value.hit) {
+            players[idx].hits++
+          }
+          players[idx].hitRate = parseFloat(players[idx].hits / players[idx].appearances)
+          players[idx].lines.push({
+            date: sheet.date,
+            sheetName: sheet.name,
+            prop: prop.name,
+            overUnder: value.overUnder,
+            line: value.line,
+            result: value.result,
+            hit: value.hit,
+          })
+        }
       })
     })
   })
 
-  // remove duplicates
-  players = [...new Set(players)]
-
-  console.log(players)
-
-  return { sortedSheets, perfectSheets }
-
-  // TODO:
-  // CALCULATE SHEET PERFORMANCES
-  // Create an aray based on player and amount of times they've been used
-  // Create a hit-rate for each player?
+  return { sortedSheets, perfectSheets, players }
 }
 
 export default calcSheetPerformance
