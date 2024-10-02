@@ -127,6 +127,9 @@
         class="submit-btn"
         v-if="isValidBet"
       >
+        <div v-if="this.details.legs.length > 2">
+          <h4>Round Robin</h4>
+        </div>
         <button @click.prevent="addBet(this.details)">Enter Bet</button>
       </div>
       <div
@@ -146,6 +149,8 @@
       </p>
     </div>
     <hr />
+    <!-- TODO: SET UP ROUND ROBIN STUFF -- probably adding another bet after first one with type round robin -->
+    {{ calcRR(6) }}
   </div>
 </template>
 <script>
@@ -155,6 +160,7 @@ import LegInput from '@/components/dashboard/LegInput.vue'
 import LegDetails from '@/components/dashboard/LegDetails.vue'
 import { bookOptions } from '@/utils/selectOptions'
 import calcPayout from '@/utils/calcPayout'
+import calcRR from './utils/calcRR'
 import updateValue from '@/utils/updateValue'
 import formatBet from '@/utils/formatBet'
 import sortBets from '@/utils/sortBets'
@@ -241,6 +247,7 @@ export default {
     },
   },
   methods: {
+    calcRR: calcRR,
     calcPayout: calcPayout,
     formatBet: formatBet,
     sortBets: sortBets,

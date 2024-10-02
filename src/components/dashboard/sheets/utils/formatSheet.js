@@ -1,3 +1,5 @@
+import getCurrentSeason from '@/components/sheets/utils/getCurrentSeason'
+
 const formatSheet = (props, details) => {
   const propKeys = props.flatMap(Object.keys)
   const sheetProps = []
@@ -18,6 +20,7 @@ const formatSheet = (props, details) => {
     _id: details._id,
     sheet: details.sheet,
     open: true,
+    season: getCurrentSeason(details.sheet),
     date: details.date,
     name: details.name,
     props: sheetProps,

@@ -14,6 +14,7 @@
 import PageNotFound from './PageNotFound.vue'
 import SheetDetails from '@/components/sheets/SheetDetails.vue'
 import axios from 'axios'
+import getCurrentSeason from '@/components/sheets/utils/getCurrentSeason'
 
 export default {
   name: 'SheetPage',
@@ -25,21 +26,28 @@ export default {
       sheetItems: [],
     }
   },
+  methods: {
+    getCurrentSeason: getCurrentSeason,
+  },
   async created() {
     const sheetId = this.$route.params.sheetId
     this.sheetId = sheetId
+
+    const season = getCurrentSeason(sheetId)
 
     const sheetResponse = await axios.get(`/api/sheets/${sheetId}`)
     const sheet = sheetResponse.data
     this.sheet = sheet
 
-    const sheetItemsResponse = await axios.get(`/api/dashboard/sheets/${sheetId}`)
+    const sheetItemsResponse = await axios.get(`/api/dashboard/sheets/${sheetId}/${season}`)
     const sheetItems = sheetItemsResponse.data
     this.sheetItems = sheetItems.sort(function (a, b) {
       return new Date(b.date) - new Date(a.date)
     })
 
-    this.dataReady = true
+    if (sheetItems.length > 0) {
+      this.dataReady = true
+    }
   },
   components: {
     PageNotFound,

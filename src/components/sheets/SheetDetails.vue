@@ -3,7 +3,7 @@
     <div class="hero-section">
       <div class="img-wrap">
         <img :src="sheet.imageUrl" />
-        <div class="item-name">{{ sheet.name }}</div>
+        <div class="item-name">{{ sheet.name }} - {{ sheetItems[0].season }} Season</div>
       </div>
       <SheetPerformance :sheets="settledSheets" />
     </div>
@@ -80,10 +80,8 @@ export default {
   padding-top: 8px;
 }
 .hero-section {
-  display: grid;
-  grid-template-columns: max-content 1fr;
-  gap: 15px;
-  align-items: center;
+  display: flex;
+  flex-flow: column nowrap;
 }
 .img-wrap {
   display: flex;
