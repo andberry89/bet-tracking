@@ -1,9 +1,11 @@
 <template>
-  <h1>Sheets Review</h1>
-  <SheetsList
-    :sheets="sheets"
-    size="large"
-  />
+  <div>
+    <h1>Sheets Review</h1>
+    <SheetsList
+      :sheets="sheets"
+      size="large"
+    />
+  </div>
 </template>
 
 <script>

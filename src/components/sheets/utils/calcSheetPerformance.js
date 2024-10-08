@@ -48,6 +48,7 @@ const calcSheetPerformance = sheets => {
     let perfectProp = 0
 
     sortedSheets[key].values.forEach(e => {
+      const localTotal = e.length
       total += e.length
       let lineHit = 0
       e.forEach(line => {
@@ -55,7 +56,7 @@ const calcSheetPerformance = sheets => {
           lineHit++
         }
       })
-      if (lineHit === total) {
+      if (lineHit === localTotal) {
         perfectProp++
       }
       hit += lineHit

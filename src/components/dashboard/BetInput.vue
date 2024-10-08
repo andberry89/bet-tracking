@@ -123,13 +123,15 @@
           @delete="deleteLeg($event)"
         />
       </div>
+      <RoundRobin
+        v-if="this.details.legs.length > 2"
+        :options="calcRR(this.details.legs.length)"
+        @update="updateValue(details, 'rr', $event)"
+      />
       <div
         class="submit-btn"
         v-if="isValidBet"
       >
-        <div v-if="this.details.legs.length > 2">
-          <h4>Round Robin</h4>
-        </div>
         <button @click.prevent="addBet(this.details)">Enter Bet</button>
       </div>
       <div
@@ -150,7 +152,7 @@
     </div>
     <hr />
     <!-- TODO: SET UP ROUND ROBIN STUFF -- probably adding another bet after first one with type round robin -->
-    {{ calcRR(6) }}
+    {{ this.details.legs }}
   </div>
 </template>
 <script>
@@ -158,6 +160,7 @@ import axios from 'axios'
 import BetItem from '@/components/dashboard/BetItem.vue'
 import LegInput from '@/components/dashboard/LegInput.vue'
 import LegDetails from '@/components/dashboard/LegDetails.vue'
+import RoundRobin from './RoundRobin.vue'
 import { bookOptions } from '@/utils/selectOptions'
 import calcPayout from '@/utils/calcPayout'
 import calcRR from './utils/calcRR'
@@ -185,6 +188,7 @@ export default {
         type: '',
         promo: 'No',
         legs: [],
+        rr: [],
       },
       flags: {
         date: false,
@@ -203,6 +207,7 @@ export default {
     BetItem,
     LegDetails,
     LegInput,
+    RoundRobin,
   },
   computed: {
     betType() {
@@ -221,15 +226,21 @@ export default {
     isBuilder() {
       return true
     },
+    isRoundRobin() {
+      const found = this.details.rr.find(e => e.wager > 0)
+      return found ? true : false
+    },
     isValidBet() {
-      return (
-        this.flags.date &&
-        this.flags.odds &&
-        this.flags.risk &&
-        this.flags.payout &&
-        this.flags.book &&
-        this.details.legs.length > 0
-      )
+      // TODO: REMOVE TRUE
+      return true
+      // return (
+      //   this.flags.date &&
+      //   this.flags.odds &&
+      //   this.flags.risk &&
+      //   this.flags.payout &&
+      //   this.flags.book &&
+      //   this.details.legs.length > 0
+      // )
     },
     isSettled() {
       return this.details.settled === 'Yes'
@@ -256,10 +267,43 @@ export default {
       this.details.legs.push(event)
     },
     async addBet(details) {
+      // TODO: MAKE A CHECK FOR ROUND ROBIN
+      // AND IF THERE IS PROPERLY FORMAT IT
+      // ALSO, MODIFY THE SERVER MODEL TO ACCOUNT FOR RR
+      const path = `/api/dashboard/${this.details.contributorId}`
+
       details.type = this.betType
       const formattedBet = formatBet(details)
+
+      // if Round Robin was entered,
+      // format additional bets
+      let rr = []
+      if (this.isRoundRobin) {
+        this.details.rr.forEach(e => {
+          if (e.wager > 0) {
+            let rrBet = formatBet(details)
+            rrBet.type = 'Round Robin x ' + e.choose + 's'
+            rr.odds = null
+            rr.risk = e.wager
+            rr.payout = null
+            rr.push(rrBet)
+          }
+        })
+
+        rr.forEach(item => {
+          axios
+            .post(path, item)
+            .then(res => {
+              console.log(`Successfully entered ${item.type}:`, res.data)
+            })
+            .catch(err => {
+              console.log(`Error posting ${item.type}:`, err)
+            })
+        })
+      }
+
       await axios
-        .post(`/api/dashboard/${this.details.contributorId}`, formattedBet)
+        .post(path, formattedBet)
         .then(res => {
           if (res.status === 201) {
             this.betMsg = 'Bet successfully entered!'

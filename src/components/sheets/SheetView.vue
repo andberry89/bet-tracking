@@ -5,7 +5,6 @@
   >
     <div class="sheet-date">{{ sheet.name ? sheet.name : date }}</div>
     <div class="sheet-record">{{ getSheetRecord() }}</div>
-    <!-- TODO: FORMAT SHEET RECORD -->
     <div
       v-for="(prop, index) in this.sheetProps"
       :key="prop.name"
