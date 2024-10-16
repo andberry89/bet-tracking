@@ -5,15 +5,21 @@ const formatSheet = (props, details) => {
   const sheetProps = []
 
   propKeys.forEach(prop => {
-    sheetProps.push({
-      name: prop,
-      values: details[prop],
-    })
+    if (details[prop]) {
+      sheetProps.push({
+        name: prop,
+        values: details[prop],
+      })
+    }
   })
 
+  console.log(sheetProps)
+
   sheetProps.forEach(prop => {
-    prop.values = prop.values.filter(e => e.player !== '')
-    prop.values = prop.values.map(e => ({ ...e, result: null, hit: false }))
+    if (prop.values) {
+      prop.values = prop.values.filter(e => e.player !== '')
+      prop.values = prop.values.map(e => ({ ...e, result: null, hit: false }))
+    }
   })
 
   const newDetails = {
@@ -25,6 +31,8 @@ const formatSheet = (props, details) => {
     name: details.name,
     props: sheetProps,
   }
+
+  console.log(newDetails)
 
   return newDetails
 }

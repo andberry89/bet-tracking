@@ -9,6 +9,9 @@ const mostUsedPlayers = players => {
 
   if (favoritePlayers.length <= 1) {
     max--
+    while (players.filter(e => e.appearances === max).length === 0) {
+      max--
+    }
     favoritePlayers = favoritePlayers.concat(players.filter(e => e.appearances === max))
   }
 
@@ -53,3 +56,8 @@ const mostSuccessfulPlayers = players => {
 }
 
 export { mostUsedPlayers, mostSuccessfulPlayers }
+
+// TODO: CREATE NEW METHODS TO SORT PLAYERS
+// TODO: EACH HIT RATE?
+// TODO: CREATE A COMPONENT SO PERSON CAN CLICK PLAYER
+// TODO: AND GET DETAILS ON THEIR HISTORY
