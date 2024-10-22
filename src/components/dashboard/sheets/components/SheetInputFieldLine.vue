@@ -28,6 +28,15 @@
       @keydown="updateLine('line', $event.target.value)"
       @change="updateLine('line', $event.target.value)"
     />
+    <input
+      type="number"
+      step="1"
+      :value="details.odds"
+      :id="id + '-odds'"
+      @keyup="updateLine('odds', $event.target.value)"
+      @keydown="updateLine('odds', $event.target.value)"
+      @change="updateLine('odds', $event.target.value)"
+    />
   </div>
 </template>
 <script>
@@ -40,6 +49,7 @@ export default {
         player: '',
         overUnder: 'over',
         line: 0,
+        odds: 0,
       },
     }
   },
@@ -52,7 +62,7 @@ export default {
   methods: {
     updateValue: updateValue,
     updateLine(detail, value) {
-      if (detail === 'line') {
+      if (detail === 'line' || detail === 'odds') {
         value = parseFloat(value)
       }
       updateValue(this.details, detail, value)
@@ -64,7 +74,7 @@ export default {
 <style scoped>
 .line {
   display: grid;
-  grid-template-columns: auto max-content 75px;
+  grid-template-columns: auto max-content 75px 75px;
 }
 input[type='number'] {
   text-align: right;

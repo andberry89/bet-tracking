@@ -39,10 +39,12 @@ export default {
     const sheet = sheetResponse.data
     this.sheet = sheet
 
-    const sheetItemsResponse = await axios.get(`/api/dashboard/sheets/${sheetId}/${season}`)
-    const sheetItems = sheetItemsResponse.data
-    this.sheetItems = sheetItems.sort(function (a, b) {
-      return new Date(b.date) - new Date(a.date)
+    let sheetItems = []
+    await axios.get(`/api/dashboard/sheets/${sheetId}/${season}`).then(res => {
+      sheetItems = res.data
+      this.sheetItems = sheetItems.sort(function (a, b) {
+        return new Date(b.date) - new Date(a.date)
+      })
     })
 
     if (sheetItems.length > 0) {

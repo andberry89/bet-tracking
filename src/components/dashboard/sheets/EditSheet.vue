@@ -7,9 +7,9 @@
       class="sheet-props-wrap"
     >
       <div class="prop-header">
-        <span class="header-text">{{ getKeyName(index) }}</span>
+        <span class="header-text">{{ getKeyName(prop.name) }}</span>
         <div
-          v-for="(player, idx) in getValues(index)"
+          v-for="(player, idx) in getValues(prop.name)"
           :key="player._id"
           class="edit-sheet-line"
         >
@@ -42,6 +42,7 @@ export default {
   name: 'EditSheet',
   data() {
     return {
+      actualProps: [],
       dataReady: false,
       details: {},
       msg: '',
@@ -56,15 +57,20 @@ export default {
   methods: {
     dateFormat: dateFormat,
     propNames: propNames,
-    getKey(index) {
-      return Object.keys(this.sheetProps[index])[0]
+    getKeyName(prop) {
+      const idx = Object.keys(this.sheetProps).filter(key => {
+        return prop === Object.keys(this.sheetProps[key])[0]
+      })
+      const value = this.sheetProps[idx][prop]
+      return value
     },
-    getKeyName(index) {
-      return Object.values(this.sheetProps[index])[0]
-    },
-    getValues(index) {
-      const propsIdx = this.sheet.props.findIndex(e => e.name === this.getKey(index))
-      return this.sheet.props[propsIdx].values
+    getValues(prop) {
+      const propsIdx = this.sheet.props.findIndex(e => e.name === prop)
+      if (propsIdx > -1) {
+        return this.sheet.props[propsIdx].values
+      } else {
+        return []
+      }
     },
     async deleteSheet() {
       const path = `/api/dashboard/sheets/${this.details.sheet}/${this.details._id}`
@@ -95,6 +101,7 @@ export default {
         .then(res => {
           if (res.status === 201) {
             this.msg = 'Sheet Updated Successfully!'
+            location.reload()
           }
         })
         .catch(err => {
@@ -116,6 +123,9 @@ export default {
   created() {
     this.sheetProps = propNames(this.sheet.sheet)
     this.details = this.sheet
+    this.details.props.forEach(e => {
+      this.actualProps.push(e.name)
+    })
     this.dataReady = true
   },
 }

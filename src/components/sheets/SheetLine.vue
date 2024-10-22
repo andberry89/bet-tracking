@@ -11,7 +11,14 @@
       {{ line.overUnder }}
     </div>
     <div class="line-wrap">{{ line.line }}</div>
+
     <div class="result-wrap">{{ line.result }}</div>
+    <div
+      class="odds-wrap"
+      v-if="showOdds"
+    >
+      {{ getOdds }}
+    </div>
   </div>
 </template>
 <script>
@@ -26,6 +33,13 @@ export default {
     firstName() {
       return this.line.player.split(' ')[0]
     },
+    getOdds() {
+      if (parseInt(this.line.odds) > 0) {
+        return '+' + this.line.odds
+      } else {
+        return this.line.odds
+      }
+    },
     lastName() {
       return this.line.player.split(' ').slice(1).join(' ')
     },
@@ -39,13 +53,16 @@ export default {
     settled() {
       return this.line.hit !== null
     },
+    showOdds() {
+      return parseInt(this.line.odds)
+    },
   },
 }
 </script>
 <style scoped>
 .sheet-line-wrap {
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr;
+  grid-template-columns: 2fr 1fr 1fr 1fr max-content;
   place-items: center;
   padding: 4px 2px;
 }
@@ -66,6 +83,14 @@ export default {
   margin-left: 1px;
   font-size: 18px;
   font-weight: 700;
+}
+.ou-wrap,
+.line-wrap,
+.odds-wrap {
+  text-align: center;
+}
+.odds-wrap {
+  padding-right: 15px;
 }
 .ou-wrap {
   text-transform: capitalize;

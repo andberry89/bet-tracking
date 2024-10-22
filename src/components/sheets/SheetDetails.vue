@@ -5,7 +5,10 @@
         <img :src="sheet.imageUrl" />
         <div class="item-name">{{ sheet.name }} - {{ sheetItems[0].season }} Season</div>
       </div>
-      <SheetPerformance :sheets="settledSheets" />
+      <SheetPerformance
+        v-if="settledSheets.length > 0"
+        :sheets="settledSheets"
+      />
     </div>
     <div class="date-wrapper">
       <button
@@ -71,13 +74,21 @@ export default {
     },
   },
   created() {
-    this.settledSheets = this.sheetItems.filter(e => !e.open)
+    if (this.sheetItems.length > 0) {
+      this.settledSheets = this.sheetItems.filter(e => !e.open)
+    }
   },
 }
 </script>
 <style scoped>
 .page-header {
   padding-top: 8px;
+}
+.date-wrapper {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+  margin-top: 15px;
 }
 .hero-section {
   display: flex;

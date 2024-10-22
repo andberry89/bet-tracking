@@ -5,26 +5,34 @@
   >
     <div class="sheet-date">{{ sheet.name ? sheet.name : date }}</div>
     <div class="sheet-record">{{ getSheetRecord() }}</div>
-    <div
-      v-for="(prop, index) in this.sheetProps"
-      :key="prop.name"
-      class="sheet-props-wrap"
-    >
-      <div class="sheet-props-header">
-        {{ getKeyName(index) }} <span v-if="!sheet.open">({{ getRecord(index) }})</span>
+    <div class="sheet-props-wrap">
+      <div
+        v-for="prop in this.actualProps"
+        :key="prop"
+        class="sheet-props"
+      >
+        <div class="sheet-props-header">
+          {{ getKeyName(prop) }} <span v-if="!sheet.open">({{ getRecord(prop) }})</span>
+        </div>
+        <div class="col-header-row">
+          <span class="name-col">Player</span>
+          <span class="ou-col">O/U</span>
+          <span class="line-col">Line</span>
+
+          <span class="result-col">Result</span>
+          <span
+            class="odds-col"
+            v-if="showOdds"
+            >Odds</span
+          >
+        </div>
+        <SheetLine
+          v-for="player in getValues(prop)"
+          :key="player._id"
+          :line="player"
+          class="sheet-line"
+        />
       </div>
-      <div class="col-header-row">
-        <span class="name-col">Player</span>
-        <span class="ou-col">O/U</span>
-        <span class="line-col">Line</span>
-        <span class="result-col">Result</span>
-      </div>
-      <SheetLine
-        v-for="player in getValues(index)"
-        :key="player._id"
-        :line="player"
-        class="sheet-line"
-      />
     </div>
   </div>
 </template>
@@ -37,6 +45,7 @@ export default {
   name: 'SheetView',
   data() {
     return {
+      actualProps: [],
       dataReady: false,
       sheetProps: [],
     }
@@ -56,18 +65,22 @@ export default {
     header(index) {
       return Object.values(this.sheetProps[index][0])
     },
+    showOdds() {
+      return parseInt(this.sheet.props[0].values[0].odds)
+    },
   },
   methods: {
     dateFormat: dateFormat,
     propNames: propNames,
-    getKey(index) {
-      return Object.keys(this.sheetProps[index])[0]
+    getKeyName(prop) {
+      const idx = Object.keys(this.sheetProps).filter(key => {
+        return prop === Object.keys(this.sheetProps[key])[0]
+      })
+      const value = this.sheetProps[idx][prop]
+      return value
     },
-    getKeyName(index) {
-      return Object.values(this.sheetProps[index])[0]
-    },
-    getRecord(index) {
-      const values = this.getValues(index)
+    getRecord(prop) {
+      const values = this.getValues(prop)
       const len = values.length
       const hit = values.filter(e => e.hit).length
       return hit + '/' + len
@@ -75,22 +88,47 @@ export default {
     getSheetRecord() {
       let hit = 0
       let total = 0
-      const len = this.sheet.props.length
-      for (let i = 0; i < len; i++) {
-        const valuesLen = this.sheet.props[i].values.length
-        total += valuesLen
-        hit += this.getValues(i).filter(e => e.hit).length
-      }
-      return hit + '/' + total + ' -- ' + (hit * 100) / total + '%'
+      const props = this.sheet.props
+
+      props.forEach(prop => {
+        const values = this.getValues(prop.name)
+        const valuesLen = values.length
+        if (Array.isArray(values) && values.length) {
+          total += valuesLen
+          hit += values.filter(e => e.hit).length
+        }
+      })
+      const percentage = ((hit * 100) / total).toFixed(2)
+      return hit + '/' + total + ' -- ' + percentage + '%'
     },
-    getValues(index) {
-      const propsIdx = this.sheet.props.findIndex(e => e.name === this.getKey(index))
-      return this.sheet.props[propsIdx].values
+    getValues(prop) {
+      const propsIdx = this.sheet.props.findIndex(e => e.name === prop)
+      if (propsIdx > -1) {
+        return this.sheet.props[propsIdx].values
+      } else {
+        return []
+      }
     },
   },
   created() {
     this.sheetProps = propNames(this.sheet.sheet)
     this.dataReady = true
+
+    this.sheet.props.forEach(e => {
+      this.actualProps.push(e.name)
+    })
+    this.dataReady = true
+  },
+  watch: {
+    sheet: {
+      handler(val) {
+        this.actualProps = []
+        val.props.forEach(e => {
+          this.actualProps.push(e.name)
+        })
+      },
+      deep: true,
+    },
   },
 }
 </script>
@@ -109,13 +147,14 @@ export default {
   border-left: 6px solid var(--white);
   padding-left: 10px;
 }
-.sheet-props-wrap {
+.sheet-props {
   width: 45%;
   display: inline-block;
   border: 1px solid var(--white);
   border-radius: 8px;
   margin: 5px 10px;
   overflow: hidden;
+  vertical-align: top;
 }
 .sheet-props-header {
   background-color: var(--green);
@@ -125,15 +164,19 @@ export default {
 }
 .col-header-row {
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr;
+  grid-template-columns: 2fr 1fr 1fr 1fr max-content;
   place-items: center;
   padding: 4px 2px;
 }
 .col-header-row span {
   text-transform: uppercase;
+  display: inline-block;
   font-size: 14px;
   font-weight: 700;
   color: var(--green);
+}
+.odds-col {
+  padding-right: 10px;
 }
 .sheet-line:not(:first-child) {
   border-top: 1px solid var(--white);

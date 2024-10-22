@@ -45,7 +45,7 @@
               {{ ((prop.hit * 100) / prop.total).toFixed(2) + '%' }}
             </td>
           </tr>
-          <tr>
+          <tr v-if="showPerfect">
             <th scope="row">Perfect Weeks</th>
             <td
               v-for="prop in sortedSheets"
@@ -94,6 +94,11 @@ export default {
   },
   components: {
     PlayerPerformanceTable,
+  },
+  computed: {
+    showPerfect() {
+      return this.sheets[0].sheet === '660db1bcf994906905e1ce76' ? true : false
+    },
   },
   methods: {
     calcSheetPerformance: calcSheetPerformance,
