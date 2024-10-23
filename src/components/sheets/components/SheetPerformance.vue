@@ -112,6 +112,9 @@ export default {
     this.sortedSheets = results.sortedSheets
     this.dataReady = true
   },
+  // TODO: MAKE IT SO PERFORMANCE TRACKS ALL STATS, NOT JUST
+  // THE ONE OF THE CURRENT SHEET
+  // see how the 10-22 sheet doesn't show assists at the top
 }
 </script>
 <style scoped>
