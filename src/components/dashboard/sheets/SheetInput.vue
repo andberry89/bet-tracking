@@ -8,7 +8,16 @@
       :value="this.details.date"
       @update="updateValue(details, 'date', $event)"
     />
+    <InputNumber
+      v-if="isStarting5"
+      label="Odds"
+      class="date-field"
+      placeholder="Odds"
+      :value="this.details.odds"
+      @update="updateValue(details, 'odds', $event)"
+    />
     <InputText
+      v-else
       label="Name"
       class="date-field"
       placeholder="Custom Name"
@@ -43,6 +52,7 @@ export default {
         date: '',
         sheet: '',
         name: '',
+        odds: '0',
       },
     }
   },
@@ -54,6 +64,11 @@ export default {
   },
   components: {
     SheetInputField,
+  },
+  computed: {
+    isStarting5() {
+      return this.sheetId === '660db1bcf994906905e1ce79'
+    },
   },
   methods: {
     formatSheet: formatSheet,

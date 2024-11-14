@@ -10,10 +10,10 @@
             <th></th>
             <th
               scope="col"
-              v-for="prop in sortedSheets"
-              :key="prop.name"
+              v-for="prop in actualProps"
+              :key="Object.keys(prop)[0]"
             >
-              {{ prop.name }}
+              {{ prop[Object.keys(prop)[0]] }}
             </th>
           </tr>
         </thead>
@@ -42,7 +42,7 @@
               v-for="prop in sortedSheets"
               :key="prop.name + ' Hit Rate'"
             >
-              {{ ((prop.hit * 100) / prop.total).toFixed(2) + '%' }}
+              {{ calcHitRate(prop.hit, prop.total) + '%' }}
             </td>
           </tr>
           <tr v-if="showPerfect">
@@ -73,6 +73,8 @@
 import PlayerPerformanceTable from './PlayerPerformanceTable.vue'
 import calcSheetPerformance from '../utils/calcSheetPerformance'
 import { mostUsedPlayers, mostSuccessfulPlayers } from '../utils/calcPlayers'
+import propNames from '@/utils/sheets/propNames'
+
 export default {
   name: 'SheetPerformance',
   data() {
@@ -80,6 +82,7 @@ export default {
       dataReady: false,
       perfectSheets: 0,
       players: [],
+      actualProps: [],
       sortedSheets: {
         type: Object,
       },
@@ -104,12 +107,20 @@ export default {
     calcSheetPerformance: calcSheetPerformance,
     mostSuccessfulPlayers: mostSuccessfulPlayers,
     mostUsedPlayers: mostUsedPlayers,
+    propNames: propNames,
+    calcHitRate(hit, total) {
+      if (total === 0) {
+        return 0
+      }
+      return ((hit * 100) / total).toFixed(2)
+    },
   },
   created() {
     const results = calcSheetPerformance(this.sheets)
     this.perfectSheets = results.perfectSheets
     this.players = results.players
     this.sortedSheets = results.sortedSheets
+    this.actualProps = this.propNames(this.sheets[0].sheet)
     this.dataReady = true
   },
   // TODO: MAKE IT SO PERFORMANCE TRACKS ALL STATS, NOT JUST

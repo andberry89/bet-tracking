@@ -3,11 +3,9 @@ import propNames from '@/utils/sheets/propNames'
 const calcSheetPerformance = sheets => {
   // ORGANIZE SHEETS INTO SEPARATE CATEGORIES
 
-  // get the values from the name key
-  const keys = sheets[0].props.map(value => value.name)
-
   // get the display name from each key
   const keyNames = Object.assign({}, ...propNames(sheets[0].sheet))
+  const keys = Object.keys(keyNames)
 
   let sortedSheets = {}
 
@@ -102,7 +100,7 @@ const calcSheetPerformance = sheets => {
   sheets.forEach(sheet => {
     sheet.props.forEach(prop => {
       prop.values.forEach(value => {
-        const idx = players.findIndex(player => player.name === value.player)
+        const idx = players.findIndex(player => player.name.toLowerCase() === value.player.toLowerCase())
         if (idx === -1) {
           let hits = value.hit ? 1 : 0
           let appearances = 1

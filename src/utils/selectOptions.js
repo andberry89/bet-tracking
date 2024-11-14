@@ -107,6 +107,25 @@ export const overUnderOptions = [
   },
 ]
 
+export const starting5OverUnderOptions = [
+  {
+    value: '--O/U/N--',
+    disabled: true,
+  },
+  {
+    value: 'Over',
+    disabled: false,
+  },
+  {
+    value: 'Under',
+    disabled: false,
+  },
+  {
+    value: 'Other',
+    disabled: false,
+  },
+]
+
 export const bookOptions = [
   {
     value: '--Select a Book--',

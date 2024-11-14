@@ -16,7 +16,7 @@
         >
           <td>{{ player.name }}</td>
           <td>{{ player.appearances }}</td>
-          <td>{{ player.hitRate.toFixed(2) * 100 }}%</td>
+          <td>{{ (player.hitRate.toFixed(2) * 100).toFixed(2) }}%</td>
         </tr>
       </tbody>
     </table>

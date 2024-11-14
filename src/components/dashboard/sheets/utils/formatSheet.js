@@ -1,6 +1,6 @@
 import getCurrentSeason from '@/components/sheets/utils/getCurrentSeason'
 
-const formatSheet = (props, details) => {
+const formatSportsSheet = (props, details, newDetails) => {
   const propKeys = props.flatMap(Object.keys)
   const sheetProps = []
 
@@ -13,8 +13,6 @@ const formatSheet = (props, details) => {
     }
   })
 
-  console.log(sheetProps)
-
   sheetProps.forEach(prop => {
     if (prop.values) {
       prop.values = prop.values.filter(e => e.player !== '')
@@ -22,19 +20,41 @@ const formatSheet = (props, details) => {
     }
   })
 
-  const newDetails = {
-    _id: details._id,
-    sheet: details.sheet,
-    open: true,
-    season: getCurrentSeason(details.sheet),
-    date: details.date,
+  newDetails = {
+    ...newDetails,
     name: details.name,
     props: sheetProps,
   }
 
   console.log(newDetails)
+  return newDetails
+}
+
+const formatSheet = (props, details) => {
+  const isStarting5 = details.sheet === '660db1bcf994906905e1ce79'
+
+  let newDetails = {
+    _id: details._id,
+    sheet: details.sheet,
+    date: details.date,
+    open: true,
+    season: getCurrentSeason(details.sheet),
+  }
+
+  if (!isStarting5) {
+    newDetails = formatSportsSheet(props, details, newDetails)
+  } else {
+    newDetails = {
+      ...newDetails,
+      hit: null,
+      odds: details.odds,
+      players: details.players,
+    }
+  }
 
   return newDetails
 }
 
 export default formatSheet
+
+//TODO: ADD VOID OPTION FOR SHEETS
