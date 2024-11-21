@@ -25,7 +25,10 @@
     </div>
     <hr />
     <h2>New Sheet</h2>
-    <SheetInput :sheetId="sheetId" />
+    <SheetInput
+      :sheetId="sheetId"
+      :playerList="playerList"
+    />
   </div>
   <div v-else>
     <PageNotFound />
@@ -50,6 +53,7 @@ export default {
       closedSheets: [],
       dataReady: false,
       openSheets: [],
+      playerList: [],
       sheet: {},
       sheetId: '',
       sheetItems: [],
@@ -82,6 +86,9 @@ export default {
     const sheetResponse = await axios.get(`/api/sheets/${sheetId}`)
     const sheet = sheetResponse.data
     this.sheet = sheet
+
+    const playerListResponse = await axios.get(`/api/players/${this.sheet.league}`)
+    this.playerList = playerListResponse.data
 
     const sheetItemsResponse = await axios.get(`/api/dashboard/sheets/${sheetId}/${season}`)
     const sheetItems = sheetItemsResponse.data

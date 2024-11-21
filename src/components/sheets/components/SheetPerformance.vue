@@ -3,61 +3,16 @@
     v-if="dataReady"
     class="performance-head"
   >
-    <div>
-      <table>
-        <thead>
-          <tr>
-            <th></th>
-            <th
-              scope="col"
-              v-for="prop in actualProps"
-              :key="Object.keys(prop)[0]"
-            >
-              {{ prop[Object.keys(prop)[0]] }}
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <th scope="row">Hit</th>
-            <td
-              v-for="prop in sortedSheets"
-              :key="prop.name + ' Hit'"
-            >
-              {{ prop.hit }}
-            </td>
-          </tr>
-          <tr>
-            <th scope="row">Total</th>
-            <td
-              v-for="prop in sortedSheets"
-              :key="prop.name + ' Total'"
-            >
-              {{ prop.total }}
-            </td>
-          </tr>
-          <tr>
-            <th scope="row">Hit Rate</th>
-            <td
-              v-for="prop in sortedSheets"
-              :key="prop.name + ' Hit Rate'"
-            >
-              {{ calcHitRate(prop.hit, prop.total) + '%' }}
-            </td>
-          </tr>
-          <tr v-if="showPerfect">
-            <th scope="row">Perfect Weeks</th>
-            <td
-              v-for="prop in sortedSheets"
-              :key="prop.name + ' Perfect'"
-            >
-              {{ prop.perfect }}
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="players-wrap">
+    <PropPerformance
+      v-for="prop in sortedSheets"
+      :prop="prop"
+      :key="prop.name + '-card'"
+    />
+    <PropPerformance
+      class="grand-total-prop"
+      :prop="this.grandTotal"
+    />
+    <!-- <div class="players-wrap">
       <PlayerPerformanceTable
         title="Favorite Players"
         :players="mostUsedPlayers(this.players)"
@@ -66,11 +21,12 @@
         title="MVPs"
         :players="mostSuccessfulPlayers(this.players)"
       />
-    </div>
+    </div> -->
   </div>
 </template>
 <script>
-import PlayerPerformanceTable from './PlayerPerformanceTable.vue'
+// import PlayerPerformanceTable from './PlayerPerformanceTable.vue'
+import PropPerformance from './PropPerformance.vue'
 import calcSheetPerformance from '../utils/calcSheetPerformance'
 import { mostUsedPlayers, mostSuccessfulPlayers } from '../utils/calcPlayers'
 import propNames from '@/utils/sheets/propNames'
@@ -80,6 +36,9 @@ export default {
   data() {
     return {
       dataReady: false,
+      grandTotal: {
+        type: Object,
+      },
       perfectSheets: 0,
       players: [],
       actualProps: [],
@@ -96,7 +55,8 @@ export default {
     },
   },
   components: {
-    PlayerPerformanceTable,
+    // PlayerPerformanceTable,
+    PropPerformance,
   },
   computed: {
     showPerfect() {
@@ -120,42 +80,24 @@ export default {
     this.perfectSheets = results.perfectSheets
     this.players = results.players
     this.sortedSheets = results.sortedSheets
+    this.grandTotal = results.grandTotal
     this.actualProps = this.propNames(this.sheets[0].sheet)
     this.dataReady = true
   },
-  // TODO: MAKE IT SO PERFORMANCE TRACKS ALL STATS, NOT JUST
-  // THE ONE OF THE CURRENT SHEET
-  // see how the 10-22 sheet doesn't show assists at the top
 }
 </script>
 <style scoped>
 .performance-head {
   display: flex;
-  flex-flow: column nowrap;
-  justify-content: space-between;
+  flex-flow: row nowrap;
+  justify-content: center;
   align-items: center;
+  gap: 15px;
 }
 .players-wrap {
   display: flex;
   flex-flow: row nowrap;
   gap: 30px;
   text-align: center;
-}
-table {
-  text-align: center;
-  border-collapse: collapse;
-}
-th,
-td {
-  padding: 0 5px;
-}
-table tr {
-  border-bottom: 1px solid var(--light-gray);
-}
-thead tr {
-  background-color: var(--translucent-green);
-}
-tbody th {
-  text-align: right;
 }
 </style>

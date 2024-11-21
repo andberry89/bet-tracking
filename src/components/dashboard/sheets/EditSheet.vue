@@ -1,19 +1,26 @@
 <template>
   <div v-if="dataReady">
     <h3>{{ dateFormat(this.sheet.date, 'UTC:mm/dd/yyyy') }}</h3>
+    <!-- <EditSheetProp
+      v-for="prop in this.details.props"
+      :key="prop.name + '-pill'"
+      :name="getKeyName(prop.name, this.sheetProps)"
+      :prop="prop"
+      :values="getValues(prop.name, this.sheet.props)"
+    /> -->
     <div
       v-for="(prop, index) in this.details.props"
       :key="prop.name"
       class="sheet-props-wrap"
     >
       <div class="prop-header">
-        <span class="header-text">{{ getKeyName(prop.name) }}</span>
+        <span class="header-text">{{ getKeyName(prop.name, this.sheetProps) }}</span>
         <div
-          v-for="(player, idx) in getValues(prop.name)"
+          v-for="(player, idx) in getValues(prop.name, this.sheet.props)"
           :key="player._id"
           class="edit-sheet-line"
         >
-          <span class="name-text">{{ player.player }}</span>
+          <span class="name-text">{{ player.player.displayName }}</span>
           <span class="ou-text">{{ player.overUnder }}</span>
           <span class="line-text">{{ player.line }}</span>
           <input
@@ -24,6 +31,17 @@
             @keydown="updateResult(index, idx, player, $event.target.value)"
             @change="updateResult(index, idx, player, $event.target.value)"
           />
+          <div class="void-wrap">
+            <label :for="player + '-' + prop">Void?</label>
+            <input
+              type="checkbox"
+              :id="player + '-' + prop"
+              :name="player + '-' + prop"
+              value="void"
+              v-model="isVoid"
+              @click="updateVoid(index, idx)"
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -37,7 +55,11 @@
 <script>
 import axios from 'axios'
 import dateFormat from 'dateformat'
+// import EditSheetProp from './components/EditSheetProp.vue'
 import propNames from '@/utils/sheets/propNames'
+import getKeyName from '@/components/sheets/utils/getKeyName'
+import getValues from '@/components/sheets/utils/getValues'
+
 export default {
   name: 'EditSheet',
   data() {
@@ -45,6 +67,7 @@ export default {
       actualProps: [],
       dataReady: false,
       details: {},
+      isVoid: false,
       msg: '',
       sheetProps: [],
     }
@@ -54,24 +77,14 @@ export default {
       type: Object,
     },
   },
+  components: {
+    // EditSheetProp,
+  },
   methods: {
     dateFormat: dateFormat,
     propNames: propNames,
-    getKeyName(prop) {
-      const idx = Object.keys(this.sheetProps).filter(key => {
-        return prop === Object.keys(this.sheetProps[key])[0]
-      })
-      const value = this.sheetProps[idx][prop]
-      return value
-    },
-    getValues(prop) {
-      const propsIdx = this.sheet.props.findIndex(e => e.name === prop)
-      if (propsIdx > -1) {
-        return this.sheet.props[propsIdx].values
-      } else {
-        return []
-      }
-    },
+    getKeyName: getKeyName,
+    getValues: getValues,
     async deleteSheet() {
       const path = `/api/dashboard/sheets/${this.details.sheet}/${this.details._id}`
       const body = { id: this.details._id }
@@ -119,6 +132,10 @@ export default {
         this.details.props[index].values[idx].hit = value < line ? true : false
       }
     },
+    updateVoid(index, idx) {
+      console.log(this.isVoid)
+      this.details.props[index].values[idx].void = this.isVoid
+    },
   },
   created() {
     this.sheetProps = propNames(this.sheet.sheet)
@@ -151,7 +168,7 @@ h3 {
 }
 .edit-sheet-line {
   display: grid;
-  grid-template-columns: 1fr max-content max-content 100px;
+  grid-template-columns: 1fr max-content max-content 100px max-content;
   place-items: center;
   justify-content: space-between;
   grid-gap: 10px;
@@ -164,7 +181,12 @@ h3 {
 .ou-text {
   text-transform: capitalize;
 }
-input {
+.void-wrap {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+}
+input[type='number'] {
   width: 100px;
 }
 button {

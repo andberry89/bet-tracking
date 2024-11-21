@@ -7,6 +7,7 @@
       v-for="i in 5"
       :key="formattedHeader + '-' + i"
       :id="formattedHeader + '-' + i"
+      :playerList="playerList"
       @update="addLine(i - 1, $event)"
     />
   </div>
@@ -26,6 +27,10 @@ export default {
   props: {
     header: {
       type: String,
+      required: true,
+    },
+    playerList: {
+      type: Array,
       required: true,
     },
   },

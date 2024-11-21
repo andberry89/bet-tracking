@@ -25,6 +25,7 @@ import {
 import {
   ArrowComponent,
   CheckboxInput,
+  DoughnutChart,
   InputDate,
   InputNumber,
   InputText,
@@ -32,6 +33,7 @@ import {
   ModalOverlay,
   RadioButton,
   RadioButtonGroup,
+  SearchBox,
   SelectComponent,
   SVGComponent,
   SVGEdit,
@@ -42,6 +44,7 @@ const app = createApp(App)
 
 app.component('ArrowComponent', ArrowComponent)
 app.component('CheckboxInput', CheckboxInput)
+app.component('DoughnutChart', DoughnutChart)
 app.component('InputDate', InputDate)
 app.component('InputNumber', InputNumber)
 app.component('InputText', InputText)
@@ -49,6 +52,7 @@ app.component('LineChart', LineChart)
 app.component('ModalOverlay', ModalOverlay)
 app.component('RadioButton', RadioButton)
 app.component('RadioButtonGroup', RadioButtonGroup)
+app.component('SearchBox', SearchBox)
 app.component('SelectComponent', SelectComponent)
 app.component('SVGComponent', SVGComponent)
 app.component('SVGEdit', SVGEdit)

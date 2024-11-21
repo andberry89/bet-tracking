@@ -1,23 +1,56 @@
 <template>
-  <div class="sheet-line-wrap">
+  <div
+    class="sheet-line-wrap"
+    :style="backgroundColorObject"
+  >
     <div
-      class="name-wrap"
-      :style="'border-left: 15px solid var(--' + result + ')'"
+      class="player-wrap"
+      :style="voidBackground"
     >
-      <div class="first-name uppercase">{{ firstName }}</div>
-      <div class="last-name uppercase">{{ lastName }}</div>
+      <div class="name-wrap">
+        <span class="first-name uppercase">{{ line.player.firstName }}</span>
+        <span class="last-name uppercase">{{ line.player.lastName }}</span>
+        <span class="team uppercase">
+          <span class="location">{{ line.player.team.location }}&nbsp;</span>
+          <span class="team-name">{{ line.player.team.name }}</span>
+        </span>
+      </div>
+      <div class="line-img-wrap">
+        <img
+          v-if="line.player.headshot"
+          :src="line.player.headshot.href"
+          :alt="line.player.headshot.alt"
+          height="105"
+          width="147"
+        />
+      </div>
     </div>
-    <div class="ou-wrap">
-      {{ line.overUnder }}
+    <div
+      class="ou-wrap"
+      v-if="!line.void"
+    >
+      <h5>{{ line.overUnder }}</h5>
+      {{ line.line }}
     </div>
-    <div class="line-wrap">{{ line.line }}</div>
-
-    <div class="result-wrap">{{ line.result }}</div>
+    <div
+      class="result-wrap"
+      v-if="!isOpen && !line.void"
+    >
+      <h5>Result</h5>
+      {{ line.result }}
+    </div>
     <div
       class="odds-wrap"
-      v-if="showOdds"
+      v-if="showOdds && !line.void"
     >
+      <h5>Odds</h5>
       {{ getOdds }}
+    </div>
+    <div
+      class="void-text"
+      v-if="line.void"
+    >
+      VOID
     </div>
   </div>
 </template>
@@ -30,8 +63,17 @@ export default {
     },
   },
   computed: {
-    firstName() {
-      return this.line.player.split(' ')[0]
+    backgroundColorObject() {
+      const primaryColor = '#' + this.line.player.team.color
+      const altColor = '#' + this.line.player.team.alternateColor
+      const borderColor = this.result
+      // TODO: Conditionally show border
+
+      return {
+        borderLeft: `15px solid var(--${borderColor})`,
+        backgroundSize: '100% 100%',
+        backgroundImage: `linear-gradient(135deg, #000000 10%, ${primaryColor} 25%, ${altColor} 58%, ${primaryColor} 70%, #000000 92%)`,
+      }
     },
     getOdds() {
       if (parseInt(this.line.odds) > 0) {
@@ -40,8 +82,8 @@ export default {
         return this.line.odds
       }
     },
-    lastName() {
-      return this.line.player.split(' ').slice(1).join(' ')
+    isOpen() {
+      return this.line.result === null
     },
     result() {
       if (this.line.result === null) {
@@ -56,15 +98,28 @@ export default {
     showOdds() {
       return parseInt(this.line.odds)
     },
+    voidBackground() {
+      const opacity = this.line.void ? '0.6' : '1'
+
+      return {
+        opacity: opacity,
+      }
+    },
   },
 }
 </script>
 <style scoped>
 .sheet-line-wrap {
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr max-content;
+  grid-template-columns: 6fr 1fr 1fr 1fr;
   place-items: center;
-  padding: 4px 2px;
+  position: relative;
+}
+.player-wrap {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-self: flex-end;
 }
 .name-wrap {
   display: flex;
@@ -73,29 +128,53 @@ export default {
   justify-self: end;
   width: 100%;
 }
+.name-wrap div {
+  margin: 0;
+}
 .uppercase {
   text-transform: uppercase;
 }
 .first-name {
-  font-size: 14px;
+  font-size: 18px;
 }
 .last-name {
   margin-left: 1px;
-  font-size: 18px;
+  font-size: 24px;
   font-weight: 700;
 }
-.ou-wrap,
-.line-wrap,
-.odds-wrap {
-  text-align: center;
+.team {
+  font-size: 12px;
+  margin-top: 5px;
+  color: var(--white);
+}
+.line-img-wrap img {
+  display: block;
+}
+.team-name {
+  font-weight: 700;
+  font-size: 14px;
 }
 .odds-wrap {
-  padding-right: 15px;
+  padding-right: 25px;
 }
 .ou-wrap {
   text-transform: capitalize;
 }
-.result-wrap {
-  font-weight: 700;
+.result-wrap,
+.odds-wrap,
+.ou-wrap {
+  text-align: center;
+}
+.sheet-line-wrap h5 {
+  margin: 0;
+  padding: 0;
+  font-size: 18px;
+}
+.void-text {
+  position: absolute;
+  left: 72%;
+  font-size: 28px;
+  font-family: 'Russo One';
+  opacity: 0.8;
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
   <div class="line">
-    <input
+    <!-- <input
       type="text"
       :value="details.player"
       :id="id + '-player'"
@@ -8,7 +8,12 @@
       @keydown="updateLine('player', $event.target.value)"
       @keychange="updateLine('player', $event.target.value)"
       placeholder="Player Name"
+    /> -->
+    <SearchBox
+      :playerList="playerList"
+      @update="updateLine('player', $event)"
     />
+    <span>{{ this.details.player.displayName }}</span>
     <select
       name="over-under"
       :id="id + '-ou'"
@@ -41,21 +46,29 @@
 </template>
 <script>
 import updateValue from '@/utils/updateValue'
+
 export default {
   name: 'SheetInputFieldLine',
   data() {
     return {
       details: {
-        player: '',
+        player: {
+          type: Object,
+        },
         overUnder: 'over',
         line: 0,
         odds: 0,
       },
+      searchVal: '',
     }
   },
   props: {
     id: {
       type: String,
+      required: true,
+    },
+    playerList: {
+      type: Array,
       required: true,
     },
   },
@@ -74,7 +87,7 @@ export default {
 <style scoped>
 .line {
   display: grid;
-  grid-template-columns: auto max-content 75px 75px;
+  grid-template-columns: auto auto max-content 75px 75px;
 }
 input[type='number'] {
   text-align: right;

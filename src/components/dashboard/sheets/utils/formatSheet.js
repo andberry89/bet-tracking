@@ -15,7 +15,9 @@ const formatSportsSheet = (props, details, newDetails) => {
 
   sheetProps.forEach(prop => {
     if (prop.values) {
-      prop.values = prop.values.filter(e => e.player !== '')
+      prop.values = prop.values.filter(e => {
+        return !(e.line === e.odds)
+      })
       prop.values = prop.values.map(e => ({ ...e, result: null, hit: false }))
     }
   })

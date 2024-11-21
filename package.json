@@ -17,7 +17,8 @@
     "lodash": "^4.17.21",
     "vue": "^3.2.13",
     "vue-chartjs": "^5.3.1",
-    "vue-router": "^4.3.0"
+    "vue-router": "^4.3.0",
+    "vue-search-input": "^1.1.16"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",

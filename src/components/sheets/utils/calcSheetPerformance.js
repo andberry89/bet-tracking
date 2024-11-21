@@ -45,12 +45,13 @@ const calcSheetPerformance = sheets => {
     let total = 0
     let perfectProp = 0
 
-    sortedSheets[key].values.forEach(e => {
-      const localTotal = e.length
-      total += e.length
+    sortedSheets[key].values.forEach(group => {
+      const voids = group.filter(e => e.void)
+      const localTotal = group.length - voids.length
+      total += localTotal
       let lineHit = 0
-      e.forEach(line => {
-        if (line.hit) {
+      group.forEach(line => {
+        if (line.hit && !line.void) {
           lineHit++
         }
       })
@@ -100,13 +101,13 @@ const calcSheetPerformance = sheets => {
   sheets.forEach(sheet => {
     sheet.props.forEach(prop => {
       prop.values.forEach(value => {
-        const idx = players.findIndex(player => player.name.toLowerCase() === value.player.toLowerCase())
+        const idx = players.findIndex(player => player.displayName === value.player.displayName)
         if (idx === -1) {
           let hits = value.hit ? 1 : 0
           let appearances = 1
           let hitRate = parseFloat(hits / appearances)
-          players.push({
-            name: value.player,
+          let newPlayer = {
+            ...value.player,
             appearances: appearances,
             hits: hits,
             hitRate: hitRate,
@@ -121,12 +122,12 @@ const calcSheetPerformance = sheets => {
                 hit: value.hit,
               },
             ],
-          })
+          }
+
+          players.push(newPlayer)
         } else {
           players[idx].appearances++
-          if (value.hit) {
-            players[idx].hits++
-          }
+          if (value.hit) players[idx].hits++
           players[idx].hitRate = parseFloat(players[idx].hits / players[idx].appearances)
           players[idx].lines.push({
             date: sheet.date,
@@ -142,7 +143,19 @@ const calcSheetPerformance = sheets => {
     })
   })
 
-  return { sortedSheets, perfectSheets, players }
+  // calculate total hit rate
+  let grandTotal = {
+    name: 'Total',
+    hit: 0,
+    total: 0,
+  }
+
+  for (const prop in sortedSheets) {
+    grandTotal.hit += sortedSheets[prop].hit
+    grandTotal.total += sortedSheets[prop].total
+  }
+
+  return { sortedSheets, perfectSheets, players, grandTotal }
 }
 
 export default calcSheetPerformance

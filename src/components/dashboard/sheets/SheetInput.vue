@@ -27,6 +27,7 @@
     <div class="sheet-wrap">
       <SheetInputField
         v-for="(prop, index) in props"
+        :playerList="playerList"
         class="sheet-input-field"
         :key="index"
         :header="Object.values(prop)[0]"
@@ -57,6 +58,10 @@ export default {
     }
   },
   props: {
+    playerList: {
+      type: Array,
+      required: true,
+    },
     sheetId: {
       type: String,
       required: true,

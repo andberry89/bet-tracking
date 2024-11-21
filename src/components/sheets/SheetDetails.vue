@@ -10,6 +10,7 @@
         :sheets="settledSheets"
       />
     </div>
+    <SheetView :sheet="activeSheet" />
     <div class="date-wrapper">
       <button
         v-for="item in sheetItems"
@@ -21,21 +22,14 @@
         {{ item.name ? item.name : dateFormat(item.date, 'UTC:mm/dd/yyyy') }}
       </button>
     </div>
-    <hr />
-    <SheetView :sheet="activeSheet" />
   </div>
 </template>
 
 <script>
-/**
- * TODO
- * SET UP THE API TO PULL ALL TEAM DATA ONCE PER DAY - MLB TEAM PLAYERS
- * CREATE A LIST OF ATHLETES FROM ALL TEAMS
- * RUN AN AUDIT OVER NIGHT TO CHECK SHEETS - USING MLB SUMMARY
- */
 import SheetView from './SheetView.vue'
 import dateFormat from 'dateformat'
 import updateActiveSheet from '@/components/sheets/utils/updateActiveSheet'
+import calcSheetPerformance from './utils/calcSheetPerformance'
 import SheetPerformance from './components/SheetPerformance.vue'
 
 export default {
@@ -44,6 +38,7 @@ export default {
     return {
       activeSheetIdx: 0,
       settledSheets: [],
+      results: {},
     }
   },
   components: {
@@ -76,6 +71,7 @@ export default {
   created() {
     if (this.sheetItems.length > 0) {
       this.settledSheets = this.sheetItems.filter(e => !e.open)
+      this.results = calcSheetPerformance(this.settledSheets)
     }
   },
 }
@@ -99,6 +95,7 @@ export default {
   flex-direction: column;
 }
 .item-name {
-  font-size: 30px;
+  font-family: 'Russo One';
+  font-size: 36px;
 }
 </style>

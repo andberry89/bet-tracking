@@ -12,19 +12,8 @@
         class="sheet-props"
       >
         <div class="sheet-props-header">
-          {{ getKeyName(prop) }} <span v-if="!sheet.open">({{ getRecord(prop) }})</span>
-        </div>
-        <div class="col-header-row">
-          <span class="name-col">Player</span>
-          <span class="ou-col">O/U</span>
-          <span class="line-col">Line</span>
-
-          <span class="result-col">Result</span>
-          <span
-            class="odds-col"
-            v-if="showOdds"
-            >Odds</span
-          >
+          <h4>{{ getKeyName(prop) }}</h4>
+          <span v-if="!sheet.open">({{ getRecord(prop) }})</span>
         </div>
         <SheetLine
           v-for="player in getValues(prop)"
@@ -80,7 +69,7 @@ export default {
       return value
     },
     getRecord(prop) {
-      const values = this.getValues(prop)
+      let values = this.getValues(prop).filter(e => !e.void)
       const len = values.length
       const hit = values.filter(e => e.hit).length
       return hit + '/' + len
@@ -91,10 +80,10 @@ export default {
       const props = this.sheet.props
 
       props.forEach(prop => {
-        const values = this.getValues(prop.name)
-        const valuesLen = values.length
+        let values = this.getValues(prop.name)
         if (Array.isArray(values) && values.length) {
-          total += valuesLen
+          values = values.filter(e => !e.void)
+          total += values.length
           hit += values.filter(e => e.hit).length
         }
       })
@@ -136,19 +125,19 @@ export default {
 .sheet-date {
   margin: 15px 10px;
   font-weight: 700;
-  font-size: 24px;
-  border-left: 6px solid var(--white);
-  padding-left: 10px;
+  font-size: 28px;
+  font-family: 'Russo One';
+  text-align: center;
 }
 .sheet-record {
   margin: 10px;
   font-weight: 700;
-  font-size: 20px;
-  border-left: 6px solid var(--white);
-  padding-left: 10px;
+  font-size: 24px;
+  font-family: 'Russo One';
+  text-align: center;
 }
 .sheet-props {
-  width: 45%;
+  width: 48%;
   display: inline-block;
   border: 1px solid var(--white);
   border-radius: 8px;
@@ -157,23 +146,16 @@ export default {
   vertical-align: top;
 }
 .sheet-props-header {
-  background-color: var(--green);
   padding: 8px;
   font-weight: 700;
   text-transform: uppercase;
+  text-align: center;
 }
-.col-header-row {
-  display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr max-content;
-  place-items: center;
-  padding: 4px 2px;
-}
-.col-header-row span {
-  text-transform: uppercase;
-  display: inline-block;
-  font-size: 14px;
-  font-weight: 700;
-  color: var(--green);
+.sheet-props-header h4 {
+  margin: 0;
+  padding: 0;
+  font-family: 'Russo One';
+  font-size: 30px;
 }
 .odds-col {
   padding-right: 10px;
