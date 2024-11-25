@@ -50,8 +50,7 @@ export default {
 <style scoped>
 .individual-sheet {
   border: 1px solid var(--white);
-  border-radius: 8px;
-  overflow: hidden;
+  border-radius: 0 0 8px 8px;
 }
 .individual-sheet div {
   padding: 8px 16px;

@@ -1,19 +1,25 @@
 <template>
   <div class="line">
-    <!-- <input
-      type="text"
-      :value="details.player"
-      :id="id + '-player'"
-      @keyup="updateLine('player', $event.target.value)"
-      @keydown="updateLine('player', $event.target.value)"
-      @keychange="updateLine('player', $event.target.value)"
-      placeholder="Player Name"
-    /> -->
     <SearchBox
       :playerList="playerList"
       @update="updateLine('player', $event)"
+      class="searchbox"
+      v-if="this.details.player.name === ''"
     />
-    <span>{{ this.details.player.displayName }}</span>
+    <div
+      v-else
+      class="clear-btn-wrap"
+    >
+      <button
+        class="clear-btn"
+        @click="clearPlayer"
+      >
+        X
+      </button>
+    </div>
+    <span class="selected-player">{{
+      this.details.player ? this.details.player.displayName : 'No player selected'
+    }}</span>
     <select
       name="over-under"
       :id="id + '-ou'"
@@ -53,7 +59,7 @@ export default {
     return {
       details: {
         player: {
-          type: Object,
+          name: '',
         },
         overUnder: 'over',
         line: 0,
@@ -74,6 +80,9 @@ export default {
   },
   methods: {
     updateValue: updateValue,
+    clearPlayer() {
+      this.details.player = { name: '' }
+    },
     updateLine(detail, value) {
       if (detail === 'line' || detail === 'odds') {
         value = parseFloat(value)
@@ -82,12 +91,37 @@ export default {
       this.$emit('update', this.details)
     },
   },
+  created() {
+    console.log(this.details.player.name === '')
+  },
 }
 </script>
 <style scoped>
 .line {
   display: grid;
-  grid-template-columns: auto auto max-content 75px 75px;
+  grid-template-columns: 130px auto max-content 75px 75px;
+}
+.clear-btn-wrap {
+  text-align: right;
+}
+.clear-btn {
+  margin: 2px;
+  padding: 2px 4px;
+  background-color: var(--red);
+  color: var(--white);
+  font-weight: 700;
+  font-size: 12px;
+}
+.clear-btn:hover {
+  cursor: pointer;
+  background-color: var(--translucent-red);
+}
+.selected-player {
+  border: 1px solid var(--green);
+  background-color: var(--light-gray);
+  margin: 0 2px;
+  padding: 0 2px;
+  font-size: 14px;
 }
 input[type='number'] {
   text-align: right;

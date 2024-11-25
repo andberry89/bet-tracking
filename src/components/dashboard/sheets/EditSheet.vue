@@ -1,50 +1,14 @@
 <template>
   <div v-if="dataReady">
     <h3>{{ dateFormat(this.sheet.date, 'UTC:mm/dd/yyyy') }}</h3>
-    <!-- <EditSheetProp
-      v-for="prop in this.details.props"
+    <EditSheetProp
+      v-for="(prop, index) in this.details.props"
       :key="prop.name + '-pill'"
       :name="getKeyName(prop.name, this.sheetProps)"
       :prop="prop"
       :values="getValues(prop.name, this.sheet.props)"
-    /> -->
-    <div
-      v-for="(prop, index) in this.details.props"
-      :key="prop.name"
-      class="sheet-props-wrap"
-    >
-      <div class="prop-header">
-        <span class="header-text">{{ getKeyName(prop.name, this.sheetProps) }}</span>
-        <div
-          v-for="(player, idx) in getValues(prop.name, this.sheet.props)"
-          :key="player._id"
-          class="edit-sheet-line"
-        >
-          <span class="name-text">{{ player.player.displayName }}</span>
-          <span class="ou-text">{{ player.overUnder }}</span>
-          <span class="line-text">{{ player.line }}</span>
-          <input
-            type="number"
-            placeholder="Result"
-            step="1"
-            @keyup="updateResult(index, idx, player, $event.target.value)"
-            @keydown="updateResult(index, idx, player, $event.target.value)"
-            @change="updateResult(index, idx, player, $event.target.value)"
-          />
-          <div class="void-wrap">
-            <label :for="player + '-' + prop">Void?</label>
-            <input
-              type="checkbox"
-              :id="player + '-' + prop"
-              :name="player + '-' + prop"
-              value="void"
-              v-model="isVoid"
-              @click="updateVoid(index, idx)"
-            />
-          </div>
-        </div>
-      </div>
-    </div>
+      @update="updateResult(index, $event)"
+    />
     <div class="msg-div">{{ this.msg }}</div>
     <div class="update-btn">
       <button @click="settleSheet">Update Sheet</button>
@@ -55,7 +19,7 @@
 <script>
 import axios from 'axios'
 import dateFormat from 'dateformat'
-// import EditSheetProp from './components/EditSheetProp.vue'
+import EditSheetProp from './components/EditSheetProp.vue'
 import propNames from '@/utils/sheets/propNames'
 import getKeyName from '@/components/sheets/utils/getKeyName'
 import getValues from '@/components/sheets/utils/getValues'
@@ -67,7 +31,6 @@ export default {
       actualProps: [],
       dataReady: false,
       details: {},
-      isVoid: false,
       msg: '',
       sheetProps: [],
     }
@@ -78,7 +41,7 @@ export default {
     },
   },
   components: {
-    // EditSheetProp,
+    EditSheetProp,
   },
   methods: {
     dateFormat: dateFormat,
@@ -121,20 +84,8 @@ export default {
           console.log(err)
         })
     },
-    updateResult(index, idx, player, value) {
-      value = parseInt(value)
-      this.details.props[index].values[idx].result = value
-      const ou = player.overUnder
-      const line = player.line
-      if (ou === 'over') {
-        this.details.props[index].values[idx].hit = value > line ? true : false
-      } else {
-        this.details.props[index].values[idx].hit = value < line ? true : false
-      }
-    },
-    updateVoid(index, idx) {
-      console.log(this.isVoid)
-      this.details.props[index].values[idx].void = this.isVoid
+    updateResult(index, prop) {
+      this.details.props[index] = prop
     },
   },
   created() {

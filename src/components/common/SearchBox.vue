@@ -1,12 +1,10 @@
 <template>
   <div class="player-list-wrapper">
-    <div class="icon input">
-      <input
-        type="text"
-        placeholder="Search..."
-        v-model="searchVal"
-      />
-    </div>
+    <input
+      type="text"
+      placeholder="Search..."
+      v-model="searchVal"
+    />
     <ul v-if="searchedPlayers.length">
       <li
         class="player-card"
@@ -14,16 +12,7 @@
         :key="player.id"
         @click="selectPlayer(player)"
       >
-        <div class="player-headshot">
-          <img
-            v-if="player.headshot"
-            :src="player.headshot.href"
-            :alt="player.headshot.alt"
-            width="40"
-            height="40"
-          />
-        </div>
-        <div class="player-name">{{ player.displayName }} ({{ player.team.abbreviation }})</div>
+        {{ player.displayName }} ({{ player.team.abbreviation }})
       </li>
     </ul>
   </div>
@@ -68,8 +57,28 @@ export default {
 }
 </script>
 <style scoped>
-.player-card {
-  display: flex;
-  flex-flow: row nowrap;
+.player-list-wrapper {
+  position: relative;
+  text-align: left;
+}
+input {
+  width: 125px;
+}
+ul {
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  z-index: 99;
+  list-style-type: none;
+}
+li {
+  background-color: var(--light-gray);
+  font-size: 14px;
+  text-align: left;
+  padding: 2px 5px;
+}
+li:hover {
+  cursor: pointer;
+  background-color: var(--green);
 }
 </style>
