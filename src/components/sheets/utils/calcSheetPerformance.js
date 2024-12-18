@@ -1,6 +1,8 @@
 import propNames from '@/utils/sheets/propNames'
 
 const calcSheetPerformance = sheets => {
+  if (sheets.length === 0) return []
+
   // ORGANIZE SHEETS INTO SEPARATE CATEGORIES
 
   // get the display name from each key
@@ -120,6 +122,7 @@ const calcSheetPerformance = sheets => {
                 line: value.line,
                 result: value.result,
                 hit: value.hit,
+                altProp: value.altProp,
               },
             ],
           }
@@ -137,6 +140,7 @@ const calcSheetPerformance = sheets => {
             line: value.line,
             result: value.result,
             hit: value.hit,
+            odds: value.odds,
           })
         }
       })

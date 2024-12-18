@@ -28,6 +28,8 @@
   --blue: rgb(197, 209, 241); /* #c5d1f1 */
   --dark-gray: rgb(19, 19, 19); /* #131313 */
   --light-gray: rgb(170, 170, 170); /* #aaa */
+  --translucent-gray: rgba(170, 170, 170, 0.7);
+  --translucent-dark-gray: rgba(19, 19, 19, 0.6);
   --red: rgb(204, 0, 0); /* #cc0000 */
   --translucent-red: rgba(204, 0, 0, 0.6);
   --orange: rgb(255, 131, 23); /* #ff8317 */

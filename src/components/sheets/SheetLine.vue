@@ -17,11 +17,16 @@
       </div>
       <div class="line-img-wrap">
         <img
+          :src="this.line.player.team.logo"
+          class="logo"
+        />
+        <img
           v-if="line.player.headshot"
           :src="line.player.headshot.href"
           :alt="line.player.headshot.alt"
           height="105"
           width="147"
+          class="headshot"
         />
       </div>
     </div>
@@ -30,7 +35,12 @@
       v-if="!line.void"
     >
       <h5>{{ line.overUnder }}</h5>
-      {{ line.line }}
+      <span class="line">{{ line.line }}</span>
+      <span
+        class="alt-prop"
+        v-if="line.altProp !== ''"
+        >{{ line.altProp }}</span
+      >
     </div>
     <div
       class="result-wrap"
@@ -85,6 +95,25 @@ export default {
     isOpen() {
       return this.line.result === null
     },
+    logoStyleObject() {
+      const url = this.line.player.team.logo
+
+      return {
+        content: '',
+        display: 'block',
+        position: 'absolute',
+        left: '0',
+        top: '0',
+        right: '0',
+        bottom: '0',
+        width: '100%',
+        height: '100%',
+        opacity: '0.6',
+        backgroundImage: url(`${url}`),
+        backgroundRepeat: 'no-repeat',
+        backgroundSize: 'cover',
+      }
+    },
     result() {
       if (this.line.result === null) {
         return 'dark-gray'
@@ -114,12 +143,14 @@ export default {
   grid-template-columns: 6fr 1fr 1fr 1fr;
   place-items: center;
   position: relative;
+  overflow: hidden;
 }
 .player-wrap {
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
   justify-self: flex-end;
+  position: relative;
 }
 .name-wrap {
   display: flex;
@@ -147,8 +178,24 @@ export default {
   margin-top: 5px;
   color: var(--white);
 }
+.line-img-wrap {
+  position: relative;
+}
 .line-img-wrap img {
   display: block;
+}
+.logo {
+  position: absolute;
+  height: 80px;
+  width: auto;
+  top: 10%;
+  left: 50%;
+  opacity: 0.6;
+  z-index: 1;
+}
+.headshot {
+  z-index: 99;
+  position: relative;
 }
 .team-name {
   font-weight: 700;
@@ -159,6 +206,14 @@ export default {
 }
 .ou-wrap {
   text-transform: capitalize;
+  display: flex;
+  flex-flow: column nowrap;
+}
+.ou-wrap span {
+  display: inline-block;
+}
+.alt-prop {
+  font-size: 12px;
 }
 .result-wrap,
 .odds-wrap,

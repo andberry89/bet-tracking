@@ -107,6 +107,33 @@ export const overUnderOptions = [
   },
 ]
 
+export const sortOptions = [
+  {
+    value: 'Player Name: A to Z',
+    disabled: false,
+  },
+  {
+    value: 'Player Name: Z to A',
+    disabled: false,
+  },
+  {
+    value: 'Hit Rate: High to Low',
+    disabled: false,
+  },
+  {
+    value: 'Hit Rate: Low to High',
+    disabled: false,
+  },
+  {
+    value: 'Picks: High to Low',
+    disabled: false,
+  },
+  {
+    value: 'Picks: Low to High',
+    disabled: false,
+  },
+]
+
 export const starting5OverUnderOptions = [
   {
     value: '--O/U/N--',

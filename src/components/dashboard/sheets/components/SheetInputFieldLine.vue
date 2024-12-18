@@ -91,9 +91,6 @@ export default {
       this.$emit('update', this.details)
     },
   },
-  created() {
-    console.log(this.details.player.name === '')
-  },
 }
 </script>
 <style scoped>
