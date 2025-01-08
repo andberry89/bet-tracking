@@ -2,7 +2,9 @@ const calcPlayerProps = lines => {
   let props = []
   let propsArr = []
 
-  lines.forEach(line => {
+  let nonVoidLines = lines.filter(e => e.void === false)
+
+  nonVoidLines.forEach(line => {
     const hit = line.hit ? 1 : 0
     if (!props.includes(line.prop)) {
       props.push(line.prop)
@@ -18,7 +20,26 @@ const calcPlayerProps = lines => {
     }
   })
 
-  return propsArr
+  const appearances = nonVoidLines.length
+  const hits = nonVoidLines.filter(e => e.hit === true).length
+  const hitRate = ((hits / appearances) * 100).toFixed(2) + '%'
+
+  const overallStats = [
+    {
+      label: 'Hits',
+      value: hits,
+    },
+    {
+      label: 'Picks',
+      value: appearances,
+    },
+    {
+      label: 'Hit Rate',
+      value: hitRate,
+    },
+  ]
+
+  return { propsArr, overallStats }
 }
 
 export default calcPlayerProps

@@ -46,7 +46,10 @@ export default {
       }
     },
     getOdds() {
-      let odds = this.line.odds ? this.line.odds : 'N/A'
+      if (this.line.odds === '' || this.line.odds === 0 || this.line.odds === null || this.line.odds === undefined) {
+        return ''
+      }
+      let odds = this.line.odds
       if (odds > 0) {
         odds = '+' + odds
       }
@@ -66,7 +69,7 @@ export default {
       if (line.sheetName !== '') {
         return line.sheetName
       } else {
-        return dateFormat(line.date, 'paddedShortDate')
+        return dateFormat(line.date, 'UTC:mm/dd/yyyy')
       }
     },
   },

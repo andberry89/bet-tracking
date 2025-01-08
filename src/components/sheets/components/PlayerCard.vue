@@ -94,22 +94,9 @@ export default {
     calcPlayerProps: calcPlayerProps,
   },
   created() {
-    this.propStats = calcPlayerProps(this.player.lines)
-    const hitRate = (this.player.hitRate * 100).toFixed(2) + '%'
-    this.overallStats = [
-      {
-        label: 'Hits',
-        value: this.player.hits,
-      },
-      {
-        label: 'Picks',
-        value: this.player.appearances,
-      },
-      {
-        label: 'Hit Rate',
-        value: hitRate,
-      },
-    ]
+    const results = calcPlayerProps(this.player.lines)
+    this.propStats = results.propsArr
+    this.overallStats = results.overallStats
   },
 }
 </script>

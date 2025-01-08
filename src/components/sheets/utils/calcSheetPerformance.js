@@ -122,7 +122,9 @@ const calcSheetPerformance = sheets => {
                 line: value.line,
                 result: value.result,
                 hit: value.hit,
+                odds: value.odds,
                 altProp: value.altProp,
+                void: value.void,
               },
             ],
           }
@@ -141,6 +143,7 @@ const calcSheetPerformance = sheets => {
             result: value.result,
             hit: value.hit,
             odds: value.odds,
+            void: value.void,
           })
         }
       })
