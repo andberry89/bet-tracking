@@ -9,6 +9,12 @@
         class="select-box"
         @update="updatePlayers($event)"
       />
+      <input
+        type="text"
+        placeholder="Search Players..."
+        v-model="searchVal"
+        class="search-players"
+      />
     </div>
     <div
       class="categories-wrap"
@@ -24,7 +30,7 @@
       class="all-players-wrap"
       v-if="activeSection === 'all'"
     >
-      <PlayerPerformanceCard :category="allPlayers" />
+      <PlayerPerformanceCard :category="searchPlayers(allPlayers)" />
     </div>
   </div>
 </template>
@@ -45,6 +51,7 @@ export default {
       categories: [],
       sortOptions: sortOptions,
       defaultPlayers: [],
+      searchVal: '',
     }
   },
   props: {
@@ -59,6 +66,22 @@ export default {
   methods: {
     calcPlayers: calcPlayers,
     sortPlayers: sortPlayers,
+    searchPlayers(category) {
+      const players = category.players
+      let results = []
+
+      if (this.searchVal === '') {
+        results = players
+      }
+
+      results = this.players.filter(player => {
+        if (player.displayName.toLowerCase().includes(this.searchVal.toLowerCase())) {
+          return player
+        }
+      })
+
+      return { ...category, players: results }
+    },
     updatePlayers(option) {
       this.allPlayers.players = sortPlayers(option, this.defaultPlayers)
     },
@@ -90,7 +113,17 @@ export default {
 }
 </script>
 <style scoped>
+.sort-container {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: flex-end;
+}
 .select-box {
+  width: 175px;
+}
+.search-players {
+  margin-left: 10px;
+  height: 2rem;
   width: 175px;
 }
 </style>

@@ -11,7 +11,7 @@
       class="result"
       :style="dynamicTextColor"
     >
-      {{ line.result }}
+      {{ line.void ? 'Void' : line.result }}
     </div>
     <div class="odds">{{ getOdds }}</div>
   </div>
@@ -33,14 +33,26 @@ export default {
   },
   computed: {
     backgroundStyleObject() {
-      const color = this.line.hit ? 'rgb(21,198,60)' : 'rgb(204,0,0)'
-      const fadeColor = this.line.hit ? 'rgba(21,198,60,0.2)' : 'rgba(204,0,0,0.2)'
+      let color = ''
+      let fadeColor = ''
+      if (this.line.void) {
+        color = 'rgb(255,131,23)'
+        fadeColor = 'rgba(255, 131, 23, 0.2)'
+      } else {
+        color = this.line.hit ? 'rgb(21,198,60)' : 'rgb(204,0,0)'
+        fadeColor = this.line.hit ? 'rgba(21,198,60,0.2)' : 'rgba(204,0,0,0.2)'
+      }
       return {
         background: `linear-gradient(125deg, ${color} 0%, ${fadeColor} 65%)`,
       }
     },
     dynamicTextColor() {
-      const color = this.line.hit ? 'rgb(21,198,60)' : 'rgb(204,0,0)'
+      let color = ''
+      if (this.line.void) {
+        color = 'rgb(255,131,23)'
+      } else {
+        color = this.line.hit ? 'rgb(21,198,60)' : 'rgb(204,0,0)'
+      }
       return {
         color: color,
       }

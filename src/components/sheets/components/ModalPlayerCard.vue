@@ -215,7 +215,8 @@ export default {
 }
 .overall-card {
   border-radius: 8px;
-  background-color: var(--light-gray);
+  /* background-color: var(--translucent-gray); */
+  border: 2px inset var(--green);
   width: 30%;
   text-align: center;
   font-size: 24px;

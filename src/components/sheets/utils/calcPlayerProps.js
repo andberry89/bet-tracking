@@ -22,7 +22,7 @@ const calcPlayerProps = lines => {
 
   const appearances = nonVoidLines.length
   const hits = nonVoidLines.filter(e => e.hit === true).length
-  const hitRate = ((hits / appearances) * 100).toFixed(2) + '%'
+  const hitRate = appearances > 0 ? ((hits / appearances) * 100).toFixed(2) + '%' : '0%'
 
   const overallStats = [
     {

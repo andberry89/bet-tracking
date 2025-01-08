@@ -106,13 +106,18 @@ const calcSheetPerformance = sheets => {
         const idx = players.findIndex(player => player.displayName === value.player.displayName)
         if (idx === -1) {
           let hits = value.hit ? 1 : 0
-          let appearances = 1
-          let hitRate = parseFloat(hits / appearances)
+          let appearances = value.void ? 0 : 1
+          let hitRate = 0
+          if (appearances > 0) {
+            hitRate = parseFloat(hits / appearances)
+          }
+          let totalVoids = value.void ? 1 : 0
           let newPlayer = {
             ...value.player,
             appearances: appearances,
             hits: hits,
             hitRate: hitRate,
+            totalVoids: totalVoids,
             lines: [
               {
                 date: sheet.date,
@@ -131,8 +136,9 @@ const calcSheetPerformance = sheets => {
 
           players.push(newPlayer)
         } else {
-          players[idx].appearances++
+          if (!value.void) players[idx].appearances++
           if (value.hit) players[idx].hits++
+          if (value.void) players[idx].totalVoids++
           players[idx].hitRate = parseFloat(players[idx].hits / players[idx].appearances)
           players[idx].lines.push({
             date: sheet.date,
