@@ -111,9 +111,12 @@ export default {
   border: 1px solid var(--white);
   border-radius: 15px;
   overflow: hidden;
+  transition: all 0.3s ease-out allow-discrete;
 }
 .player-card-wrap:hover {
   cursor: pointer;
+  background-color: var(--translucent-green);
+  transform: scale(1.04);
 }
 .img-wrap {
   text-align: center;

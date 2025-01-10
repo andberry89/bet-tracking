@@ -33,6 +33,7 @@
   --red: rgb(204, 0, 0); /* #cc0000 */
   --translucent-red: rgba(204, 0, 0, 0.6);
   --orange: rgb(255, 131, 23); /* #ff8317 */
+  --translucent-orange: rgba(255, 131, 23, 0.6);
   --white: rgb(255, 253, 250); /* #fffdfa */
   --black: rgb(0, 0, 0); /* #000 */
 }

@@ -106,7 +106,7 @@ export default {
       players: copyPlayers,
     }
 
-    this.defaultPlayers = copyPlayers
+    this.defaultPlayers = this.players
 
     this.categories = calcPlayers(copyPlayers)
   },

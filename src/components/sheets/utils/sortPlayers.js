@@ -51,3 +51,4 @@ const sortPlayers = (option, players) => {
 export default sortPlayers
 
 // TODO: Player name sorting isn't quite functional
+// todo: need to fix it all -- start with default selection
